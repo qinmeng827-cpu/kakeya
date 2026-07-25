@@ -42,9 +42,10 @@ test("server-renders the Kakeya exhibition and its scientific framing", async ()
 });
 
 test("keeps interactive models explicit about scope and removes fake estimates", async () => {
-  const [page, css] = await Promise.all([
+  const [page, css, layout] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.match(page, /projectiveDirections/);
@@ -59,8 +60,13 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /@media\s*\(max-width:\s*760px\)/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /--font-serif-cn:/);
+  assert.match(css, /--font-serif-cn:\s*var\(--font-source-han-serif\)/);
   assert.match(css, /\.hero h1[\s\S]*?font-weight:\s*700/);
+  assert.match(css, /\.question-heading h2,[\s\S]*?\.dimension-top h2[\s\S]*?font-weight:\s*700/);
   assert.match(css, /\.site-header nav a,[\s\S]*?font-size:\s*17px/);
   assert.match(css, /\.section-index[\s\S]*?font:\s*650 14px/);
+  assert.match(layout, /Noto_Serif_SC/);
+  assert.match(layout, /variable:\s*"--font-source-han-serif"/);
+  assert.match(layout, /weight:\s*"700"/);
   await access(new URL("../public/hong-wang-portrait.jpg", import.meta.url));
 });

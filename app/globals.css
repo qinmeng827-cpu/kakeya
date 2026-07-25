@@ -11,7 +11,7 @@
   --muted: #89949b;
   --line: rgba(184, 222, 220, 0.16);
   --page-pad: max(36px, calc((100vw - 1720px) / 2 + 56px));
-  --font-serif-cn: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
+  --font-serif-cn: var(--font-source-han-serif), "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", "SimSun", serif;
 }
 
 * {
