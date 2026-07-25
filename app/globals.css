@@ -1334,15 +1334,15 @@ input[type="range"] {
 
 .person-section {
   display: grid;
-  grid-template-columns: minmax(620px, .86fr) minmax(760px, 1.14fr);
-  min-height: 800px;
+  grid-template-columns: minmax(520px, .72fr) minmax(880px, 1.28fr);
+  min-height: 720px;
   background: var(--paper);
   color: #111814;
 }
 
 .person-photo {
   position: relative;
-  min-height: 800px;
+  min-height: 720px;
   overflow: hidden;
   background: #10231d;
 }
@@ -1374,35 +1374,80 @@ input[type="range"] {
 
 .person-copy {
   align-self: center;
-  max-width: 980px;
-  padding: 84px clamp(56px, 6vw, 116px);
+  width: 100%;
+  max-width: none;
+  padding: 62px clamp(58px, 5vw, 100px);
 }
 
 .person-kicker {
-  margin: 54px 0 18px;
+  margin: 36px 0 16px;
   color: #a47729;
   font: 600 15px/1 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
 .person-copy h2 {
-  font-size: clamp(42px, 3.8vw, 60px);
-  line-height: 1.18;
+  max-width: 1120px;
+  font-size: clamp(42px, 3.35vw, 60px);
+  line-height: 1.15;
 }
 
-.person-copy > p:not(.person-kicker) {
+.person-bio {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 48px);
+  margin-top: 28px;
+}
+
+.person-bio p {
+  margin: 0;
   color: #425047;
-  font-size: 19px;
-  line-height: 1.95;
+  font-size: 18px;
+  line-height: 1.78;
+}
+
+.person-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 30px;
+  border-top: 1px solid rgba(25, 53, 43, .18);
+  border-bottom: 1px solid rgba(25, 53, 43, .18);
+}
+
+.person-facts div {
+  min-height: 86px;
+  padding: 18px 20px 16px 0;
+}
+
+.person-facts div:not(:first-child) {
+  padding-left: 20px;
+  border-left: 1px solid rgba(25, 53, 43, .13);
+}
+
+.person-facts span,
+.person-facts strong {
+  display: block;
+}
+
+.person-facts span {
+  color: #78837c;
+  font-size: 14px;
+}
+
+.person-facts strong {
+  margin-top: 10px;
+  color: #183a31;
+  font-size: 17px;
+  font-weight: 650;
 }
 
 .coauthor-note {
   display: grid;
   grid-template-columns: 100px 1fr;
   gap: 8px 24px;
-  margin-top: 44px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(25, 53, 43, .18);
+  margin-top: 28px;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .coauthor-note span {
@@ -1918,6 +1963,19 @@ footer > a {
   }
   .person-copy {
     padding: 80px 24px 100px;
+  }
+  .person-bio {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .person-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .person-facts div:nth-child(3) {
+    border-left: 0;
+  }
+  .person-facts div:nth-child(n + 3) {
+    border-top: 1px solid rgba(25, 53, 43, .13);
   }
   .person-copy h2,
   .award-section h2 {

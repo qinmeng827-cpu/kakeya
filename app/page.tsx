@@ -1665,13 +1665,33 @@ export default function Home() {
           <div className="section-index">05 / THE MATHEMATICIAN</div>
           <p className="person-kicker">HONG WANG · 王虹</p>
           <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
-          <p>
-            王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。
-            她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
-          </p>
-          <p>
-            她的工作把“波的传播”与“细管怎样重叠”连在一起。2026 年菲尔兹奖引文提到局部光滑、傅里叶限制、Falconer 距离集、Furstenberg 集以及三维挂谷问题。
-          </p>
+          <div className="person-bio">
+            <p>
+              王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。
+              她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
+            </p>
+            <p>
+              她的工作把“波的传播”与“细管怎样重叠”连在一起。2026 年菲尔兹奖引文提到局部光滑、傅里叶限制、Falconer 距离集、Furstenberg 集以及三维挂谷问题。
+            </p>
+          </div>
+          <div className="person-facts" aria-label="王虹人物资料">
+            <div>
+              <span>出生地</span>
+              <strong>广西桂林</strong>
+            </div>
+            <div>
+              <span>本科</span>
+              <strong>北京大学</strong>
+            </div>
+            <div>
+              <span>博士</span>
+              <strong>MIT · 2019</strong>
+            </div>
+            <div>
+              <span>现职</span>
+              <strong>IHES</strong>
+            </div>
+          </div>
           <div className="coauthor-note">
             <span>共同证明者</span>
             <strong>Joshua Zahl</strong>
