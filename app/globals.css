@@ -1388,14 +1388,16 @@ input[type="range"] {
 .person-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 500px;
+  height: 680px;
+  min-height: 680px;
   background: var(--paper);
   color: #111814;
 }
 
 .person-photo {
   position: relative;
-  min-height: 500px;
+  height: 680px;
+  min-height: 680px;
   overflow: hidden;
   background: #10231d;
 }
@@ -1831,6 +1833,10 @@ footer > a {
   .award-section {
     grid-template-columns: 1fr;
   }
+  .person-section {
+    height: auto;
+    min-height: 0;
+  }
   .question-grid { gap: 55px; }
   .dimension-display {
     grid-template-columns: .7fr 1.3fr;
@@ -1865,6 +1871,7 @@ footer > a {
     grid-template-columns: 180px 1fr;
   }
   .person-photo {
+    height: auto;
     max-height: 780px;
   }
   .person-copy {
