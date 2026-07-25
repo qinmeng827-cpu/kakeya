@@ -11,6 +11,7 @@
   --muted: #89949b;
   --line: rgba(184, 222, 220, 0.16);
   --page-pad: max(32px, calc((100vw - 1600px) / 2 + 52px));
+  --font-serif-cn: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
 }
 
 * {
@@ -92,7 +93,7 @@ main {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: .14em;
   transition: color .2s ease;
 }
@@ -150,7 +151,7 @@ main {
   display: flex;
   gap: 28px;
   color: var(--cyan);
-  font: 600 10px/1.3 var(--font-geist-mono), monospace;
+  font: 650 12px/1.3 var(--font-geist-mono), monospace;
   letter-spacing: .16em;
 }
 
@@ -160,11 +161,11 @@ main {
 
 .hero h1 {
   margin: 38px 0 30px;
-  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-family: var(--font-serif-cn);
   font-size: clamp(64px, 5.8vw, 116px);
-  font-weight: 400;
+  font-weight: 700;
   line-height: .98;
-  letter-spacing: -.055em;
+  letter-spacing: -.04em;
 }
 
 .hero h1 span {
@@ -179,7 +180,7 @@ main {
   top: -2px;
   right: -34px;
   color: var(--cyan);
-  font: 500 10px/1 var(--font-geist-mono), monospace;
+  font: 600 12px/1 var(--font-geist-mono), monospace;
   letter-spacing: .1em;
 }
 
@@ -187,7 +188,7 @@ main {
   max-width: 670px;
   margin: 0;
   color: #a9b7b5;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.9;
 }
 
@@ -213,7 +214,7 @@ main {
   padding: 17px 18px;
   border: 1px solid rgba(97, 228, 222, .42);
   color: var(--cyan-soft);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: .08em;
   transition: background .2s ease, color .2s ease;
 }
@@ -226,7 +227,7 @@ main {
 
 .hero-actions > span {
   color: #687779;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .lab-shell {
@@ -271,7 +272,7 @@ main {
   display: flex;
   justify-content: space-between;
   color: rgba(190, 237, 232, .58);
-  font: 500 9px/1.2 var(--font-geist-mono), monospace;
+  font: 600 11px/1.2 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
@@ -297,7 +298,7 @@ main {
   align-items: center;
   gap: 10px;
   color: rgba(194, 221, 218, .58);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .pulse-dot {
@@ -327,12 +328,12 @@ main {
   display: flex;
   justify-content: space-between;
   color: #94aaa8;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .lab-controls label strong {
   color: var(--cyan);
-  font: 500 12px/1 var(--font-geist-mono), monospace;
+  font: 600 14px/1 var(--font-geist-mono), monospace;
 }
 
 input[type="range"] {
@@ -356,7 +357,7 @@ input[type="range"] {
   color: #9db6b4;
   min-height: 44px;
   padding: 10px 14px;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -395,7 +396,7 @@ input[type="range"] {
 
 .hero-facts span {
   color: #718183;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .question-section,
@@ -408,7 +409,7 @@ input[type="range"] {
 
 .section-index {
   color: #53716d;
-  font: 600 10px/1.3 var(--font-geist-mono), monospace;
+  font: 650 12px/1.3 var(--font-geist-mono), monospace;
   letter-spacing: .16em;
 }
 
@@ -427,7 +428,7 @@ input[type="range"] {
 .question-heading > p {
   margin: 8px 0 0;
   color: #556159;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .question-heading h2,
@@ -437,9 +438,9 @@ input[type="range"] {
 .award-section h2,
 .dimension-top h2 {
   margin: 0;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -.04em;
+  font-family: var(--font-serif-cn);
+  font-weight: 700;
+  letter-spacing: -.025em;
 }
 
 .question-heading h2 {
@@ -504,7 +505,7 @@ input[type="range"] {
   border: 1px solid rgba(31, 83, 70, .18);
   background: rgba(230, 235, 227, .78);
   color: #456056;
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .08em;
   backdrop-filter: blur(8px);
   pointer-events: none;
@@ -527,7 +528,7 @@ input[type="range"] {
   border: 1px solid rgba(31, 83, 70, .2);
   background: rgba(230, 235, 227, .84);
   color: #345448;
-  font: 500 10px/1 var(--font-geist-mono), monospace;
+  font: 600 12px/1 var(--font-geist-mono), monospace;
   backdrop-filter: blur(8px);
 }
 
@@ -549,7 +550,7 @@ input[type="range"] {
   display: flex;
   justify-content: space-between;
   color: #4f6158;
-  font: 600 11px/1 var(--font-geist-mono), monospace;
+  font: 650 13px/1 var(--font-geist-mono), monospace;
   letter-spacing: .08em;
 }
 
@@ -559,7 +560,7 @@ input[type="range"] {
 
 .question-copy > p {
   color: #34443b;
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.9;
 }
 
@@ -567,8 +568,9 @@ input[type="range"] {
   margin: 48px 0;
   padding: 0 0 0 26px;
   border-left: 2px solid #aa7d28;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: 28px;
+  font-family: var(--font-serif-cn);
+  font-size: 30px;
+  font-weight: 600;
   line-height: 1.55;
 }
 
@@ -576,7 +578,7 @@ input[type="range"] {
   padding-top: 25px;
   border-top: 1px solid rgba(24, 48, 39, .18);
   color: #59675f;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .dimension-section {
@@ -642,21 +644,21 @@ input[type="range"] {
 .dimension-copy > span,
 .proof-copy > span {
   color: var(--cyan);
-  font: 500 9px/1.3 var(--font-geist-mono), monospace;
+  font: 600 11px/1.3 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
 .dimension-copy h3 {
   margin: 26px 0;
-  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-family: var(--font-serif-cn);
   font-size: clamp(30px, 3vw, 46px);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.35;
 }
 
 .dimension-copy p {
   color: #b4c2be;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.9;
 }
 
@@ -690,13 +692,13 @@ input[type="range"] {
 
 .dimension-legend span {
   color: #8fa39d;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .dimension-legend strong {
   margin-top: 8px;
   color: #dceae4;
-  font: 400 17px/1.2 "Songti SC", Georgia, serif;
+  font: 600 19px/1.25 var(--font-serif-cn);
 }
 
 .section-heading-row {
@@ -719,7 +721,7 @@ input[type="range"] {
   max-width: 460px;
   margin: 40px 0 0;
   color: #4b5b52;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.9;
 }
 
@@ -756,7 +758,7 @@ input[type="range"] {
 
 .proof-nav button span {
   color: #9b8e67;
-  font: 500 10px/1 var(--font-geist-mono), monospace;
+  font: 600 12px/1 var(--font-geist-mono), monospace;
 }
 
 .proof-nav button[aria-selected="true"] {
@@ -817,13 +819,13 @@ input[type="range"] {
 
 .proof-live span {
   color: var(--cyan);
-  font: 600 9px/1 var(--font-geist-mono), monospace;
+  font: 650 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
 .proof-live strong {
   color: rgba(224, 240, 234, .72);
-  font: 400 11px/1.2 var(--font-geist-mono), monospace;
+  font: 500 13px/1.3 var(--font-geist-mono), monospace;
 }
 
 .proof-controls {
@@ -843,12 +845,12 @@ input[type="range"] {
   grid-template-columns: 1fr auto;
   gap: 8px 14px;
   color: #92aaa3;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .proof-controls label strong {
   color: var(--gold);
-  font: 500 11px/1 var(--font-geist-mono), monospace;
+  font: 600 13px/1 var(--font-geist-mono), monospace;
 }
 
 .proof-controls input {
@@ -865,7 +867,7 @@ input[type="range"] {
   border: 1px solid rgba(110, 220, 208, .22);
   background: rgba(35, 108, 94, .16);
   color: #c5e7df;
-  font: 500 10px/1 var(--font-geist-mono), monospace;
+  font: 600 12px/1 var(--font-geist-mono), monospace;
   cursor: pointer;
 }
 
@@ -886,15 +888,15 @@ input[type="range"] {
 
 .proof-copy h3 {
   margin: 20px 0;
-  font-family: "Songti SC", Georgia, serif;
+  font-family: var(--font-serif-cn);
   font-size: 27px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
 }
 
 .proof-copy p {
   color: #b2c1bc;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.9;
 }
 
@@ -914,12 +916,12 @@ input[type="range"] {
 
 .proof-logic span {
   color: #718780;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .proof-logic strong {
   color: #dce9e4;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.45;
 }
@@ -930,7 +932,7 @@ input[type="range"] {
   padding-top: 20px;
   border-top: 1px solid rgba(130, 206, 198, .13);
   color: #81948e;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
@@ -954,7 +956,7 @@ input[type="range"] {
 .timeline-heading p {
   max-width: 360px;
   color: #a5b4af;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.8;
 }
 
@@ -997,18 +999,18 @@ input[type="range"] {
 
 .timeline button > span {
   color: #57716b;
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
 }
 
 .timeline button h3 {
   margin: 74px 0 22px;
   color: var(--gold);
-  font: 400 22px/1.2 Georgia, serif;
+  font: 600 24px/1.2 Georgia, var(--font-serif-cn);
 }
 
 .timeline button p {
   color: #a8b7b2;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
 }
 
@@ -1017,7 +1019,7 @@ input[type="range"] {
   left: 24px;
   bottom: 24px;
   color: #6b827b;
-  font: normal 500 9px/1 var(--font-geist-mono), monospace;
+  font: normal 600 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .08em;
 }
 
@@ -1065,7 +1067,7 @@ input[type="range"] {
   left: 20px;
   top: 18px;
   color: #72968d;
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .09em;
   pointer-events: none;
 }
@@ -1079,23 +1081,23 @@ input[type="range"] {
 
 .era-copy > span {
   color: var(--cyan);
-  font: 600 9px/1 var(--font-geist-mono), monospace;
+  font: 650 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
 .era-copy h3 {
   margin: 22px 0 16px;
   color: #eff5f1;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: 30px;
-  font-weight: 400;
+  font-family: var(--font-serif-cn);
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1.35;
 }
 
 .era-copy > p {
   margin: 0;
   color: #afc0ba;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.85;
 }
 
@@ -1108,12 +1110,12 @@ input[type="range"] {
   border-top: 1px solid rgba(143, 216, 207, .14);
   border-bottom: 1px solid rgba(143, 216, 207, .14);
   color: #7f9991;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .era-copy label strong {
   color: var(--gold);
-  font: 500 11px/1 var(--font-geist-mono), monospace;
+  font: 600 13px/1 var(--font-geist-mono), monospace;
 }
 
 .era-copy input {
@@ -1129,20 +1131,20 @@ input[type="range"] {
 
 .era-copy > div span {
   color: #72968d;
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .08em;
 }
 
 .era-copy > div p {
   color: #d4e6e0;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.75;
 }
 
 .era-copy small {
   margin-top: 20px;
   color: #70857f;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
 }
 
@@ -1162,20 +1164,20 @@ input[type="range"] {
 
 .derivation-head span {
   color: var(--cyan);
-  font: 600 9px/1 var(--font-geist-mono), monospace;
+  font: 650 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
 .derivation-head h3 {
   margin: 16px 0 0;
   color: #eef5f1;
-  font: 400 30px/1.3 "Songti SC", "STSong", Georgia, serif;
+  font: 700 32px/1.3 var(--font-serif-cn);
 }
 
 .derivation-head p {
   margin: 0;
   color: #829991;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
@@ -1218,13 +1220,13 @@ input[type="range"] {
 
 .derivation-nav button span {
   color: #5d766e;
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
 }
 
 .derivation-nav button strong {
   color: inherit;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .derivation-card {
@@ -1235,19 +1237,19 @@ input[type="range"] {
 
 .derivation-card > span {
   color: #6f8981;
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .12em;
 }
 
 .derivation-card h4 {
   margin: 22px 0 16px;
   color: #f0f5f2;
-  font: 400 clamp(28px, 3vw, 42px)/1.25 "Songti SC", "STSong", Georgia, serif;
+  font: 700 clamp(28px, 3vw, 42px)/1.25 var(--font-serif-cn);
 }
 
 .derivation-card > p {
   color: #b5c5c0;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.9;
 }
 
@@ -1257,7 +1259,7 @@ input[type="range"] {
   border-left: 2px solid var(--gold);
   background: rgba(242, 203, 114, .045);
   color: var(--gold);
-  font: 400 17px/1.6 Georgia, "Songti SC", serif;
+  font: 500 19px/1.6 Georgia, var(--font-serif-cn);
 }
 
 .derivation-card nav {
@@ -1274,7 +1276,7 @@ input[type="range"] {
   border: 1px solid rgba(143, 216, 207, .2);
   background: transparent;
   color: #9db2ab;
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -1325,7 +1327,7 @@ input[type="range"] {
   left: 34px;
   bottom: 28px;
   color: rgba(255,255,255,.72);
-  font: 500 9px/1 var(--font-geist-mono), monospace;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: .12em;
 }
 
@@ -1337,7 +1339,7 @@ input[type="range"] {
 .person-kicker {
   margin: 54px 0 18px;
   color: #a47729;
-  font: 500 11px/1 var(--font-geist-mono), monospace;
+  font: 600 13px/1 var(--font-geist-mono), monospace;
   letter-spacing: .14em;
 }
 
@@ -1348,7 +1350,7 @@ input[type="range"] {
 
 .person-copy > p:not(.person-kicker) {
   color: #425047;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.95;
 }
 
@@ -1363,7 +1365,7 @@ input[type="range"] {
 
 .coauthor-note span {
   color: #78837c;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .coauthor-note strong {
@@ -1375,7 +1377,7 @@ input[type="range"] {
   grid-column: 2;
   margin: 0;
   color: #58665d;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.8;
 }
 
@@ -1421,7 +1423,7 @@ input[type="range"] {
 
 .medal-orbit b {
   margin-top: 12px;
-  font: 500 10px/1 var(--font-geist-mono), monospace;
+  font: 600 12px/1 var(--font-geist-mono), monospace;
   letter-spacing: .28em;
 }
 
@@ -1444,7 +1446,7 @@ input[type="range"] {
 .award-section p {
   max-width: 660px;
   color: #b3c2bd;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.9;
 }
 
@@ -1474,14 +1476,14 @@ input[type="range"] {
 
 .award-facts span {
   color: #78908a;
-  font: 600 10px/1.2 var(--font-geist-mono), monospace;
+  font: 650 12px/1.2 var(--font-geist-mono), monospace;
   letter-spacing: .12em;
 }
 
 .award-facts strong {
   margin-top: 14px;
   color: #e1ece7;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1.4;
 }
@@ -1492,7 +1494,7 @@ input[type="range"] {
   min-height: 44px;
   margin-top: 28px;
   color: var(--cyan);
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .sources-section {
@@ -1522,11 +1524,12 @@ input[type="range"] {
 .source-list span,
 .source-list small {
   color: #65736a;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .source-list strong {
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .source-list b {
@@ -1547,13 +1550,13 @@ footer {
 footer p {
   margin: 0;
   color: #708079;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.7;
 }
 
 footer > a {
   color: var(--cyan);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 @media (max-width: 1100px) {
@@ -1643,7 +1646,7 @@ footer > a {
     font-size: clamp(50px, 16vw, 78px);
   }
   .hero-lead {
-    font-size: 14px;
+    font-size: 16px;
   }
   .hero-actions {
     align-items: flex-start;
