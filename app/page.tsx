@@ -1925,7 +1925,6 @@ export default function Home() {
           </article>
         </div>
         <aside className="collaboration-callout" aria-label="共同成果说明">
-          <strong>共同成果</strong>
           <p>三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果；菲尔兹奖则授予王虹个人。</p>
         </aside>
       </section>
