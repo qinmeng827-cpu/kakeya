@@ -86,7 +86,7 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /\.timeline-explorer[\s\S]*?grid-template-columns:\s*minmax\(260px,\s*310px\)\s*minmax\(0,\s*1fr\)/);
   assert.match(css, /\.timeline[\s\S]*?grid-row:\s*1\s*\/\s*span 2/);
   assert.match(css, /\.person-section\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\) minmax\(0, 1fr\)/);
-  assert.match(css, /\.person-section\s*\{[\s\S]*?min-height:\s*680px/);
+  assert.match(css, /\.person-section\s*\{[\s\S]*?min-height:\s*500px/);
   assert.match(css, /\.era-stage[\s\S]*?grid-column:\s*2/);
   assert.match(css, /\.era-derivation[\s\S]*?grid-column:\s*2/);
   assert.match(layout, /Noto_Serif_SC/);

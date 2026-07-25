@@ -1388,14 +1388,14 @@ input[type="range"] {
 .person-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 680px;
+  min-height: 500px;
   background: var(--paper);
   color: #111814;
 }
 
 .person-photo {
   position: relative;
-  min-height: 680px;
+  min-height: 500px;
   overflow: hidden;
   background: #10231d;
 }
@@ -1426,9 +1426,9 @@ input[type="range"] {
 }
 
 .person-copy {
-  align-self: center;
+  align-self: start;
   max-width: 980px;
-  padding: 60px clamp(56px, 6vw, 116px) 64px;
+  padding: 48px clamp(56px, 6vw, 116px) 52px;
 }
 
 .person-kicker {
