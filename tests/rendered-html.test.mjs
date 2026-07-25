@@ -49,6 +49,9 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   ]);
 
   assert.match(page, /projectiveDirections/);
+  assert.match(page, /requestFullscreen/);
+  assert.match(page, /cameraDistance/);
+  assert.match(page, /drawGuide/);
   assert.match(page, /排版调节台/);
   assert.match(page, /typographyStorageKey/);
   assert.match(page, /titleLeading/);
@@ -71,6 +74,8 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /--type-title-leading-adjust:/);
   assert.match(css, /\.typography-toggle/);
   assert.match(css, /\.typography-panel/);
+  assert.match(css, /\.lab-shell:fullscreen/);
+  assert.match(css, /\.lab-readout-actions/);
   assert.match(css, /--font-serif-cn:\s*var\(--font-source-han-serif\)/);
   assert.match(css, /\.hero h1[\s\S]*?font-weight:\s*700/);
   assert.match(css, /\.question-heading h2,[\s\S]*?\.dimension-top h2[\s\S]*?font-weight:\s*700/);

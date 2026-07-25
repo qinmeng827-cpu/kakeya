@@ -123,9 +123,9 @@ main {
 
 .hero {
   position: relative;
-  min-height: 980px;
+  min-height: 1040px;
   display: grid;
-  grid-template-columns: minmax(680px, 1.08fr) minmax(600px, .92fr);
+  grid-template-columns: minmax(560px, .83fr) minmax(700px, 1.17fr);
   grid-template-rows: 1fr auto;
   gap: 0 clamp(52px, 4vw, 84px);
   padding: 132px var(--page-pad) 36px;
@@ -241,7 +241,7 @@ main {
   position: relative;
   z-index: 2;
   align-self: stretch;
-  min-height: 690px;
+  min-height: 780px;
   border: 1px solid rgba(97, 228, 222, .2);
   background: linear-gradient(145deg, rgba(10, 24, 28, .62), rgba(4, 10, 14, .42));
   box-shadow: 0 40px 110px rgba(0,0,0,.26);
@@ -283,6 +283,29 @@ main {
   letter-spacing: .14em;
 }
 
+.lab-readout-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lab-readout-actions button {
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(97, 228, 222, .38);
+  background: rgba(4, 16, 20, .65);
+  color: var(--cyan-soft);
+  font: 600 12px/1 var(--font-geist-mono), monospace;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+
+.lab-readout-actions button:hover,
+.lab-readout-actions button:focus-visible {
+  border-color: var(--cyan);
+  background: rgba(97, 228, 222, .14);
+}
+
 .direction-canvas {
   position: absolute;
   inset: 0;
@@ -294,6 +317,29 @@ main {
 
 .direction-canvas:active {
   cursor: grabbing;
+}
+
+.lab-shell:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  border: 0;
+  background: #040a0d;
+}
+
+.lab-shell:fullscreen .lab-readout {
+  top: 42px;
+  left: 54px;
+  right: 54px;
+}
+
+.lab-shell:fullscreen .lab-caption {
+  left: 54px;
+  bottom: 178px;
+}
+
+.lab-shell:fullscreen .lab-controls {
+  padding: 26px 54px 32px;
 }
 
 .lab-caption {
@@ -1775,7 +1821,7 @@ footer > a {
     padding-bottom: 55px;
   }
   .lab-shell {
-    min-height: 680px;
+    min-height: 720px;
   }
   .hero-facts {
     margin-top: 45px;
@@ -1898,11 +1944,17 @@ footer > a {
     flex-direction: column;
   }
   .lab-shell {
-    min-height: 620px;
+    min-height: 650px;
   }
   .lab-readout {
     left: 24px;
     right: 24px;
+  }
+  .lab-readout-actions {
+    gap: 8px;
+  }
+  .lab-readout-actions > span {
+    display: none;
   }
   .lab-controls {
     grid-template-columns: 1fr;

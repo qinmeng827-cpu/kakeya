@@ -907,6 +907,7 @@ function DirectionLab() {
   const [showTubes, setShowTubes] = useState(true);
   const [autoRotate, setAutoRotate] = useState(true);
   const [sampleCount, setSampleCount] = useState(96);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const yawRef = useRef(-0.45);
   const pitchRef = useRef(0.28);
   const dragRef = useRef({ active: false, x: 0, y: 0 });
@@ -939,15 +940,27 @@ function DirectionLab() {
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (autoRotate && !reduceMotion) yawRef.current += 0.0017;
       const centerX = width * 0.5;
-      const centerY = height * 0.49;
-      const worldScale = Math.min(width, height) * 0.76;
+      const centerY = height * 0.46;
+      const worldScale = Math.min(width, height) * 0.68;
+      const cameraDistance = 3.15;
+      const project = (point: Vec3) => {
+        const perspective = cameraDistance / (cameraDistance - point.z);
+        return {
+          x: centerX + point.x * worldScale * 0.64 * perspective,
+          y: centerY - point.y * worldScale * 0.64 * perspective,
+          z: point.z,
+          perspective,
+        };
+      };
 
-      const projected = points
-        .map((point, index) => {
-          const rotated = rotatePoint(point, yawRef.current, pitchRef.current);
-          return { ...rotated, index };
-        })
-        .sort((a, b) => a.z - b.z);
+      const samples = points.map((point, index) => {
+        const direction = rotatePoint(point, yawRef.current, pitchRef.current);
+        const first = { x: direction.x * 0.78, y: direction.y * 0.78, z: direction.z * 0.78 };
+        const second = { x: -first.x, y: -first.y, z: -first.z };
+        const near = first.z >= second.z ? first : second;
+        const far = first.z >= second.z ? second : first;
+        return { index, near: project(near), far: project(far) };
+      });
 
       const halo = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, worldScale * 0.575);
       halo.addColorStop(0, "rgba(78, 232, 214, .12)");
@@ -956,36 +969,88 @@ function DirectionLab() {
       ctx.fillStyle = halo;
       ctx.fillRect(0, 0, width, height);
 
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      projected.forEach((point) => {
-        const depth = (point.z + 1) / 2;
-        const x = point.x * worldScale * 0.5;
-        const y = point.y * worldScale * 0.5;
-        const emphasis = point.index === Math.floor(sampleCount * 0.38);
+      const drawGuide = (guide: Vec3[]) => {
         ctx.beginPath();
-        ctx.moveTo(-x, -y);
-        ctx.lineTo(x, y);
-        ctx.lineCap = "round";
-        ctx.lineWidth = showTubes ? Math.max(0.7, 2 * delta * worldScale) : 0.7;
-        ctx.strokeStyle = emphasis
-          ? "rgba(247, 206, 112, .95)"
-          : `rgba(100, 225, 239, ${0.09 + depth * 0.35})`;
+        guide.forEach((point, index) => {
+          const screen = project(rotatePoint(point, yawRef.current, pitchRef.current));
+          if (index === 0) ctx.moveTo(screen.x, screen.y);
+          else ctx.lineTo(screen.x, screen.y);
+        });
         ctx.stroke();
+      };
+
+      ctx.save();
+      ctx.setLineDash([5, 7]);
+      ctx.strokeStyle = "rgba(128, 218, 213, .16)";
+      ctx.lineWidth = 1;
+      [-0.58, -0.28, 0, 0.28, 0.58].forEach((latitude) => {
+        const radius = Math.sqrt(1 - latitude * latitude);
+        drawGuide(Array.from({ length: 65 }, (_, index) => {
+          const angle = (index / 64) * Math.PI * 2;
+          return { x: Math.cos(angle) * radius, y: latitude, z: Math.sin(angle) * radius };
+        }));
+      });
+      Array.from({ length: 6 }, (_, longitude) => longitude * Math.PI / 6).forEach((longitude) => {
+        drawGuide(Array.from({ length: 65 }, (_, index) => {
+          const angle = (index / 64) * Math.PI * 2;
+          return { x: Math.cos(angle) * Math.cos(longitude), y: Math.sin(angle), z: Math.cos(angle) * Math.sin(longitude) };
+        }));
       });
       ctx.restore();
 
+      const origin = project({ x: 0, y: 0, z: 0 });
+      const strokeHalf = (start: { x: number; y: number; z: number; perspective: number }, end: { x: number; y: number; z: number; perspective: number }, index: number, front: boolean) => {
+        const emphasis = index === Math.floor(sampleCount * 0.38);
+        const depth = (start.z + 1) / 2;
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.lineCap = "round";
+        ctx.lineWidth = showTubes ? Math.max(0.9, 2 * delta * worldScale * start.perspective) : 0.9;
+        ctx.strokeStyle = emphasis
+          ? (front ? "rgba(247, 206, 112, .98)" : "rgba(247, 206, 112, .36)")
+          : `rgba(100, 225, 239, ${front ? 0.18 + depth * 0.42 : 0.08 + depth * 0.18})`;
+        ctx.stroke();
+      };
+
+      samples.slice().sort((a, b) => a.far.z - b.far.z).forEach((sample) => strokeHalf(sample.far, origin, sample.index, false));
+      samples.slice().sort((a, b) => a.near.z - b.near.z).forEach((sample) => {
+        strokeHalf(origin, sample.near, sample.index, true);
+        ctx.beginPath();
+        ctx.arc(sample.near.x, sample.near.y, Math.max(1.3, 2.4 * sample.near.perspective), 0, Math.PI * 2);
+        ctx.fillStyle = sample.index === Math.floor(sampleCount * 0.38) ? "rgba(247, 206, 112, .98)" : "rgba(137, 238, 230, .58)";
+        ctx.fill();
+      });
+
       ctx.beginPath();
-      ctx.arc(centerX, centerY, worldScale * 0.5, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(165, 235, 229, .12)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      ctx.arc(origin.x, origin.y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(99, 235, 224, .95)";
+      ctx.shadowColor = "rgba(99, 235, 224, .8)";
+      ctx.shadowBlur = 18;
+      ctx.fill();
+      ctx.shadowBlur = 0;
 
       animation = requestAnimationFrame(draw);
     };
     draw();
     return () => cancelAnimationFrame(animation);
   }, [autoRotate, delta, points, sampleCount, showTubes]);
+
+  useEffect(() => {
+    const syncFullscreenState = () => setIsFullscreen(document.fullscreenElement === wrapRef.current);
+    document.addEventListener("fullscreenchange", syncFullscreenState);
+    return () => document.removeEventListener("fullscreenchange", syncFullscreenState);
+  }, []);
+
+  const toggleFullscreen = () => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    if (document.fullscreenElement === wrap) {
+      void document.exitFullscreen();
+      return;
+    }
+    void wrap.requestFullscreen();
+  };
 
   const handlePointerDown = (event: React.PointerEvent) => {
     dragRef.current = { active: true, x: event.clientX, y: event.clientY };
@@ -1009,7 +1074,12 @@ function DirectionLab() {
     <div className="lab-shell" ref={wrapRef}>
       <div className="lab-readout">
         <span>PROJECTIVE DIRECTION SAMPLER</span>
-        <span>{sampleCount} UNORIENTED DIR · δ {delta.toFixed(3)}</span>
+        <div className="lab-readout-actions">
+          <span>{sampleCount} UNORIENTED DIR · δ {delta.toFixed(3)}</span>
+          <button type="button" onClick={toggleFullscreen} aria-pressed={isFullscreen}>
+            {isFullscreen ? "退出全屏" : "全屏查看"}
+          </button>
+        </div>
       </div>
       <canvas
         ref={canvasRef}
