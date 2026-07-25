@@ -802,24 +802,31 @@ input[type="range"] {
   grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
   gap: clamp(44px, 4vw, 76px);
   margin-top: 78px;
+  align-items: stretch;
 }
 
 .proof-nav {
   display: flex;
   flex-direction: column;
+  min-height: 680px;
+  height: 100%;
 }
 
 .proof-nav button {
   display: grid;
-  grid-template-columns: 42px 1fr;
-  gap: 12px;
+  grid-template-columns: 48px 1fr;
+  gap: 14px;
   align-items: center;
+  flex: 1;
   width: 100%;
-  min-height: 82px;
+  min-height: 0;
   border: 0;
   border-top: 1px solid rgba(21, 50, 39, .17);
   background: transparent;
   color: #6b756f;
+  font-size: calc(20px + var(--type-ui-adjust));
+  font-weight: 600;
+  line-height: 1.7;
   text-align: left;
   cursor: pointer;
 }
@@ -830,7 +837,7 @@ input[type="range"] {
 
 .proof-nav button span {
   color: #9b8e67;
-  font: 600 14px/1 var(--font-geist-mono), monospace;
+  font: 650 calc(16px + var(--type-ui-adjust))/1 var(--font-geist-mono), monospace;
 }
 
 .proof-nav button strong {
@@ -2091,6 +2098,8 @@ footer > a {
   }
   .proof-nav {
     flex-direction: row;
+    min-height: 0;
+    height: auto;
     overflow-x: auto;
     padding-bottom: 14px;
   }
