@@ -1387,7 +1387,7 @@ input[type="range"] {
 
 .person-section {
   display: grid;
-  grid-template-columns: minmax(620px, .86fr) minmax(760px, 1.14fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   min-height: 800px;
   background: var(--paper);
   color: #111814;
