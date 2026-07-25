@@ -1772,10 +1772,8 @@ export default function Home() {
       <section className="question-section" id="question">
         <div className="section-index">01 / THE QUESTION</div>
         <div className="question-heading">
-          <p>先玩一个很简单的想象游戏。</p>
           <h2>
             这里的“针”，就是一条
-            <br />
             <span>无限细、长度为 1 的线段。</span>
           </h2>
         </div>
@@ -1860,10 +1858,6 @@ export default function Home() {
             <div className="section-index">03 / THE PROOF MAP</div>
             <h2>把看不见的线段，变成可以测量的细管。</h2>
           </div>
-          <p>
-            127 页证明无法塞进一个网页。这里把主线拆成五关：
-            <strong>加厚线段、限制拥挤、反复缩放、估计体积、再把厚度缩回零。</strong>
-          </p>
         </div>
         <ProofRoute />
       </section>

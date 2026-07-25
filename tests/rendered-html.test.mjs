@@ -36,7 +36,7 @@ test("server-renders the Kakeya exhibition and its scientific framing", async ()
   assert.match(html, /面积可以是零，但二维里的集合仍/);
   assert.match(html, /04 \/ A CENTURY OF PROGRESS/);
   assert.match(html, /动画只讲思路，不负责替代数学证明/);
-  assert.match(html, /加厚线段、限制拥挤/);
+  assert.doesNotMatch(html, /加厚线段、限制拥挤/);
   assert.match(html, /数学家把“复杂得像整个空间”说成“满维”/);
   assert.match(html, /三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果/);
 });
@@ -49,6 +49,8 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   ]);
 
   assert.match(page, /projectiveDirections/);
+  assert.doesNotMatch(page, /先玩一个很简单的想象游戏/);
+  assert.doesNotMatch(page, /127 页证明无法塞进一个网页/);
   assert.match(page, /requestFullscreen/);
   assert.match(page, /cameraDistance/);
   assert.match(page, /drawGuide/);
@@ -80,6 +82,8 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /\.lab-readout-actions/);
   assert.match(css, /--font-serif-cn:\s*var\(--font-source-han-serif\)/);
   assert.match(css, /\.hero h1[\s\S]*?font-weight:\s*700/);
+  assert.match(css, /\.question-heading h2[\s\S]*?white-space:\s*nowrap/);
+  assert.match(css, /\.section-heading-row h2[\s\S]*?text-align:\s*center/);
   assert.match(css, /\.question-heading h2,[\s\S]*?\.dimension-top h2[\s\S]*?font-weight:\s*700/);
   assert.match(css, /\.site-header nav a,[\s\S]*?font-size:\s*17px/);
   assert.match(css, /\.section-index[\s\S]*?font:\s*650 14px/);
