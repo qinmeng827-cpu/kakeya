@@ -39,6 +39,7 @@ test("server-renders the Kakeya exhibition and its scientific framing", async ()
   assert.doesNotMatch(html, /加厚线段、限制拥挤/);
   assert.match(html, /数学家把“复杂得像整个空间”说成“满维”/);
   assert.match(html, /三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果/);
+  assert.match(html, /Joshua Zahl 是南开大学陈省身数学研究所教授/);
 });
 
 test("keeps interactive models explicit about scope and removes fake estimates", async () => {
@@ -94,14 +95,15 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /\.section-index[\s\S]*?font:\s*650 14px/);
   assert.match(css, /\.timeline-explorer[\s\S]*?grid-template-columns:\s*minmax\(260px,\s*310px\)\s*minmax\(0,\s*1fr\)/);
   assert.match(css, /\.timeline[\s\S]*?grid-row:\s*1\s*\/\s*span 2/);
-  assert.match(css, /\.person-section\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\) minmax\(0, 1fr\)/);
-  assert.match(css, /\.person-section\s*\{[\s\S]*?height:\s*900px/);
-  assert.match(css, /\.person-section\s*\{[\s\S]*?min-height:\s*900px/);
-  assert.match(css, /\.person-photo\s*\{[\s\S]*?height:\s*900px/);
+  assert.match(css, /\.person-profiles\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1\.12fr\) minmax\(0, \.88fr\)/);
+  assert.match(css, /\.person-profiles\s*\{[\s\S]*?min-height:\s*900px/);
+  assert.match(css, /\.person-profile-zahl\s*\{[\s\S]*?border-left:/);
+  assert.match(css, /\.profile-portrait img\s*\{[\s\S]*?object-fit:\s*cover/);
   assert.match(css, /\.era-stage[\s\S]*?grid-column:\s*2/);
   assert.match(css, /\.era-derivation[\s\S]*?grid-column:\s*2/);
   assert.match(layout, /Noto_Serif_SC/);
   assert.match(layout, /variable:\s*"--font-source-han-serif"/);
   assert.match(layout, /weight:\s*"700"/);
   await access(new URL("../public/hong-wang-portrait.jpg", import.meta.url));
+  assert.match(page, /https:\/\/www\.claymath\.org\/wp-content\/uploads\/2026\/03\/Zahl-scaled\.jpg/);
 });

@@ -340,6 +340,16 @@ const sources = [
     title: "Peking University alumna Hong Wang wins the 2026 Fields Medal",
     href: "https://newsen.pku.edu.cn/news_events/news/focus/15623.html",
   },
+  {
+    label: "南开大学",
+    title: "Joshua Zahl 全职受聘南开大学讲席教授",
+    href: "https://news.nankai.edu.cn/ywsd/system/2025/06/23/030067711.shtml",
+  },
+  {
+    label: "Clay Mathematics Institute",
+    title: "Joshua Zahl · Clay Research Award",
+    href: "https://www.claymath.org/people/joshua-zahl/",
+  },
 ];
 
 function projectiveDirections(count: number): Vec3[] {
@@ -1875,29 +1885,49 @@ export default function Home() {
           <div className="section-index">05 / THE MATHEMATICIAN</div>
           <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
         </div>
-        <div className="person-photo">
-          {/* eslint-disable-next-line @next/next/no-img-element -- local editorial crop is intentionally rendered full bleed */}
-          <img
-            src="/hong-wang-portrait.jpg"
-            alt="2026 年菲尔兹奖得主、数学家王虹"
-          />
-          <span>IMAGE SOURCE · IHES · 2026</span>
-        </div>
-        <div className="person-copy">
-          <p>
-            王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。
-            她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
-          </p>
-          <p>
-            她的工作把“波的传播”与“细管怎样重叠”连在一起。2026 年菲尔兹奖引文提到局部光滑、傅里叶限制、Falconer 距离集、Furstenberg 集以及三维挂谷问题。
-          </p>
-          <div className="coauthor-note">
-            <span>共同证明者</span>
-            <strong>Joshua Zahl</strong>
-            <p>
-              三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果。菲尔兹奖授予王虹个人，但网页始终保留成果的合作归属。
-            </p>
-          </div>
+        <div className="person-profiles">
+          <article className="person-profile person-profile-hong">
+            <div className="profile-portrait">
+              {/* eslint-disable-next-line @next/next/no-img-element -- local editorial crop is intentionally rendered full bleed */}
+              <img src="/hong-wang-portrait.jpg" alt="2026 年菲尔兹奖得主、数学家王虹" />
+              <span>PHOTO · IHES · 2026</span>
+            </div>
+            <div className="profile-copy">
+              <div className="profile-kicker">FIELDS MEDAL 2026 · 王虹</div>
+              <h3>王虹</h3>
+              <p>
+                王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
+              </p>
+              <p>
+                她研究波如何传播，也研究几何对象能被压缩到什么程度；这些问题在调和分析、几何测度论与挂谷猜想之间彼此相连。
+              </p>
+            </div>
+          </article>
+
+          <article className="person-profile person-profile-zahl">
+            <div className="profile-portrait">
+              {/* eslint-disable-next-line @next/next/no-img-element -- an attributed public editorial portrait is displayed from its publisher */}
+              <img
+                src="https://www.claymath.org/wp-content/uploads/2026/03/Zahl-scaled.jpg"
+                alt="数学家 Joshua Zahl"
+              />
+              <span>PHOTO · PAUL JOSEPH / CMI</span>
+            </div>
+            <div className="profile-copy">
+              <div className="profile-kicker">CO-AUTHOR · 共同证明者</div>
+              <h3>Joshua Zahl</h3>
+              <p>
+                Joshua Zahl 是南开大学陈省身数学研究所教授，2013 年获 UCLA 数学博士，导师为 Terence Tao。他曾任英属哥伦比亚大学数学系副教授。
+              </p>
+              <p>
+                他的兴趣横跨经典调和分析与组合数学，特别关注关联几何、限制型问题、挂谷问题和和积现象。
+              </p>
+              <div className="collaboration-note">
+                <strong>共同成果</strong>
+                <p>三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果；菲尔兹奖则授予王虹个人。</p>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
