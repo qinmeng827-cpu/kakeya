@@ -1201,7 +1201,7 @@ function TimelineExplorer() {
       const cy = height * 0.47;
 
       if (activeEra === 0) {
-        const radius = Math.min(width, height) * 0.31;
+        const radius = Math.min(width, height) * 0.4;
         ctx.beginPath();
         ctx.arc(cx, cy, radius, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(91, 225, 213, .025)";
@@ -1212,9 +1212,9 @@ function TimelineExplorer() {
         const samples = Math.max(2, Math.round(parameter * 22));
         for (let index = 0; index < samples; index += 1) {
           const angle = (index / Math.max(1, samples - 1)) * parameter * Math.PI;
-          tube(cx, cy, radius * 1.38, angle, 1.2, cyanSoft);
+          tube(cx, cy, radius * 1.18, angle, 1.2, cyanSoft);
         }
-        tube(cx, cy, radius * 1.38, parameter * Math.PI, 4, gold);
+        tube(cx, cy, radius * 1.18, parameter * Math.PI, 4, gold);
         ctx.beginPath();
         ctx.arc(cx, cy, 5, 0, Math.PI * 2);
         ctx.fillStyle = gold;
