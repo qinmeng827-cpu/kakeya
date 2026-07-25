@@ -1414,13 +1414,14 @@ input[type="range"] {
 
 .person-section {
   display: grid;
+  padding: 0 var(--page-pad) 112px;
   background: var(--paper);
   color: #111814;
 }
 
 .person-heading {
   grid-column: 1 / -1;
-  padding: 82px var(--page-pad) 56px;
+  padding: 82px 0 56px;
   text-align: center;
 }
 
@@ -1433,17 +1434,18 @@ input[type="range"] {
 
 .person-profiles {
   grid-column: 1 / -1;
+  width: 100%;
+  max-width: 1720px;
+  justify-self: center;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 700px;
   border-top: 1px solid rgba(25, 53, 43, .16);
 }
 
 .person-profile,
 .person-profile-zahl {
   display: grid;
-  grid-template-rows: 320px 1fr;
-  min-height: 700px;
+  grid-template-rows: auto 1fr;
 }
 
 .person-profile-zahl {
@@ -1453,6 +1455,7 @@ input[type="range"] {
 
 .profile-portrait {
   position: relative;
+  aspect-ratio: 8 / 3;
   overflow: hidden;
   background: #10231d;
 }
@@ -1464,21 +1467,31 @@ input[type="range"] {
   background: linear-gradient(to top, rgba(4, 17, 13, .55), transparent 45%);
 }
 
-.profile-portrait img {
-  width: 100%;
-  height: 100%;
+.profile-portrait .profile-backdrop {
+  position: absolute;
+  inset: -24px;
+  width: calc(100% + 48px);
+  height: calc(100% + 48px);
   object-fit: cover;
-  object-position: center 32%;
-  filter: saturate(.82) contrast(1.04);
+  object-position: center;
+  filter: blur(18px) saturate(.72) contrast(.95);
+  opacity: .56;
+  transform: scale(1.06);
 }
 
-.person-profile-zahl .profile-portrait img {
-  object-position: center 24%;
+.profile-portrait .profile-image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: saturate(.86) contrast(1.03);
 }
 
 .profile-portrait > span {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   left: 34px;
   bottom: 28px;
   color: rgba(255,255,255,.72);
@@ -1922,9 +1935,6 @@ footer > a {
   .derivation-grid {
     grid-template-columns: 180px 1fr;
   }
-  .person-profile {
-    min-height: 700px;
-  }
   .profile-copy {
     padding: 40px clamp(30px, 4vw, 64px) 42px;
   }
@@ -1943,9 +1953,8 @@ footer > a {
   }
   .person-profile,
   .person-profile-zahl {
-    min-height: 0;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: 560px;
+    grid-template-rows: auto;
   }
   .person-profile-zahl {
     border-top: 1px solid rgba(25, 53, 43, .16);
@@ -1954,6 +1963,9 @@ footer > a {
   .profile-copy {
     align-self: stretch;
     padding: 56px clamp(36px, 7vw, 88px);
+  }
+  .profile-portrait {
+    aspect-ratio: 4 / 3;
   }
   .timeline {
     display: grid;
@@ -2237,7 +2249,7 @@ footer > a {
     display: block;
   }
   .profile-portrait {
-    height: 500px;
+    aspect-ratio: 4 / 3;
   }
   .profile-copy {
     padding: 54px 24px 64px;
