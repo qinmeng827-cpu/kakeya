@@ -1570,12 +1570,12 @@ function TypographyPanel({
           </div>
           <p>这些设置只保存在当前浏览器。拖动后全站立即预览。</p>
           <div className="type-control-list">
-            {range("display", "首屏主标题", -16, 16, 1, "px")}
-            {range("section", "章节标题", -12, 16, 1, "px")}
-            {range("body", "正文", -3, 6, 1, "px")}
-            {range("ui", "导航与标签", -3, 6, 1, "px")}
-            {range("titleLeading", "标题行距", -0.16, 0.3, 0.02, "")}
-            {range("leading", "正文行距", -0.2, 0.35, 0.05, "")}
+            {range("display", "首屏主标题", -16, 32, 1, "px")}
+            {range("section", "章节标题", -12, 28, 1, "px")}
+            {range("body", "正文", -3, 12, 1, "px")}
+            {range("ui", "导航与标签", -3, 10, 1, "px")}
+            {range("titleLeading", "标题行距", -0.16, 0.5, 0.02, "")}
+            {range("leading", "正文行距", -0.2, 0.6, 0.05, "")}
             <label className="type-control-select">
               <span>标题字重</span>
               <select value={settings.weight} onChange={(event) => update("weight", Number(event.target.value))}>

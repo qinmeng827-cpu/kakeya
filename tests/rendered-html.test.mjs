@@ -52,6 +52,8 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(page, /排版调节台/);
   assert.match(page, /typographyStorageKey/);
   assert.match(page, /titleLeading/);
+  assert.match(page, /-16, 32, 1/);
+  assert.match(page, /-0\.16, 0\.5, 0\.02/);
   assert.match(page, /恢复默认/);
   assert.match(page, /复制设置/);
   assert.match(page, /DAVIES · PLANAR THEOREM · 1971/);
