@@ -1741,7 +1741,39 @@ export default function Home() {
         </a>
       </header>
 
-      <section className="hero" id="top">
+      <section className="award-section award-banner" id="top">
+        <figure className="medal-orbit">
+          {/* eslint-disable-next-line @next/next/no-img-element -- public-domain editorial medal photograph is cropped as a circular object */}
+          <img src="/fields-medal-obverse.jpg" alt="菲尔兹奖章正面：阿基米德浮雕" />
+          <figcaption>菲尔兹奖章正面 · Stefan Zachow / IMU</figcaption>
+        </figure>
+        <div>
+          <div className="section-index light">PHILADELPHIA · 23 JULY 2026</div>
+          <h2>2026 年，王虹获得菲尔兹奖。</h2>
+          <p>
+            王虹是继伊朗裔美国数学家玛丽安·米尔札哈尼、乌克兰数学家玛丽娜・维亚佐夫斯卡之后，菲尔兹奖历史上第三位女性得主，也是首位获奖的中国女性。
+          </p>
+          <div className="award-facts">
+            <div>
+              <span>地点</span>
+              <strong>Philadelphia</strong>
+            </div>
+            <div>
+              <span>日期</span>
+              <strong>23 JUL 2026</strong>
+            </div>
+            <div>
+              <span>研究领域</span>
+              <strong>Harmonic Analysis</strong>
+            </div>
+          </div>
+          <a className="award-source" href="https://www.ihes.fr/en/hong-wang2026-fields-medal/" target="_blank" rel="noreferrer">
+            查看 IHES 官方公告 ↗
+          </a>
+        </div>
+      </section>
+
+      <section className="hero" id="hero">
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-copy">
           <div className="eyebrow">
@@ -1927,38 +1959,6 @@ export default function Home() {
         <aside className="collaboration-callout" aria-label="共同成果说明">
           <p>三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果；菲尔兹奖则授予王虹个人。</p>
         </aside>
-      </section>
-
-      <section className="award-section" id="award">
-        <figure className="medal-orbit">
-          {/* eslint-disable-next-line @next/next/no-img-element -- public-domain editorial medal photograph is cropped as a circular object */}
-          <img src="/fields-medal-obverse.jpg" alt="菲尔兹奖章正面：阿基米德浮雕" />
-          <figcaption>菲尔兹奖章正面 · Stefan Zachow / IMU</figcaption>
-        </figure>
-        <div>
-          <div className="section-index light">PHILADELPHIA · 23 JULY 2026</div>
-          <h2>2026 年，王虹获得菲尔兹奖。</h2>
-          <p>
-            王虹是继伊朗裔美国数学家玛丽安·米尔札哈尼、乌克兰数学家玛丽娜・维亚佐夫斯卡之后，菲尔兹奖历史上第三位女性得主，也是首位获奖的中国女性。
-          </p>
-          <div className="award-facts">
-            <div>
-              <span>地点</span>
-              <strong>Philadelphia</strong>
-            </div>
-            <div>
-              <span>日期</span>
-              <strong>23 JUL 2026</strong>
-            </div>
-            <div>
-              <span>研究领域</span>
-              <strong>Harmonic Analysis</strong>
-            </div>
-          </div>
-          <a className="award-source" href="https://www.ihes.fr/en/hong-wang2026-fields-medal/" target="_blank" rel="noreferrer">
-            查看 IHES 官方公告 ↗
-          </a>
-        </div>
       </section>
 
       <section className="sources-section" id="sources">
