@@ -1388,16 +1388,16 @@ input[type="range"] {
 .person-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  height: 750px;
-  min-height: 750px;
+  height: 900px;
+  min-height: 900px;
   background: var(--paper);
   color: #111814;
 }
 
 .person-photo {
   position: relative;
-  height: 750px;
-  min-height: 750px;
+  height: 900px;
+  min-height: 900px;
   overflow: hidden;
   background: #10231d;
 }
