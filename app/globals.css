@@ -1434,19 +1434,19 @@ input[type="range"] {
 .person-profiles {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   min-height: 900px;
   border-top: 1px solid rgba(25, 53, 43, .16);
 }
 
-.person-profile {
+.person-profile,
+.person-profile-zahl {
   display: grid;
-  grid-template-rows: 1.2fr .8fr;
+  grid-template-rows: 1fr 1fr;
   min-height: 900px;
 }
 
 .person-profile-zahl {
-  grid-template-rows: .86fr 1.14fr;
   border-left: 1px solid rgba(25, 53, 43, .16);
   background: #eef0e8;
 }
