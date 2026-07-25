@@ -12,6 +12,7 @@ type TypographySettings = {
   ui: number;
   weight: 700 | 800 | 900;
   leading: number;
+  titleLeading: number;
 };
 
 const defaultTypography: TypographySettings = {
@@ -21,6 +22,7 @@ const defaultTypography: TypographySettings = {
   ui: 0,
   weight: 700,
   leading: 0,
+  titleLeading: 0,
 };
 
 const typographyStorageKey = "kakeya-typography-settings-v1";
@@ -1511,6 +1513,7 @@ function TypographyPanel({
       `正文大小：${settings.body >= 0 ? "+" : ""}${settings.body}px`,
       `导航与标签：${settings.ui >= 0 ? "+" : ""}${settings.ui}px`,
       `标题字重：${settings.weight}`,
+      `标题行距：${settings.titleLeading >= 0 ? "+" : ""}${settings.titleLeading.toFixed(2)}`,
       `正文行距：${settings.leading >= 0 ? "+" : ""}${settings.leading.toFixed(2)}`,
     ].join("\n");
     try {
@@ -1571,6 +1574,7 @@ function TypographyPanel({
             {range("section", "章节标题", -12, 16, 1, "px")}
             {range("body", "正文", -3, 6, 1, "px")}
             {range("ui", "导航与标签", -3, 6, 1, "px")}
+            {range("titleLeading", "标题行距", -0.16, 0.3, 0.02, "")}
             {range("leading", "正文行距", -0.2, 0.35, 0.05, "")}
             <label className="type-control-select">
               <span>标题字重</span>
@@ -1617,6 +1621,7 @@ export default function Home() {
     "--type-body-adjust": `${typography.body}px`,
     "--type-ui-adjust": `${typography.ui}px`,
     "--type-title-weight": String(typography.weight),
+    "--type-title-leading-adjust": String(typography.titleLeading),
     "--type-body-leading-adjust": String(typography.leading),
   }) as CSSProperties, [typography]);
 

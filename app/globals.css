@@ -17,6 +17,7 @@
   --type-body-adjust: 0px;
   --type-ui-adjust: 0px;
   --type-title-weight: 700;
+  --type-title-leading-adjust: 0;
   --type-body-leading-adjust: 0;
 }
 
@@ -170,7 +171,7 @@ main {
   font-family: var(--font-serif-cn);
   font-size: clamp(calc(64px + var(--type-display-adjust)), calc(5.1vw + var(--type-display-adjust)), calc(104px + var(--type-display-adjust)));
   font-weight: var(--type-title-weight);
-  line-height: .98;
+  line-height: calc(.98 + var(--type-title-leading-adjust));
   letter-spacing: -.04em;
 }
 
@@ -451,7 +452,7 @@ input[type="range"] {
 
 .question-heading h2 {
   font-size: clamp(calc(42px + var(--type-section-adjust)), calc(4.4vw + var(--type-section-adjust)), calc(68px + var(--type-section-adjust)));
-  line-height: 1.16;
+  line-height: calc(1.16 + var(--type-title-leading-adjust));
 }
 
 .question-heading h2 span {
@@ -716,7 +717,7 @@ input[type="range"] {
   max-width: 1060px;
   margin-top: 28px;
   font-size: clamp(calc(42px + var(--type-section-adjust)), calc(5vw + var(--type-section-adjust)), calc(72px + var(--type-section-adjust)));
-  line-height: 1.12;
+  line-height: calc(1.12 + var(--type-title-leading-adjust));
   text-wrap: balance;
 }
 
@@ -965,7 +966,7 @@ input[type="range"] {
 .timeline-heading h2 {
   max-width: 1020px;
   font-size: clamp(calc(46px + var(--type-section-adjust)), calc(5vw + var(--type-section-adjust)), calc(76px + var(--type-section-adjust)));
-  line-height: 1.08;
+  line-height: calc(1.08 + var(--type-title-leading-adjust));
 }
 
 .timeline-heading p {
@@ -1393,7 +1394,7 @@ input[type="range"] {
 
 .person-copy h2 {
   font-size: clamp(calc(42px + var(--type-section-adjust)), calc(3.8vw + var(--type-section-adjust)), calc(60px + var(--type-section-adjust)));
-  line-height: 1.18;
+  line-height: calc(1.18 + var(--type-title-leading-adjust));
 }
 
 .person-copy > p:not(.person-kicker) {
@@ -1489,7 +1490,7 @@ input[type="range"] {
   margin-top: 30px;
   max-width: 920px;
   font-size: clamp(calc(48px + var(--type-section-adjust)), calc(5vw + var(--type-section-adjust)), calc(76px + var(--type-section-adjust)));
-  line-height: 1.08;
+  line-height: calc(1.08 + var(--type-title-leading-adjust));
 }
 
 .award-section p {
