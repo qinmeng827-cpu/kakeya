@@ -8,250 +8,250 @@ type Tube2D = { x: number; y: number; angle: number; gold?: boolean };
 const proofSteps = [
   {
     number: "01",
-    title: "把线段放大成 δ-细管",
-    text: "无限细的线段难以直接估计。证明先在尺度 δ 上，用长度为 1、半径约为 δ 的细管近似每个方向。",
-    input: "每个方向的一条单位线段",
-    operation: "在尺度 δ 上增厚",
-    output: "有限族 δ-细管",
+    title: "先给线段一点厚度",
+    text: "线段细到没有体积，没法直接测量。于是先把每条线段套进一根很细的“吸管”；吸管半径记作 δ。",
+    input: "每个方向都有一条线段",
+    operation: "给线段套上半径 δ 的细管",
+    output: "一组可以测量的细管",
   },
   {
     number: "02",
-    title: "识别异常聚集",
-    text: "真正的困难不是方向多，而是大量细管可能高度重叠。论文用对所有凸集都成立的定量条件，限制管束在凸集中的集中程度。",
-    input: "可能高度重叠的细管",
-    operation: "检验凸集非聚集条件",
-    output: "满足 Wolff 条件的受控管族",
+    title: "找出挤成一团的地方",
+    text: "麻烦不在于细管很多，而在于它们可能躲进同一小块区域。证明要排除这种过分拥挤，同时允许正常的交叉。",
+    input: "一组可能互相重叠的细管",
+    operation: "检查它们有没有挤进同一凸形区域",
+    output: "重叠程度受到控制",
   },
   {
     number: "03",
-    title: "在多个尺度间传递控制",
-    text: "把空间逐层放大、分解，再追踪“拥挤”如何随尺度变化。局部结构与整体体积由此联系起来。",
-    input: "一个尺度上的重叠信息",
-    operation: "放大、分解并递推",
-    output: "跨尺度的一致控制",
+    title: "像看地图一样不断缩放",
+    text: "远看不拥挤，不代表近看也不拥挤。证明在不同放大倍数之间来回切换，追踪局部的拥挤会不会累积成整体问题。",
+    input: "某一个放大倍数下的重叠情况",
+    operation: "放大、拆分，再把结论传到下一层",
+    output: "每个尺度都不失控",
   },
   {
     number: "04",
-    title: "推出并集几乎最大",
-    text: "若细管满足论文中的凸集与薄片非聚集条件，带 shading 的管族并集可获得接近尺度允许上限的体积下界。",
-    input: "受控的细管族",
-    operation: "估计并集体积",
-    output: "接近最大的体积下界",
+    title: "证明它们占的空间不会太小",
+    text: "只要细管没有异常抱团，它们合在一起就必须占据足够多的空间。允许局部只取细管的一部分，但这些部分也不能凭空缩没。",
+    input: "已经控制好重叠的细管",
+    operation: "估计所有细管合起来的体积",
+    output: "得到一个不会塌缩的体积下界",
   },
   {
     number: "05",
-    title: "让 δ 趋近于 0",
-    text: "离散尺度上的体积估计最终给出：三维挂谷集合的 Minkowski 维数和 Hausdorff 维数都等于 3。",
-    input: "所有小尺度上的体积下界",
-    operation: "取极限 δ → 0",
-    output: "Hausdorff 与 Minkowski 维数为 3",
+    title: "最后把“吸管”变回线段",
+    text: "让细管半径 δ 一点点缩到 0。前面的估计始终有效，于是原来的集合再薄，也不可能只像一张面或一条线。",
+    input: "每个小尺度都成立的体积估计",
+    operation: "让 δ 趋近于 0",
+    output: "两种常用维数都等于 3",
   },
 ];
 
 const timeline = [
-  ["1917", "挂谷宗一提出“转针”问题：一根单位线段改变方向，最少需要多大区域？"],
-  ["1919—1928", "Besicovitch 展示了反直觉现象：若不要求区域凸，包含所有方向线段的集合可以拥有任意小面积。"],
-  ["1970s", "Davies 证明二维挂谷集合满维；同一时期，挂谷几何与傅里叶分析之间的联系开始显现。"],
-  ["1990s—2020s", "多代数学家不断提高维数下界，并发展多尺度、组合几何与多项式方法。"],
-  ["2025.02", "王虹与 Joshua Zahl 公布 127 页论文，证明三维挂谷集合猜想。"],
-  ["2026.07", "王虹在费城国际数学家大会获菲尔兹奖，成为该奖历史上第三位女性得主。"],
+  ["1917", "问题从一根会转动的针开始：想让它转遍所有方向，最小要腾出多大地方？"],
+  ["1919—1928", "第一个惊喜出现了：允许针一边转一边移动，所需面积竟然可以小到接近零。"],
+  ["1970s", "面积可以是零，但二维里的集合仍“复杂得像整个平面”。几何也在这时走进傅里叶分析。"],
+  ["1990s—2020s", "数学家开始像看卫星地图一样切换尺度，逐步限制那些过分拥挤的细管。"],
+  ["2025.02", "王虹与 Joshua Zahl 完成三维证明：集合可以没有体积，却不能降成一张面。"],
+  ["2026.07", "菲尔兹奖表彰王虹的一系列工作；三维挂谷定理由她与 Joshua Zahl 共同证明。"],
 ];
 
 const timelineExperiments = [
   {
     kicker: "问题的诞生",
-    title: "共中心旋转：一个基线模型",
-    action: "拖动角度，观察所有线段共用中心时扫过的方向；原问题还允许线段中心移动。",
+    title: "先试最简单的玩法：原地转针",
+    action: "拖动角度，让针绕着同一个中心旋转。真正的挂谷问题更自由：针的中心也可以移动。",
     control: "针的方向",
     value: (parameter: number) => `${Math.round(parameter * 180)}°`,
-    conclusion: "目标不是画满一个圆，而是寻找包含每个方向线段的最小集合。",
+    conclusion: "如果针只能原地转，它会扫出一个圆盘。允许它移动后，答案会离奇得多。",
   },
   {
     kicker: "反直觉构造",
-    title: "有限方向的重叠模型",
-    action: "增加重叠参数，38 个采样方向保持不变；这只是有限模型，不是 Besicovitch 零面积构造本身。",
+    title: "让不同方向尽量挤在一起",
+    action: "拖动重叠程度。方向数量不变，但线段会越来越集中。动画只演示思路，不会真的生成零面积集合。",
     control: "有限模型重叠参数",
     value: (parameter: number) => `${Math.round(parameter * 100)}%`,
-    conclusion: "二维挂谷集合可以具有零面积；严格结论来自 Besicovitch 的极限构造，不由这个有限动画计算。",
+    conclusion: "当方向越来越密、重叠越来越精细时，极限构造可以做到面积为零。这一步需要严格证明。",
   },
   {
     kicker: "分析学转向",
-    title: "把细管看成波包",
-    action: "改变示意频率，观察“频率帽—曲面法向—空间细管”的概念对应；动画不求解波动方程。",
+    title: "一束波，也会在空间里走成细管",
+    action: "改变示意频率。傅里叶分析会把复杂的波拆成许多波包；每个波包主要沿着一根细管传播。",
     control: "示意频率",
     value: (parameter: number) => `2^${Math.round(1 + parameter * 7)}`,
-    conclusion: "挂谷几何与傅里叶限制、局部光滑和偏微分方程由此连接。",
+    conclusion: "于是“细管能重叠多少”会影响我们对波的估计。几何问题和分析问题接上了。",
   },
   {
     kicker: "工具的积累",
-    title: "在多尺度网格中追踪重叠",
-    action: "提升示意分解层级，观察局部拥挤如何被逐层定位；网格不等同于真实多项式分割。",
+    title: "从街区看到城市，再放大回街角",
+    action: "提高分解层级，观察拥挤如何被逐层定位。这里的网格只是帮助理解，不等同于论文中的多项式分割。",
     control: "示意分解层级",
     value: (parameter: number) => `${1 + Math.round(parameter * 4)} 层`,
-    conclusion: "组合几何、多项式方法与多尺度归纳不断抬高维数下界。",
+    conclusion: "这些工具能把“哪里挤、为什么挤”说得越来越精确，也让已知的维数下界不断提高。",
   },
   {
     kicker: "三维猜想解决",
-    title: "沿五步证明地图推进",
-    action: "移动进度，查看离散化、聚集控制与体积下界如何衔接。",
+    title: "把 127 页论文压成五个关卡",
+    action: "移动进度，看看“给线段加厚、控制拥挤、跨尺度传递、估计体积、取极限”怎样接起来。",
     control: "证明进度",
     value: (parameter: number) => `${1 + Math.min(4, Math.floor(parameter * 5))} / 5`,
-    conclusion: "Wang–Zahl 证明三维挂谷集合的 Hausdorff 与 Minkowski 维数均为 3。",
+    conclusion: "结论很干脆：在三维空间里，这类集合的 Hausdorff 与 Minkowski 维数都等于 3。",
   },
   {
     kicker: "成果被确认",
-    title: "从百年问题到菲尔兹奖",
-    action: "推进时间轴，观察问题、方法、证明与奖项如何汇流。",
+    title: "一百多年，六个关键时刻",
+    action: "推进时间轴，看看一个看似简单的转针游戏，怎样一步步变成现代调和分析中的核心问题。",
     control: "历史汇流",
     value: (parameter: number) => `${1917 + Math.round(parameter * 109)}`,
-    conclusion: "2026 年奖项表彰王虹的一系列工作；三维挂谷定理由她与 Joshua Zahl 共同证明。",
+    conclusion: "菲尔兹奖属于王虹个人；三维挂谷定理的证明署名始终属于王虹与 Joshua Zahl 两人。",
   },
 ];
 
 const timelineProofs = [
   {
     type: "问题定义",
-    note: "这一时期提出的是问题，不是一份证明。",
+    note: "1917 年还没有答案。挂谷宗一只是把“转针”这件事问得足够准确。",
     steps: [
       {
-        title: "参数化方向",
-        body: "对每个方向 θ，取单位向量 vθ，并允许线段中心 xθ 自由移动。",
+        title: "先把方向编号",
+        body: "用 θ 给每个方向一个编号。每个方向配一根长度为 1 的线段，而且线段中心可以自由移动。",
         formula: "Iθ = xθ + [−1/2, 1/2]vθ",
       },
       {
-        title: "定义容纳条件",
-        body: "寻找集合 K，使每一个方向都至少有一条对应的单位线段完全落在 K 中。",
+        title: "再规定什么叫“装得下”",
+        body: "我们要找一个集合 K：不管你指定哪个方向，K 里面都能找到一根完整的单位线段。",
         formula: "∀θ ∈ S¹，∃xθ，使 Iθ ⊂ K",
       },
       {
-        title: "比较转针直觉",
-        body: "如果所有线段共用一个中心，它们的并集正是半径 1/2 的圆盘；1917 年时，允许中心移动后的面积下确界尚不清楚。",
+        title: "为什么移动中心会改变一切",
+        body: "如果所有线段都绕同一点旋转，它们会铺满一个圆盘。可一旦允许边转边移动，线段就能大量重叠，面积可能大幅缩小。",
         formula: "共中心：|K| = π/4；1917 年时自由平移下界未知",
       },
       {
-        title: "改写为现代问题",
-        body: "面积可以多小？即使体积为零，包含全方向线段的集合是否仍必须具有满维数？",
+        title: "现代版本问得更狠",
+        body: "就算面积或体积能缩到零，这个集合会不会仍然复杂得像整个环境空间？“维数是否满维”就是这个问题。",
         formula: "Kakeya 猜想：dim K = n",
       },
     ],
   },
   {
     type: "零面积构造",
-    note: "这里展示 Besicovitch 型构造的证明骨架，而非逐页技术细节。",
+    note: "这一时期给出反直觉答案：二维里，面积真的可以是零。下面只展示构造的骨架。",
     steps: [
       {
-        title: "有限方向近似",
-        body: "先只取一个很密的有限方向网格，用狭长三角形承载相邻方向的线段。",
+        title: "先只处理有限多个方向",
+        body: "把所有方向近似成一张越来越密的方向表，再用狭长三角形装下相邻方向的线段。",
         formula: "ΘN = {θ₁,…,θN} ⊂ S¹",
       },
       {
-        title: "Besicovitch 构造与 Perron 树表述",
-        body: "Besicovitch 的原始构造后来可用 Perron 树更直观地表述：切分狭长三角形并平移，使主体大量重叠而保留方向范围。",
+        title: "像叠纸扇一样制造重叠",
+        body: "把狭长三角形切开、平移，让它们的主体尽量叠在一起，同时保留原来覆盖的方向范围。这常用 Perron 树来描述。",
         formula: "方向范围保留，投影面积下降",
       },
       {
-        title: "迭代压缩",
-        body: "每轮同时增加方向分辨率并缩小承载区域；重叠提高，但每个目标方向仍保留一条线段。",
+        title: "一轮一轮压缩",
+        body: "每一轮都增加方向数量，并让承载区域更小。重叠越来越多，但每个目标方向仍保留一条完整线段。",
         formula: "|KN| < εN，且 εN → 0",
       },
       {
-        title: "取极限集合",
-        body: "选取收敛子列并闭包，得到包含所有方向单位线段、Lebesgue 面积却为零的紧集。",
+        title: "把无限多轮压缩合在一起",
+        body: "经过极限过程，可以得到一个紧集：它包含所有方向的单位线段，Lebesgue 面积却等于零。",
         formula: "|K| = 0",
       },
     ],
   },
   {
     type: "分析学桥梁",
-    note: "1970s 同时包含二维维数定理与分析学方向的转变；后两步采用现代波包语言解释其影响。",
+    note: "面积为零不等于“像一条线”。1970 年代证明了二维集合仍然满维，波的研究也开始借用这套几何。",
     steps: [
       {
-        title: "Davies 证明二维满维",
-        body: "1971 年 Roy Davies 证明：每一个平面挂谷集合的 Hausdorff 维数都等于 2；由维数单调性，其 Minkowski 维数也为 2。",
+        title: "零面积，但仍像整个平面一样复杂",
+        body: "1971 年 Roy Davies 证明，每个平面挂谷集合的 Hausdorff 维数都等于 2；Minkowski 维数也随之等于 2。",
         formula: "dimH K = dimM K = 2",
       },
       {
-        title: "频率局部化",
-        body: "把曲面上的傅里叶支撑切成许多小频率帽；每个帽在物理空间中对应一个由曲面法向（或群速度）确定的主方向。",
+        title: "先把复杂的波分成小块",
+        body: "傅里叶分析会把频率空间切成许多小片。每一小片在真实空间里都有一个主要传播方向。",
         formula: "f = Σθ fθ",
       },
       {
-        title: "波包分解",
-        body: "每个频率局部化分量可进一步分解为波包；这些波包在相应空间细管外快速衰减，而不是严格紧支撑在管内。",
+        title: "每一小块大致沿细管传播",
+        body: "继续分解后得到波包。它们的能量主要集中在相应细管附近，离开细管会迅速变弱，但并非完全为零。",
         formula: "fθ ≈ ΣT fT；fT 主要集中于 T",
       },
       {
-        title: "几何控制分析量",
-        body: "如果大量细管过度重叠，相应波包也会集中，从而阻碍限制估计和最大函数估计。",
+        title: "细管拥挤，波也会拥挤",
+        body: "如果许多细管在同一处重叠，对应的波包也会集中。这样一来，某些重要的分析估计就更难成立。",
         formula: "管束重叠 ↔ Lᵖ 范数增长",
       },
       {
-        title: "得到研究纲领",
-        body: "证明挂谷型体积下界，会反向推动傅里叶限制、局部光滑和相关偏微分方程估计。",
+        title: "几何进展会带动波动方程",
+        body: "只要能更好地限制细管重叠，就能改进傅里叶限制、局部光滑以及相关偏微分方程中的估计。",
         formula: "挂谷型管束估计 → 分析估计中的关键几何输入",
       },
     ],
   },
   {
     type: "方法累积",
-    note: "这一时期由多条技术路线共同推进，不是单一证明。",
+    note: "接下来的几十年没有一招制胜。不同工具从不同角度回答同一个问题：细管究竟能挤到什么程度？",
     steps: [
       {
-        title: "Hairbrush 计数",
-        body: "固定一根细管，研究与它相交的“刷毛”管束；方向分离限制了它们在平面薄片中的聚集。",
+        title: "把一根管当作“刷柄”",
+        body: "先固定一根细管，再数所有与它相交的管。它们像刷毛一样散开，方向差异会限制它们挤进同一薄片。",
         formula: "multiplicity × union volume ≥ tube mass",
       },
       {
-        title: "多项式分割",
-        body: "用低次数多项式的零集把空间分成许多胞腔，区分穿越胞腔的管与贴近代数曲面的管。",
+        title: "用一张代数曲面切开空间",
+        body: "低次数多项式的零集像一把复杂的刀，把空间分成许多区域。穿过区域的管和贴着曲面走的管，要分别处理。",
         formula: "cellular case / algebraic case",
       },
       {
-        title: "Grains 分解",
-        body: "把细管组织进不同尺度的扁平盒或“颗粒”，记录局部平行结构和切向结构。",
+        title: "把局部结构装进“颗粒”",
+        body: "把近似平行或贴着同一方向走的细管，装进不同大小的扁平盒。这样就能记录它们在局部怎样抱团。",
         formula: "δ ≤ ρ ≤ 1 的层级结构",
       },
       {
-        title: "尺度归纳",
-        body: "在较粗尺度建立控制，再缩放到细尺度；若结构异常，则进入更精细的聚集分类。",
+        title: "从粗地图走到细地图",
+        body: "先在较粗的尺度证明控制，再放大到更细的尺度。遇到异常结构，就把它单独分类并继续拆解。",
         formula: "尺度 ρ 的控制 + 重标度 δ/ρ 的控制 → 尺度 δ（结构示意）",
       },
     ],
   },
   {
     type: "三维定理",
-    note: "以下对应 Wang–Zahl 论文的主线；严格证明包含 127 页技术论证。",
+    note: "下面是 Wang–Zahl 证明的主干。它能告诉你每一步为什么出现，但不能替代 127 页的严格论证。",
     steps: [
       {
-        title: "离散化为 δ-细管",
-        body: "从挂谷集合中为 δ-分离的每个方向选取一根 δ-细管。这样的管族满足凸集与薄片版本的 Wolff 非聚集条件。",
+        title: "把看不见的线段换成可测量的细管",
+        body: "在每个相隔约 δ 的方向上选一条线段，再给它加上半径约 δ 的厚度。由此得到一组有限、可估计的细管。",
         formula: "# {T∈𝒯 : T⊂W} ≲ |W| / |T|",
       },
       {
-        title: "建立体积命题",
-        body: "把目标改写为带 shading 的管族并集下界；论文引入 Assertions D 与 E，使体积估计适合尺度归纳。",
+        title: "把维数问题改写成体积问题",
+        body: "证明不直接计算维数，而是估计这些细管合起来至少占多少体积。论文允许每根管只取一部分，这部分称为 shading。",
         formula: "在归一化 Kakeya 情形：|⋃T Y(T)| ≳ε δ^ε",
       },
       {
-        title: "分解凸聚集",
-        body: "将凸集中的管束分解进扁平棱柱，并证明不同非聚集表述之间的等价与三分情形。",
+        title: "拆开那些看起来过分拥挤的管束",
+        body: "把聚在凸形区域里的管分配进扁平棱柱，再判断它们属于哪一种可控情形。这样能把“拥挤”变成可计算的条件。",
         formula: "凸集分解 → 扁平棱柱中的可控子族（结构示意）",
       },
       {
-        title: "跨尺度推进",
-        body: "使用 two-scale grains decomposition、精细尺度归纳，以及 Nikishin–Stein–Pisier 因子化处理 sticky 与非-sticky 结构。",
+        title: "把粗尺度的控制传到细尺度",
+        body: "证明结合双尺度颗粒分解、尺度归纳和因子化工具，分别处理会长期黏在一起的结构与不会黏住的结构。",
         formula: "粗尺度 ρ + 重标度 δ/ρ → 尺度 δ",
       },
       {
-        title: "回到维数",
-        body: "非聚集管族的并集拥有几乎最大的体积下界；令 δ→0，排除任何低于 3 的 Minkowski 或 Hausdorff 维数。",
+        title: "让 δ 缩到 0，回到原来的集合",
+        body: "细管在每个小尺度都占有足够体积。令 δ 趋近 0，就能排除低于 3 的 Minkowski 维数或 Hausdorff 维数。",
         formula: "dimM K = dimH K = 3",
       },
     ],
   },
   {
     type: "成果确认",
-    note: "奖项不是证明步骤；这一栏说明成果归属与数学结论如何被确认。",
+    note: "这一栏不再讲证明，而是把论文结论、未解决问题和成果归属说清楚。",
     steps: [
       {
         title: "论文公开",
@@ -259,8 +259,8 @@ const timelineProofs = [
         formula: "arXiv:2502.17655",
       },
       {
-        title: "结论与边界",
-        body: "论文解决三维挂谷集合猜想；更高维一般情形仍然开放，且论文没有宣称解决三维 Kakeya maximal function 猜想。",
+        title: "解决了什么，又没有解决什么",
+        body: "论文解决的是三维挂谷集合的维数猜想。四维及以上仍然开放，三维 Kakeya maximal function 猜想也不在这篇论文的结论中。",
         formula: "n = 3 已解决；n ≥ 4 仍开放",
       },
       {
@@ -269,8 +269,8 @@ const timelineProofs = [
         formula: "Hong Wang + Joshua Zahl",
       },
       {
-        title: "奖项意义",
-        body: "2026 年菲尔兹奖授予王虹个人，表彰范围包括她在调和分析与几何测度论中的一系列贡献，而非只对应这一篇论文。",
+        title: "菲尔兹奖不只对应这一篇论文",
+        body: "2026 年菲尔兹奖授予王虹个人，表彰她在调和分析与几何测度论中的一系列成果；三维挂谷定理只是其中一项。",
         formula: "theorem ≠ medal citation 的全部",
       },
     ],
@@ -1312,7 +1312,7 @@ function TimelineExplorer() {
             <span>{String(index + 1).padStart(2, "0")}</span>
             <h3>{year}</h3>
             <p>{text}</p>
-            <i>{activeEra === index ? "正在演示" : "打开实验"} ↗</i>
+            <i>{activeEra === index ? "正在体验" : "看看怎么做"} ↗</i>
           </button>
         ))}
       </div>
@@ -1337,7 +1337,7 @@ function TimelineExplorer() {
               draggingRef.current = false;
             }}
           />
-          <span>横向拖动实验</span>
+          <span>左右拖动试试看</span>
         </div>
         <div className="era-copy">
           <span>{experiment.kicker} · INTERACTIVE</span>
@@ -1356,17 +1356,17 @@ function TimelineExplorer() {
             />
           </label>
           <div>
-            <span>这一时期得到什么</span>
+            <span>一句话结果</span>
             <p>{experiment.conclusion}</p>
           </div>
-          <small>概念演示帮助理解思想演进，不替代各时期的严格论证。</small>
+          <small>动画只讲思路，不负责替代数学证明。</small>
         </div>
       </div>
       <div className="era-derivation">
         <div className="derivation-head">
           <div>
             <span>{proof.type} · ARGUMENT MAP</span>
-            <h3>这一时期的论证怎样推进</h3>
+            <h3>当时的人怎样往前走</h3>
           </div>
           <p>{proof.note}</p>
         </div>
@@ -1390,11 +1390,11 @@ function TimelineExplorer() {
           </div>
           <article className="derivation-card" role="tabpanel">
             <span>
-              STEP {String(detailStep + 1).padStart(2, "0")} / {String(proof.steps.length).padStart(2, "0")}
+              第 {String(detailStep + 1).padStart(2, "0")} 步 / 共 {String(proof.steps.length).padStart(2, "0")} 步
             </span>
             <h4>{proof.steps[detailStep].title}</h4>
             <p>{proof.steps[detailStep].body}</p>
-            <div>{proof.steps[detailStep].formula}</div>
+            <div>数学写法　{proof.steps[detailStep].formula}</div>
             <nav aria-label="论证步骤切换">
               <button
                 type="button"
@@ -1446,21 +1446,21 @@ function ProofRoute() {
           <span>PROOF MAP / CONCEPTUAL VIEW</span>
           <h3>{proofSteps[active].title}</h3>
           <p>{proofSteps[active].text}</p>
-          <div className="proof-logic" aria-label="当前证明步骤的输入、操作和输出">
+          <div className="proof-logic" aria-label="当前证明步骤的起点、做法和结果">
             <div>
-              <span>输入</span>
+              <span>起点</span>
               <strong>{proofSteps[active].input}</strong>
             </div>
             <div>
-              <span>操作</span>
+              <span>怎么做</span>
               <strong>{proofSteps[active].operation}</strong>
             </div>
             <div>
-              <span>输出</span>
+              <span>得到</span>
               <strong>{proofSteps[active].output}</strong>
             </div>
           </div>
-          <small>此图帮助理解证明结构，不是对论文论证或数值的复现。</small>
+          <small>这张图只帮你看懂思路，不会替你完成 127 页证明。</small>
         </div>
       </div>
     </div>
@@ -1519,8 +1519,8 @@ export default function Home() {
             都装进<span>三维</span>
           </h1>
           <p className="hero-lead">
-            王虹与 Joshua Zahl 证明：任何包含所有方向单位线段的三维挂谷集合，
-            <em>Hausdorff 维数与 Minkowski 维数都必须等于 3。</em>
+            想象把一根长度固定的针，朝每个方向各放一次。王虹与 Joshua Zahl 证明：
+            <em>无论这些针怎样挤在一起，它们组成的三维集合都不可能“扁”成一张面。</em>
           </p>
           <div className="hero-actions">
             <a href="#question">进入问题 <span>↓</span></a>
@@ -1539,7 +1539,7 @@ export default function Home() {
           </div>
           <div>
             <strong>dim = 3</strong>
-            <span>三维满维数结论</span>
+            <span>数学写法：两种维数都等于 3</span>
           </div>
         </div>
       </section>
@@ -1547,9 +1547,9 @@ export default function Home() {
       <section className="question-section" id="question">
         <div className="section-index">01 / THE QUESTION</div>
         <div className="question-heading">
-          <p>先别急着想象一根真实的针。</p>
+          <p>先玩一个很简单的想象游戏。</p>
           <h2>
-            这里的“针”，是一条
+            这里的“针”，就是一条
             <br />
             <span>无限细、长度为 1 的线段。</span>
           </h2>
@@ -1564,14 +1564,14 @@ export default function Home() {
           </div>
           <div className="question-copy">
             <p>
-              一个挂谷集合是在 <strong>Rⁿ</strong> 中包含每个方向的一条单位线段的紧集。
-              这些线段不必围绕同一个中心，也不必通过同一点——它们可以移动、穿插并极其复杂地重叠。
+              任选一个方向，这个集合里都能找到一条长度为 1 的线段。
+              线段不必围着同一个中心转，也不必经过同一点。它们可以一边转、一边移动，还可以大量重叠。
             </p>
             <blockquote>
-              “集合的体积可以为零，但它是否仍必须拥有整个环境空间的维数？”
+              “它几乎不占地方，却会不会仍然复杂得像整个空间？”
             </blockquote>
             <p className="micro-note">
-              这正是挂谷集合猜想。二维情形早已解决；Wang–Zahl 在 2025 年解决了三维情形。更高维仍然开放。
+              数学家把“复杂得像整个空间”说成“满维”。二维早已证明满维；王虹与 Joshua Zahl 在 2025 年解决了三维。四维及以上仍然开放。
             </p>
           </div>
         </div>
@@ -1581,7 +1581,7 @@ export default function Home() {
         <div className="dimension-top">
           <div>
             <div className="section-index light">02 / SIZE IS NOT VOLUME</div>
-            <h2>“零体积”不等于“低维”。</h2>
+            <h2>几乎不占地方，不等于很简单。</h2>
           </div>
           <div className="dimension-switch" role="group" aria-label="切换二维和三维说明">
             <button type="button" className={dimension === "2D" ? "active" : ""} onClick={() => setDimension("2D")}>
@@ -1600,13 +1600,13 @@ export default function Home() {
             <span>{dimension === "3D" ? "WANG–ZAHL THEOREM · 2025" : "DAVIES · PLANAR THEOREM · 1971"}</span>
             <h3>
               {dimension === "3D"
-                ? "在三维空间中，再稀薄的挂谷集合也必须是满维的。"
-                : "在二维平面中，挂谷集合可以面积为零，但维数仍然等于 2。"}
+                ? "它可以没有体积，却不能只像一张纸或一条线。"
+                : "它可以没有面积，却仍然复杂得像整个平面。"}
             </h3>
             <p>
               {dimension === "3D"
-                ? "“维数为 3”并不声称集合有正体积。它说明无论怎样在小尺度观察，这个集合都复杂到无法被压成真正的曲面、曲线或更低维对象。"
-                : "Besicovitch 的构造证明面积可以为零；Davies 在 1971 年进一步证明，每个平面挂谷集合的 Hausdorff 维数都是 2，因此其 Minkowski 维数也只能是 2。"}
+                ? "体积为零，只说明它不占普通的三维体积；维数为 3，则说明你越放大观察，看到的细节仍然像三维空间那样丰富。这两句话可以同时成立。"
+                : "Besicovitch 证明面积可以为零。Davies 又证明：无论怎样构造，它的 Hausdorff 维数仍是 2，Minkowski 维数也等于 2。"}
             </p>
             <div className="formula">
               dim<sub>H</sub>(K) = dim<sub>M</sub>(K) = {dimension === "3D" ? "3" : "2"}
@@ -1614,16 +1614,16 @@ export default function Home() {
           </div>
           <div className="dimension-legend">
             <div>
-              <span>体积 / 面积</span>
+              <span>它占多少普通空间？</span>
               <strong>可以是 0</strong>
             </div>
             <div>
-              <span>Hausdorff 维数</span>
-              <strong>必须满维</strong>
+              <span>用精细标尺测复杂度</span>
+              <strong>Hausdorff 维数满维</strong>
             </div>
             <div>
-              <span>Minkowski 维数</span>
-              <strong>必须满维</strong>
+              <span>用小盒子数复杂度</span>
+              <strong>Minkowski 维数满维</strong>
             </div>
           </div>
         </div>
@@ -1633,21 +1633,21 @@ export default function Home() {
         <div className="section-heading-row">
           <div>
             <div className="section-index">03 / THE PROOF MAP</div>
-            <h2>从一根线，到一片<span className="keep-together">不可过度重叠</span>的管束。</h2>
+            <h2>把看不见的线段，变成可以测量的细管。</h2>
           </div>
           <p>
-            论文的严格证明长达 127 页。这里不伪装复现证明，而是展示它的逻辑骨架：
-            <strong>离散化、控制聚集、多尺度推进、回到维数。</strong>
+            127 页证明无法塞进一个网页。这里把主线拆成五关：
+            <strong>加厚线段、限制拥挤、反复缩放、估计体积、再把厚度缩回零。</strong>
           </p>
         </div>
         <ProofRoute />
       </section>
 
-      <section className="timeline-section">
+      <section className="timeline-section" id="timeline">
         <div className="section-index light">04 / A CENTURY OF PROGRESS</div>
         <div className="timeline-heading">
-          <h2>这不是一夜之间的胜利。</h2>
-          <p>点击每个时期，亲手操作问题、反例、分析工具与最终证明的概念模型。</p>
+          <h2>一道小学几何味的问题，做了一百多年。</h2>
+          <p>点开每个时期，先看当时的人卡在哪里，再动手玩一次他们的关键想法。</p>
         </div>
         <TimelineExplorer />
       </section>
@@ -1664,13 +1664,13 @@ export default function Home() {
         <div className="person-copy">
           <div className="section-index">05 / THE MATHEMATICIAN</div>
           <p className="person-kicker">HONG WANG · 王虹</p>
-          <h2>她研究的，是波动方程与傅里叶振荡在数学上如何传播，也是几何能被压缩到什么程度。</h2>
+          <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
           <p>
-            王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师为 Larry Guth。
-            她现任 IHES 常任教授及纽约大学柯朗数学科学研究所 Silver Professor，研究横跨调和分析、几何测度论与偏微分方程。
+            王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。
+            她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
           </p>
           <p>
-            2026 年菲尔兹奖的官方引文覆盖她在局部光滑、傅里叶限制、Falconer 距离集、Furstenberg 集和三维挂谷问题上的一系列贡献。
+            她的工作把“波的传播”与“细管怎样重叠”连在一起。2026 年菲尔兹奖引文提到局部光滑、傅里叶限制、Falconer 距离集、Furstenberg 集以及三维挂谷问题。
           </p>
           <div className="coauthor-note">
             <span>共同证明者</span>
@@ -1682,7 +1682,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="award-section">
+      <section className="award-section" id="award">
         <div className="medal-orbit" aria-hidden="true">
           <span>2026</span>
           <b>FIELDS</b>
@@ -1690,10 +1690,10 @@ export default function Home() {
         </div>
         <div>
           <div className="section-index light">PHILADELPHIA · 23 JULY 2026</div>
-          <h2>第三位获得菲尔兹奖的女性。</h2>
+          <h2>2026 年，王虹获得菲尔兹奖。</h2>
           <p>
-            国际数学联盟在 2026 年国际数学家大会开幕式上向王虹颁发菲尔兹奖。
-            王虹成为首位获得菲尔兹奖的中国女性；她与于登也是首批在中国大陆完成本科教育的菲尔兹奖得主。
+            她是菲尔兹奖历史上第三位女性得主，也是首位获奖的中国女性。
+            她与于登还是首批在中国大陆完成本科教育的菲尔兹奖得主。
           </p>
           <div className="award-facts">
             <div>
@@ -1721,7 +1721,7 @@ export default function Home() {
             <div className="section-index">06 / SOURCES</div>
             <h2>从原始论文开始。</h2>
           </div>
-          <p>页面中的定理、人物经历与奖项信息均来自原始论文和相关机构的官方材料。</p>
+          <p>想继续深挖，可以从论文、官方奖项说明和面向大众的长文开始。数学结论以原始论文为准。</p>
         </div>
         <div className="source-list">
           {sources.map((source, index) => (
@@ -1740,9 +1740,9 @@ export default function Home() {
           K <span>/</span> 3
         </div>
         <p>
-          一个关于方向、尺度与维数的交互式数学展览。
+          从一根会转动的针，走进三维挂谷猜想。
           <br />
-          严格定理与概念示意已在页面中分别标注。
+          动画讲直觉，公式保留准确边界。
         </p>
         <a href="#top">回到顶部 ↑</a>
       </footer>

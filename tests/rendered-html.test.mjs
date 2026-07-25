@@ -33,9 +33,11 @@ test("server-renders the Kakeya exhibition and its scientific framing", async ()
   assert.match(html, /<title>每一个方向，都装进三维｜王虹与三维挂谷猜想<\/title>/i);
   assert.match(html, /王虹与 Joshua Zahl 证明/);
   assert.match(html, /PROJECTIVE DIRECTION SAMPLER/);
-  assert.match(html, /Davies 证明二维挂谷集合满维/);
+  assert.match(html, /面积可以是零，但二维里的集合仍/);
   assert.match(html, /04 \/ A CENTURY OF PROGRESS/);
-  assert.match(html, /概念演示帮助理解思想演进，不替代各时期的严格论证/);
+  assert.match(html, /动画只讲思路，不负责替代数学证明/);
+  assert.match(html, /加厚线段、限制拥挤/);
+  assert.match(html, /数学家把“复杂得像整个空间”说成“满维”/);
   assert.match(html, /三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果/);
 });
 

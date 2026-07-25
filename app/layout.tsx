@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const origin = `${protocol}://${host}`;
   const title = "每一个方向，都装进三维｜王虹与三维挂谷猜想";
   const description =
-    "一场关于 2026 年菲尔兹奖得主王虹、Joshua Zahl 与三维挂谷集合猜想的交互式数学展览。";
+    "从一根会转动的针出发，用互动图解看懂王虹与 Joshua Zahl 如何解决三维挂谷猜想。";
 
   return {
     metadataBase: new URL(origin),
