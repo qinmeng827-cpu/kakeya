@@ -479,7 +479,7 @@ input[type="range"] {
 .question-heading h2,
 .section-heading-row h2,
 .timeline-heading h2,
-.person-copy h2,
+.person-heading h2,
 .award-section h2,
 .dimension-top h2 {
   margin: 0;
@@ -1408,13 +1408,26 @@ input[type="range"] {
 .person-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  height: 900px;
-  min-height: 900px;
+  grid-template-rows: auto 900px;
   background: var(--paper);
   color: #111814;
 }
 
+.person-heading {
+  grid-column: 1 / -1;
+  padding: 82px var(--page-pad) 56px;
+  text-align: center;
+}
+
+.person-heading h2 {
+  margin: 28px 0 0;
+  font-size: clamp(calc(38px + var(--type-section-adjust)), calc(3.6vw + var(--type-section-adjust)), calc(62px + var(--type-section-adjust)));
+  line-height: calc(1.12 + var(--type-title-leading-adjust));
+  white-space: nowrap;
+}
+
 .person-photo {
+  grid-row: 2;
   position: relative;
   height: 900px;
   min-height: 900px;
@@ -1448,18 +1461,11 @@ input[type="range"] {
 }
 
 .person-copy {
-  align-self: start;
-  max-width: 980px;
-  padding: 48px 40px 52px;
-}
-
-.person-copy h2 {
-  margin-top: 32px;
-  font-size: clamp(calc(26px + var(--type-section-adjust)), calc(1.65vw + var(--type-section-adjust)), calc(34px + var(--type-section-adjust)));
-  line-height: calc(1.12 + var(--type-title-leading-adjust));
-  text-align: center;
-  white-space: nowrap;
-  letter-spacing: -.04em;
+  grid-row: 2;
+  align-self: stretch;
+  height: 900px;
+  max-width: none;
+  padding: 64px clamp(48px, 5vw, 110px) 56px;
 }
 
 .person-copy > p {
@@ -1855,6 +1861,7 @@ footer > a {
   .person-section {
     height: auto;
     min-height: 0;
+    grid-template-rows: auto auto auto;
   }
   .question-grid { gap: 55px; }
   .dimension-display {
@@ -1890,10 +1897,13 @@ footer > a {
     grid-template-columns: 180px 1fr;
   }
   .person-photo {
+    grid-row: auto;
     height: auto;
     max-height: 780px;
   }
   .person-copy {
+    grid-row: auto;
+    height: auto;
     padding: 90px 8vw 120px;
   }
   .medal-orbit {
@@ -2035,7 +2045,7 @@ footer > a {
   .section-heading-row h2,
   .dimension-top h2,
   .timeline-heading h2,
-  .person-copy h2,
+  .person-heading h2,
   .award-section h2 {
     white-space: normal;
   }
@@ -2187,7 +2197,7 @@ footer > a {
   .person-copy {
     padding: 80px 24px 100px;
   }
-  .person-copy h2,
+  .person-heading h2,
   .award-section h2 {
     font-size: 42px;
   }

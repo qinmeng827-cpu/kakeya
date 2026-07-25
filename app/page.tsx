@@ -1871,6 +1871,10 @@ export default function Home() {
       </section>
 
       <section className="person-section" id="person">
+        <div className="person-heading">
+          <div className="section-index">05 / THE MATHEMATICIAN</div>
+          <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
+        </div>
         <div className="person-photo">
           {/* eslint-disable-next-line @next/next/no-img-element -- local editorial crop is intentionally rendered full bleed */}
           <img
@@ -1880,8 +1884,6 @@ export default function Home() {
           <span>IMAGE SOURCE · IHES · 2026</span>
         </div>
         <div className="person-copy">
-          <div className="section-index">05 / THE MATHEMATICIAN</div>
-          <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
           <p>
             王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。
             她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
