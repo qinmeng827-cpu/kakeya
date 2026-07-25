@@ -1450,28 +1450,19 @@ input[type="range"] {
 .person-copy {
   align-self: start;
   max-width: 980px;
-  padding: 48px clamp(48px, 4vw, 76px) 52px;
-}
-
-.person-kicker {
-  margin: 54px 0 18px;
-  color: #a47729;
-  font: 600 15px/1 var(--font-geist-mono), monospace;
-  letter-spacing: .14em;
+  padding: 48px 40px 52px;
 }
 
 .person-copy h2 {
-  font-size: clamp(calc(28px + var(--type-section-adjust)), calc(2vw + var(--type-section-adjust)), calc(30px + var(--type-section-adjust)));
-  line-height: calc(1.18 + var(--type-title-leading-adjust));
+  margin-top: 32px;
+  font-size: clamp(calc(26px + var(--type-section-adjust)), calc(1.65vw + var(--type-section-adjust)), calc(34px + var(--type-section-adjust)));
+  line-height: calc(1.12 + var(--type-title-leading-adjust));
   text-align: center;
   white-space: nowrap;
+  letter-spacing: -.04em;
 }
 
-.person-kicker {
-  text-align: center;
-}
-
-.person-copy > p:not(.person-kicker) {
+.person-copy > p {
   color: #425047;
   font-size: calc(19px + var(--type-body-adjust));
   line-height: calc(1.95 + var(--type-body-leading-adjust));

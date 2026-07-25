@@ -1881,7 +1881,6 @@ export default function Home() {
         </div>
         <div className="person-copy">
           <div className="section-index">05 / THE MATHEMATICIAN</div>
-          <p className="person-kicker">HONG WANG · 王虹</p>
           <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
           <p>
             王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。
