@@ -1201,7 +1201,7 @@ function TimelineExplorer() {
       const cy = height * 0.47;
 
       if (activeEra === 0) {
-        const radius = Math.min(width, height) * 0.27;
+        const radius = Math.min(width, height) * 0.31;
         ctx.beginPath();
         ctx.arc(cx, cy, radius, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(91, 225, 213, .025)";
@@ -1872,7 +1872,6 @@ export default function Home() {
         <div className="section-index light">04 / A CENTURY OF PROGRESS</div>
         <div className="timeline-heading">
           <h2>一道小学几何味的问题，做了一百多年。</h2>
-          <p>点开每个时期，先看当时的人卡在哪里，再动手玩一次他们的关键想法。</p>
         </div>
         <TimelineExplorer />
       </section>

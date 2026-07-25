@@ -52,6 +52,8 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(page, /requestFullscreen/);
   assert.match(page, /cameraDistance/);
   assert.match(page, /drawGuide/);
+  assert.match(page, /Math\.min\(width, height\) \* 0\.31/);
+  assert.doesNotMatch(page, /点开每个时期，先看当时的人卡在哪里/);
   assert.match(page, /排版调节台/);
   assert.match(page, /typographyStorageKey/);
   assert.match(page, /titleLeading/);
