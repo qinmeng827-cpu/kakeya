@@ -1,9 +1,29 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 type Vec3 = { x: number; y: number; z: number };
 type Tube2D = { x: number; y: number; angle: number; gold?: boolean };
+
+type TypographySettings = {
+  display: number;
+  section: number;
+  body: number;
+  ui: number;
+  weight: 700 | 800 | 900;
+  leading: number;
+};
+
+const defaultTypography: TypographySettings = {
+  display: 0,
+  section: 0,
+  body: 0,
+  ui: 0,
+  weight: 700,
+  leading: 0,
+};
+
+const typographyStorageKey = "kakeya-typography-settings-v1";
 
 const proofSteps = [
   {
@@ -1467,9 +1487,138 @@ function ProofRoute() {
   );
 }
 
+function TypographyPanel({
+  settings,
+  onChange,
+}: {
+  settings: TypographySettings;
+  onChange: (next: TypographySettings) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const update = (key: keyof TypographySettings, value: number) => {
+    onChange({
+      ...settings,
+      [key]: key === "weight" ? value as TypographySettings["weight"] : value,
+    });
+  };
+
+  const copySettings = async () => {
+    const text = [
+      `主标题字号：${settings.display >= 0 ? "+" : ""}${settings.display}px`,
+      `章节标题字号：${settings.section >= 0 ? "+" : ""}${settings.section}px`,
+      `正文大小：${settings.body >= 0 ? "+" : ""}${settings.body}px`,
+      `导航与标签：${settings.ui >= 0 ? "+" : ""}${settings.ui}px`,
+      `标题字重：${settings.weight}`,
+      `正文行距：${settings.leading >= 0 ? "+" : ""}${settings.leading.toFixed(2)}`,
+    ].join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const range = (
+    key: Exclude<keyof TypographySettings, "weight">,
+    label: string,
+    min: number,
+    max: number,
+    step: number,
+    suffix: string,
+  ) => (
+    <label className="type-control-range">
+      <span>{label}</span>
+      <output>{settings[key] >= 0 ? "+" : ""}{settings[key].toFixed(step < 1 ? 2 : 0)}{suffix}</output>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={settings[key]}
+        onChange={(event) => update(key, Number(event.target.value))}
+      />
+    </label>
+  );
+
+  return (
+    <div className="typography-tools">
+      <button
+        className="typography-toggle"
+        type="button"
+        aria-expanded={open}
+        aria-controls="typography-panel"
+        onClick={() => setOpen((current) => !current)}
+      >
+        <b>Aa</b>
+        <span>排版</span>
+      </button>
+      {open && (
+        <aside className="typography-panel" id="typography-panel" aria-label="排版调节台">
+          <div className="typography-panel-head">
+            <div>
+              <span>TYPE CONTROL</span>
+              <h2>排版调节台</h2>
+            </div>
+            <button type="button" aria-label="关闭排版调节台" onClick={() => setOpen(false)}>×</button>
+          </div>
+          <p>这些设置只保存在当前浏览器。拖动后全站立即预览。</p>
+          <div className="type-control-list">
+            {range("display", "首屏主标题", -16, 16, 1, "px")}
+            {range("section", "章节标题", -12, 16, 1, "px")}
+            {range("body", "正文", -3, 6, 1, "px")}
+            {range("ui", "导航与标签", -3, 6, 1, "px")}
+            {range("leading", "正文行距", -0.2, 0.35, 0.05, "")}
+            <label className="type-control-select">
+              <span>标题字重</span>
+              <select value={settings.weight} onChange={(event) => update("weight", Number(event.target.value))}>
+                <option value="700">700 · 加粗</option>
+                <option value="800">800 · 更粗</option>
+                <option value="900">900 · 最粗</option>
+              </select>
+            </label>
+          </div>
+          <div className="type-control-actions">
+            <button type="button" onClick={() => onChange(defaultTypography)}>恢复默认</button>
+            <button type="button" onClick={copySettings}>{copied ? "已复制设置" : "复制设置"}</button>
+          </div>
+        </aside>
+      )}
+    </div>
+  );
+}
+
 export default function Home() {
   const [dimension, setDimension] = useState<"2D" | "3D">("3D");
   const [currentSection, setCurrentSection] = useState("question");
+  const [typography, setTypography] = useState<TypographySettings>(() => {
+    if (typeof window === "undefined") return defaultTypography;
+    try {
+      const saved = window.localStorage.getItem(typographyStorageKey);
+      if (!saved) return defaultTypography;
+      const parsed = JSON.parse(saved) as Partial<TypographySettings>;
+      return { ...defaultTypography, ...parsed };
+    } catch {
+      window.localStorage.removeItem(typographyStorageKey);
+      return defaultTypography;
+    }
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(typographyStorageKey, JSON.stringify(typography));
+  }, [typography]);
+
+  const typographyStyle = useMemo(() => ({
+    "--type-display-adjust": `${typography.display}px`,
+    "--type-section-adjust": `${typography.section}px`,
+    "--type-body-adjust": `${typography.body}px`,
+    "--type-ui-adjust": `${typography.ui}px`,
+    "--type-title-weight": String(typography.weight),
+    "--type-body-leading-adjust": String(typography.leading),
+  }) as CSSProperties, [typography]);
 
   useEffect(() => {
     const ids = ["question", "theorem", "proof", "person", "sources"];
@@ -1490,7 +1639,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main style={typographyStyle}>
+      <TypographyPanel settings={typography} onChange={setTypography} />
       <header className="site-header">
         <a className="brand" href="#top" aria-label="回到顶部">
           K <span>/</span> 3
