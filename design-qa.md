@@ -84,8 +84,8 @@
 ## Typography pass
 
 - Chinese display and chapter headings use the expanded Songti/serif fallback stack at weight 700.
-- Navigation and primary body copy were increased by roughly 2 px while retaining the original editorial hierarchy.
-- Monospaced labels, parameters and step numbers were increased by 2–3 px and given slightly stronger weights.
+- Navigation and primary body copy were increased by roughly 4 px from the original implementation while retaining the editorial hierarchy.
+- Monospaced labels, parameters and step numbers were increased by roughly 4 px and given stronger weights.
 - Desktop hero, three-column timeline and proof controls were visually checked after the change; responsive breakpoints retain their existing one-column layouts.
 
 ## Findings

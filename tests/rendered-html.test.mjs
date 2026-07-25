@@ -58,7 +58,7 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /--font-serif-cn:/);
   assert.match(css, /\.hero h1[\s\S]*?font-weight:\s*700/);
-  assert.match(css, /\.site-header nav a,[\s\S]*?font-size:\s*15px/);
-  assert.match(css, /\.section-index[\s\S]*?font:\s*650 12px/);
+  assert.match(css, /\.site-header nav a,[\s\S]*?font-size:\s*17px/);
+  assert.match(css, /\.section-index[\s\S]*?font:\s*650 14px/);
   await access(new URL("../public/hong-wang-portrait.jpg", import.meta.url));
 });
