@@ -65,6 +65,10 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /\.question-heading h2,[\s\S]*?\.dimension-top h2[\s\S]*?font-weight:\s*700/);
   assert.match(css, /\.site-header nav a,[\s\S]*?font-size:\s*17px/);
   assert.match(css, /\.section-index[\s\S]*?font:\s*650 14px/);
+  assert.match(css, /\.timeline-explorer[\s\S]*?grid-template-columns:\s*minmax\(260px,\s*310px\)\s*minmax\(0,\s*1fr\)/);
+  assert.match(css, /\.timeline[\s\S]*?grid-row:\s*1\s*\/\s*span 2/);
+  assert.match(css, /\.era-stage[\s\S]*?grid-column:\s*2/);
+  assert.match(css, /\.era-derivation[\s\S]*?grid-column:\s*2/);
   assert.match(layout, /Noto_Serif_SC/);
   assert.match(layout, /variable:\s*"--font-source-han-serif"/);
   assert.match(layout, /weight:\s*"700"/);
