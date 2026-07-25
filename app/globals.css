@@ -1435,15 +1435,15 @@ input[type="range"] {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 900px;
+  min-height: 700px;
   border-top: 1px solid rgba(25, 53, 43, .16);
 }
 
 .person-profile,
 .person-profile-zahl {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  min-height: 900px;
+  grid-template-rows: 320px 1fr;
+  min-height: 700px;
 }
 
 .person-profile-zahl {
@@ -1923,7 +1923,7 @@ footer > a {
     grid-template-columns: 180px 1fr;
   }
   .person-profile {
-    min-height: 760px;
+    min-height: 700px;
   }
   .profile-copy {
     padding: 40px clamp(30px, 4vw, 64px) 42px;
