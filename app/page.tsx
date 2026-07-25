@@ -1893,7 +1893,6 @@ export default function Home() {
               <span>PHOTO · IHES · 2026</span>
             </div>
             <div className="profile-copy">
-              <div className="profile-kicker">FIELDS MEDAL 2026 · 王虹</div>
               <h3>王虹</h3>
               <p>
                 王虹出生于广西桂林，本科毕业于北京大学，2019 年在 MIT 获博士学位，导师是 Larry Guth。她现任 IHES 常任教授，也是纽约大学柯朗数学科学研究所 Silver Professor。
@@ -1915,7 +1914,6 @@ export default function Home() {
               <span>PHOTO · PAUL JOSEPH / CMI</span>
             </div>
             <div className="profile-copy">
-              <div className="profile-kicker">CO-AUTHOR · 共同证明者</div>
               <h3>Joshua Zahl</h3>
               <p>
                 Joshua Zahl 是南开大学陈省身数学研究所教授，2013 年获 UCLA 数学博士，导师为 Terence Tao。他曾任英属哥伦比亚大学数学系副教授。
@@ -1923,13 +1921,13 @@ export default function Home() {
               <p>
                 他的兴趣横跨经典调和分析与组合数学，特别关注关联几何、限制型问题、挂谷问题和和积现象。
               </p>
-              <div className="collaboration-note">
-                <strong>共同成果</strong>
-                <p>三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果；菲尔兹奖则授予王虹个人。</p>
-              </div>
             </div>
           </article>
         </div>
+        <aside className="collaboration-callout" aria-label="共同成果说明">
+          <strong>共同成果</strong>
+          <p>三维挂谷集合猜想是王虹与 Joshua Zahl 的共同成果；菲尔兹奖则授予王虹个人。</p>
+        </aside>
       </section>
 
       <section className="award-section" id="award">
