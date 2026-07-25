@@ -1455,7 +1455,7 @@ input[type="range"] {
 
 .profile-portrait {
   position: relative;
-  aspect-ratio: 8 / 3;
+  aspect-ratio: 16 / 7;
   overflow: hidden;
   background: #10231d;
 }
@@ -1467,26 +1467,18 @@ input[type="range"] {
   background: linear-gradient(to top, rgba(4, 17, 13, .55), transparent 45%);
 }
 
-.profile-portrait .profile-backdrop {
-  position: absolute;
-  inset: -24px;
-  width: calc(100% + 48px);
-  height: calc(100% + 48px);
-  object-fit: cover;
-  object-position: center;
-  filter: blur(18px) saturate(.72) contrast(.95);
-  opacity: .56;
-  transform: scale(1.06);
-}
-
 .profile-portrait .profile-image {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center 34%;
   filter: saturate(.86) contrast(1.03);
+}
+
+.person-profile-zahl .profile-image {
+  object-position: center 38%;
 }
 
 .profile-portrait > span {

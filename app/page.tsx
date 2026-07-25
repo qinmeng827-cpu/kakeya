@@ -1888,10 +1888,7 @@ export default function Home() {
         <div className="person-profiles">
           <article className="person-profile person-profile-hong">
             <div className="profile-portrait">
-              {/* Decorative blurred extension keeps the full portrait visible inside a shared landscape frame. */}
-              {/* eslint-disable-next-line @next/next/no-img-element -- decorative background duplicate */}
-              <img className="profile-backdrop" src="/hong-wang-portrait.jpg" alt="" aria-hidden="true" />
-              {/* eslint-disable-next-line @next/next/no-img-element -- local editorial crop is intentionally rendered full bleed */}
+              {/* eslint-disable-next-line @next/next/no-img-element -- editorial crop is intentionally rendered full bleed */}
               <img className="profile-image" src="/hong-wang-portrait.jpg" alt="2026 年菲尔兹奖得主、数学家王虹" />
               <span>PHOTO · IHES · 2026</span>
             </div>
@@ -1909,13 +1906,6 @@ export default function Home() {
 
           <article className="person-profile person-profile-zahl">
             <div className="profile-portrait">
-              {/* eslint-disable-next-line @next/next/no-img-element -- decorative background duplicate */}
-              <img
-                className="profile-backdrop"
-                src="https://www.claymath.org/wp-content/uploads/2026/03/Zahl-scaled.jpg"
-                alt=""
-                aria-hidden="true"
-              />
               {/* eslint-disable-next-line @next/next/no-img-element -- an attributed public editorial portrait is displayed from its publisher */}
               <img
                 className="profile-image"
