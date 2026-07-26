@@ -1992,9 +1992,8 @@ export default function Home() {
         <div className="section-heading-row">
           <div>
             <div className="section-index">06 / SOURCES</div>
-            <h2>想继续读，从两条路进入。</h2>
+            <h2>更多阅读</h2>
           </div>
-          <p>先看面向大众的解释，建立直觉；再读原始论文，保留完整证明。数学结论以原始论文为准。</p>
         </div>
         <div className="source-list">
           {sources.map((source, index) => (

@@ -1739,14 +1739,20 @@ input[type="range"] {
 
 .source-list {
   margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, auto);
+  grid-auto-flow: column;
+  column-gap: clamp(38px, 5vw, 96px);
   border-top: 1px solid rgba(22, 48, 39, .18);
 }
 
 .source-list a {
   display: grid;
-  grid-template-columns: 60px 150px 1fr 20px;
+  grid-template-columns: 42px minmax(74px, 112px) minmax(0, 1fr) 18px;
+  gap: 10px;
   align-items: center;
-  min-height: 92px;
+  min-height: 86px;
   border-bottom: 1px solid rgba(22, 48, 39, .18);
   transition: padding .2s ease, color .2s ease;
 }
@@ -2361,6 +2367,12 @@ footer > a {
   }
   .award-facts div:first-child {
     border-top: 0;
+  }
+  .source-list {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
+    column-gap: 0;
   }
   .source-list a {
     grid-template-columns: 38px 1fr 18px;
