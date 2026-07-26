@@ -682,6 +682,7 @@ function ProofVisual({ active }: { active: number }) {
         const cy = height * clusterCenter.y;
         const radiusX = width * (0.31 - cluster * 0.13);
         const radiusY = height * (0.28 - cluster * 0.1);
+        const influencedCount = Math.round(8 + cluster * 18);
         ctx.save();
         ctx.beginPath();
         ctx.ellipse(cx, cy, radiusX, radiusY, -0.18, 0, Math.PI * 2);
@@ -693,7 +694,7 @@ function ProofVisual({ active }: { active: number }) {
         ctx.stroke();
         ctx.restore();
         for (let index = 0; index < 28; index += 1) {
-          const influenced = index < Math.round(8 + cluster * 18);
+          const influenced = index < influencedCount;
           const baseX = width * (0.09 + (((index * 43) % 80) / 100));
           const baseY = height * (0.13 + (((index * 61) % 72) / 100));
           const pull = influenced ? cluster * 0.78 : 0;
@@ -704,8 +705,8 @@ function ProofVisual({ active }: { active: number }) {
             y,
             width * 0.1,
             ((index * 127) % 180) * (Math.PI / 180),
-            influenced ? 3 + cluster * 5 : 2,
-            influenced ? cyanSoft : cyan,
+            influenced ? 3.2 + cluster * 4.5 : 1.65,
+            influenced ? gold : "rgba(95, 229, 216, .24)",
           );
         }
       }
@@ -898,6 +899,8 @@ function ProofVisual({ active }: { active: number }) {
       hint: "相对缩尺演示；维数结论不是由动画拟合得到",
     },
   ][active];
+  const localOverlapCount = Math.round(8 + cluster * 18);
+  const localOverlapLevel = cluster < 0.4 ? "低" : cluster < 0.72 ? "中" : "高";
 
   return (
     <div className="proof-visual" ref={wrapRef}>
@@ -925,6 +928,14 @@ function ProofVisual({ active }: { active: number }) {
       <div className="proof-live">
         <span>INTERACTIVE MODEL</span>
         <strong>{controls.hint}</strong>
+        {active === 1 && (
+          <div className="proof-overlap-feedback" aria-live="polite">
+            <span>局部重叠 · 有限模型</span>
+            <strong><b>{localOverlapCount}</b> / 28 条细管被拉入区域 · {localOverlapLevel}</strong>
+            <i aria-hidden="true"><em style={{ "--overlap": `${(localOverlapCount / 28) * 100}%` } as CSSProperties} /></i>
+            <small>金色表示当前模型中被拉入局部区域的样本；这不是定理常数。</small>
+          </div>
+        )}
       </div>
       <div className="proof-controls">
         <label>

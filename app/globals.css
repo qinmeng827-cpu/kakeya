@@ -1051,6 +1051,55 @@ input[type="range"] {
   font: 500 15px/1.35 var(--font-geist-mono), monospace;
 }
 
+.proof-overlap-feedback {
+  width: min(330px, calc(100vw - 96px));
+  margin-top: 7px;
+  padding: 10px 12px 9px;
+  border-left: 2px solid var(--gold);
+  background: rgba(5, 18, 15, .72);
+  backdrop-filter: blur(10px);
+}
+
+.proof-overlap-feedback > span {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+
+.proof-overlap-feedback > strong {
+  display: block;
+  margin-top: 5px;
+  color: #dceee8;
+  font: 500 12px/1.35 var(--font-geist-mono), monospace;
+}
+
+.proof-overlap-feedback b {
+  color: var(--gold);
+  font-size: 17px;
+}
+
+.proof-overlap-feedback i {
+  display: block;
+  height: 3px;
+  margin: 8px 0 7px;
+  overflow: hidden;
+  background: rgba(150, 225, 214, .18);
+}
+
+.proof-overlap-feedback em {
+  display: block;
+  width: var(--overlap);
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+  transition: width .18s ease;
+}
+
+.proof-overlap-feedback small {
+  display: block;
+  color: rgba(193, 219, 213, .6);
+  font: 400 11px/1.4 var(--font-geist-mono), monospace;
+}
+
 .proof-controls {
   position: absolute;
   z-index: 3;
