@@ -1750,7 +1750,6 @@ export default function Home() {
         <figure className="medal-orbit">
           {/* eslint-disable-next-line @next/next/no-img-element -- public-domain editorial medal photograph is cropped as a circular object */}
           <img src="/fields-medal-obverse.jpg" alt="菲尔兹奖章正面：阿基米德浮雕" />
-          <figcaption>菲尔兹奖章正面 · Stefan Zachow / IMU</figcaption>
         </figure>
         <div>
           <div className="section-index light">PHILADELPHIA · 23 JULY 2026</div>
