@@ -1217,6 +1217,8 @@ function TimelineExplorer() {
 
       if (activeEra === 0) {
         const radius = Math.min(width, height) * 0.4;
+        const needleLength = radius * 1.7;
+        const sweptRadius = needleLength / 2;
         ctx.beginPath();
         ctx.arc(cx, cy, radius, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(91, 225, 213, .025)";
@@ -1225,11 +1227,26 @@ function TimelineExplorer() {
         ctx.lineWidth = 1;
         ctx.stroke();
         const samples = Math.max(2, Math.round(parameter * 22));
+        const sweepAngle = parameter * Math.PI;
+
+        // A centered needle sweeps two opposite circular sectors as it rotates.
+        ctx.fillStyle = "rgba(81, 164, 255, .11)";
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, sweptRadius, 0, sweepAngle);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, sweptRadius, Math.PI, Math.PI + sweepAngle);
+        ctx.closePath();
+        ctx.fill();
+
         for (let index = 0; index < samples; index += 1) {
           const angle = (index / Math.max(1, samples - 1)) * parameter * Math.PI;
-          tube(cx, cy, radius * 1.18, angle, 1.2, cyanSoft);
+          tube(cx, cy, needleLength, angle, 1.2, cyanSoft);
         }
-        tube(cx, cy, radius * 1.18, parameter * Math.PI, 4, gold);
+        tube(cx, cy, needleLength, parameter * Math.PI, 4, gold);
         ctx.beginPath();
         ctx.arc(cx, cy, 5, 0, Math.PI * 2);
         ctx.fillStyle = gold;
