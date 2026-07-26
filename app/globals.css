@@ -547,6 +547,22 @@ input[type="range"] {
   background: radial-gradient(circle at 50% 45%, rgba(17, 68, 60, .5), transparent 58%);
 }
 
+.needle-interactive:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  background: #061b18;
+}
+
+.needle-interactive:fullscreen .needle-topbar {
+  min-height: 88px;
+  padding: 20px 30px;
+}
+
+.needle-interactive:fullscreen .needle-status {
+  inset: auto 30px 26px;
+}
+
 .needle-card::before {
   content: "";
   position: absolute;
@@ -639,6 +655,29 @@ input[type="range"] {
   border-color: #f2cb72;
   background: rgba(119, 92, 30, .28);
   color: #fff4ca;
+}
+
+.interactive-fullscreen-button {
+  position: absolute;
+  z-index: 5;
+  top: 18px;
+  right: 18px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(97, 228, 222, .42);
+  background: rgba(4, 16, 20, .78);
+  color: var(--cyan-soft);
+  font: 600 12px/1 var(--font-geist-mono), monospace;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.interactive-fullscreen-button:hover,
+.interactive-fullscreen-button:focus-visible {
+  border-color: var(--cyan);
+  background: rgba(97, 228, 222, .14);
+  color: #ecfffc;
 }
 
 .needle-status {
@@ -949,6 +988,29 @@ input[type="range"] {
   background-size: 42px 42px;
 }
 
+.proof-visual:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  background-color: #07120f;
+}
+
+.proof-visual:fullscreen .proof-live {
+  top: 42px;
+  left: 48px;
+}
+
+.proof-visual:fullscreen .proof-controls {
+  right: 48px;
+  bottom: 42px;
+  width: min(470px, calc(100% - 240px));
+}
+
+.proof-visual:fullscreen .interactive-fullscreen-button {
+  top: 38px;
+  right: 48px;
+}
+
 .proof-canvas {
   position: absolute;
   inset: 0;
@@ -1127,11 +1189,28 @@ input[type="range"] {
 }
 
 .timeline-explorer {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(260px, 310px) minmax(0, 1fr);
   grid-template-rows: auto auto;
   gap: 22px 28px;
   align-items: stretch;
+}
+
+.timeline-explorer:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  padding: 34px;
+  grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+  grid-template-rows: minmax(440px, 58vh) auto;
+  overflow: auto;
+  background: #07120f;
+}
+
+.timeline-explorer:fullscreen .interactive-fullscreen-button {
+  top: 48px;
+  right: 52px;
 }
 
 .timeline {

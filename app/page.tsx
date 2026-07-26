@@ -396,8 +396,32 @@ function makeNeedles(seed = 0): Tube2D[] {
   });
 }
 
+function useFullscreen<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const syncFullscreenState = () => setIsFullscreen(document.fullscreenElement === ref.current);
+    document.addEventListener("fullscreenchange", syncFullscreenState);
+    return () => document.removeEventListener("fullscreenchange", syncFullscreenState);
+  }, []);
+
+  const toggleFullscreen = () => {
+    const element = ref.current;
+    if (!element) return;
+    if (document.fullscreenElement === element) {
+      void document.exitFullscreen();
+      return;
+    }
+    void element.requestFullscreen();
+  };
+
+  return { ref, isFullscreen, toggleFullscreen };
+}
+
 function KakeyaDiagram() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { ref: wrapRef, isFullscreen, toggleFullscreen } = useFullscreen<HTMLDivElement>();
   const [needles, setNeedles] = useState<Tube2D[]>(() => makeNeedles());
   const [selected, setSelected] = useState(6);
   const [seed, setSeed] = useState(0);
@@ -405,7 +429,7 @@ function KakeyaDiagram() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const wrap = canvas?.parentElement;
+    const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -458,7 +482,7 @@ function KakeyaDiagram() {
     observer.observe(wrap);
     draw();
     return () => observer.disconnect();
-  }, [needles, selected]);
+  }, [needles, selected, wrapRef]);
 
   const locate = (event: React.PointerEvent<HTMLCanvasElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -518,7 +542,7 @@ function KakeyaDiagram() {
   };
 
   return (
-    <div className="needle-interactive">
+    <div className="needle-interactive" ref={wrapRef}>
       <div className="needle-topbar">
         <div className="needle-intro">
           <span>01 / DIRECTION LAB</span>
@@ -529,6 +553,9 @@ function KakeyaDiagram() {
           <strong aria-label="所选线段当前角度">{Math.round((((needles[selected]?.angle ?? 0) * 180) / Math.PI + 180) % 180)}°</strong>
           <button type="button" onClick={() => rotateSelected(10)} aria-label="顺时针旋转所选线段">+10°</button>
           <button type="button" onClick={reshuffle}>重新排布</button>
+          <button type="button" onClick={toggleFullscreen} aria-pressed={isFullscreen}>
+            {isFullscreen ? "退出全屏" : "全屏查看"}
+          </button>
         </div>
       </div>
       <canvas
@@ -558,6 +585,7 @@ function KakeyaDiagram() {
 
 function ProofVisual({ active }: { active: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { ref: wrapRef, isFullscreen, toggleFullscreen } = useFullscreen<HTMLDivElement>();
   const [delta, setDelta] = useState(0.08);
   const [cluster, setCluster] = useState(0.72);
   const [scale, setScale] = useState(1);
@@ -588,7 +616,7 @@ function ProofVisual({ active }: { active: number }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const wrap = canvas?.parentElement;
+    const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -762,7 +790,7 @@ function ProofVisual({ active }: { active: number }) {
     observer.observe(wrap);
     draw();
     return () => observer.disconnect();
-  }, [active, cluster, clusterCenter, delta, limit, scale, spread, tubeOffsets]);
+  }, [active, cluster, clusterCenter, delta, limit, scale, spread, tubeOffsets, wrapRef]);
 
   const pointerPosition = (event: React.PointerEvent<HTMLCanvasElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -872,7 +900,7 @@ function ProofVisual({ active }: { active: number }) {
   ][active];
 
   return (
-    <div className="proof-visual">
+    <div className="proof-visual" ref={wrapRef}>
       <canvas
         ref={canvasRef}
         className="proof-canvas"
@@ -891,6 +919,9 @@ function ProofVisual({ active }: { active: number }) {
           setScale((current) => Math.max(0, Math.min(2, current + (event.deltaY > 0 ? 1 : -1))));
         }}
       />
+      <button className="interactive-fullscreen-button" type="button" onClick={toggleFullscreen} aria-pressed={isFullscreen}>
+        {isFullscreen ? "退出全屏" : "全屏查看"}
+      </button>
       <div className="proof-live">
         <span>INTERACTIVE MODEL</span>
         <strong>{controls.hint}</strong>
@@ -921,12 +952,11 @@ function ProofVisual({ active }: { active: number }) {
 
 function DirectionLab() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const { ref: wrapRef, isFullscreen, toggleFullscreen } = useFullscreen<HTMLDivElement>();
   const [delta, setDelta] = useState(0.018);
   const [showTubes, setShowTubes] = useState(true);
   const [autoRotate, setAutoRotate] = useState(true);
   const [sampleCount, setSampleCount] = useState(96);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const yawRef = useRef(-0.45);
   const pitchRef = useRef(0.28);
   const dragRef = useRef({ active: false, x: 0, y: 0 });
@@ -1055,22 +1085,6 @@ function DirectionLab() {
     return () => cancelAnimationFrame(animation);
   }, [autoRotate, delta, points, sampleCount, showTubes]);
 
-  useEffect(() => {
-    const syncFullscreenState = () => setIsFullscreen(document.fullscreenElement === wrapRef.current);
-    document.addEventListener("fullscreenchange", syncFullscreenState);
-    return () => document.removeEventListener("fullscreenchange", syncFullscreenState);
-  }, []);
-
-  const toggleFullscreen = () => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    if (document.fullscreenElement === wrap) {
-      void document.exitFullscreen();
-      return;
-    }
-    void wrap.requestFullscreen();
-  };
-
   const handlePointerDown = (event: React.PointerEvent) => {
     dragRef.current = { active: true, x: event.clientX, y: event.clientY };
     setAutoRotate(false);
@@ -1113,11 +1127,6 @@ function DirectionLab() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       />
-      <div className="lab-guide" aria-live="polite">
-        <p><span>先看</span>球面上的每条亮线代表一个方向；这里的线段共用中心，只是方向样本，不是挂谷构造本身。</p>
-        <p><span>动手</span>拖动画面换个角度，再调细管半径 δ 或方向数。</p>
-        <p><span>你刚刚看到</span>{labFeedback}</p>
-      </div>
       <div className="lab-controls" aria-label="方向采样实验控制">
         <label>
           <span>
@@ -1160,6 +1169,7 @@ function DirectionLab() {
 
 function TimelineExplorer() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { ref: wrapRef, isFullscreen, toggleFullscreen } = useFullscreen<HTMLDivElement>();
   const [activeEra, setActiveEra] = useState(0);
   const [detailStep, setDetailStep] = useState(0);
   const [parameters, setParameters] = useState([0.36, 0.58, 0.45, 0.48, 0.08, 1]);
@@ -1429,7 +1439,10 @@ function TimelineExplorer() {
   };
 
   return (
-    <div className="timeline-explorer">
+    <div className="timeline-explorer" ref={wrapRef}>
+      <button className="interactive-fullscreen-button" type="button" onClick={toggleFullscreen} aria-pressed={isFullscreen}>
+        {isFullscreen ? "退出全屏" : "全屏查看"}
+      </button>
       <div className="timeline" role="tablist" aria-label="挂谷问题百年进展">
         {timeline.map(([year, text], index) => (
           <button
