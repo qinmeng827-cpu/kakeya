@@ -79,6 +79,15 @@ const timeline = [
   ["2026.07", "成果如何归属：菲尔兹奖表彰王虹的一系列工作；三维定理由王虹与 Joshua Zahl 共同证明。"],
 ];
 
+const timelinePeople = [
+  { lead: "挂谷宗一", detail: "提出问题 · Sōichi Kakeya" },
+  { lead: "阿布拉姆·贝西科维奇", detail: "反直觉构造 · Abram S. Besicovitch" },
+  { lead: "Roy Davies · Antonio Córdoba", detail: "满维定理与分析学桥梁" },
+  { lead: "Thomas Wolff", detail: "核心推进者；Bourgain、Katz、Tao、Guth 等持续发展方法" },
+  { lead: "王虹 · Joshua Zahl", detail: "共同完成三维定理证明" },
+  { lead: "王虹 · Joshua Zahl", detail: "定理署名归两人；菲尔兹奖授予王虹个人" },
+];
+
 const timelineExperiments = [
   {
     kicker: "问题的诞生",
@@ -98,19 +107,19 @@ const timelineExperiments = [
   },
   {
     kicker: "分析学转向",
-    title: "一束波，也会在空间里走成细管",
-    action: "改变示意频率。傅里叶分析会把复杂的波拆成许多波包；每个波包主要沿着一根细管传播。",
-    control: "示意频率",
-    value: (parameter: number) => `2^${Math.round(1 + parameter * 7)}`,
-    conclusion: "于是“细管能重叠多少”会影响我们对波的估计。几何问题和分析问题接上了。",
+    title: "先看局部：有多少细管同时经过这里？",
+    action: "拖动重叠程度，把不同方向的有限细管样本拉向同一个测试区域。右下的读数只计这份样本，不是定理常数。",
+    control: "测试区域的局部重叠",
+    value: (parameter: number) => `${3 + Math.round(parameter * 17)} / 24 条细管`,
+    conclusion: "同一小块区域里的细管越多，对应的波包就越可能集中；这正是极大函数估计要控制的几何困难。",
   },
   {
     kicker: "工具的积累",
-    title: "从街区看到城市，再放大回街角",
-    action: "提高分解层级，观察拥挤如何被逐层定位。这里的网格只是帮助理解，不等同于论文中的多项式分割。",
-    control: "示意分解层级",
-    value: (parameter: number) => `${1 + Math.round(parameter * 4)} 层`,
-    conclusion: "这些工具能把“哪里挤、为什么挤”说得越来越精确，也让已知的维数下界不断提高。",
+    title: "锁定一个拥挤角落，再把它放大",
+    action: "提高放大层级。左侧总览中的金色框会逐层缩小；右侧把该局部重新放回同样大小的窗口中观察。",
+    control: "局部放大层级",
+    value: (parameter: number) => `${1 + Math.round(parameter * 4)} 次重标度`,
+    conclusion: "多尺度方法不是单纯把网格切细：它反复询问，局部拥挤在放大后是否仍然异常，并把答案传回原尺度。",
   },
   {
     kicker: "三维猜想解决",
@@ -1188,6 +1197,7 @@ function TimelineExplorer() {
   const parameter = parameters[activeEra];
   const experiment = timelineExperiments[activeEra];
   const proof = timelineProofs[activeEra];
+  const people = timelinePeople[activeEra];
 
   const setParameter = (value: number) => {
     setParameters((current) =>
@@ -1304,63 +1314,133 @@ function TimelineExplorer() {
       }
 
       if (activeEra === 2) {
-        const frequency = 2 + Math.round(parameter * 9);
-        const amplitude = height * 0.035;
-        for (let band = -3; band <= 3; band += 1) {
-          ctx.beginPath();
-          for (let x = width * 0.08; x <= width * 0.92; x += 4) {
-            const normalized = (x - width * 0.08) / (width * 0.84);
-            const y =
-              cy +
-              band * height * 0.075 +
-              Math.sin(normalized * Math.PI * 2 * frequency + phase + band) * amplitude;
-            if (x === width * 0.08) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.strokeStyle = band === 0 ? gold : cyan;
-          ctx.globalAlpha = 1 - Math.abs(band) * 0.1;
-          ctx.lineWidth = band === 0 ? 2.2 : 1.1;
-          ctx.stroke();
+        const tubeCount = 24;
+        const overlapCount = 3 + Math.round(parameter * 17);
+        const testSize = Math.min(width, height) * 0.31;
+        const testX = cx - testSize / 2;
+        const testY = cy - testSize / 2;
+        const spread = 1 - parameter;
+
+        ctx.fillStyle = "rgba(81, 164, 255, .06)";
+        ctx.fillRect(testX, testY, testSize, testSize);
+        ctx.strokeStyle = "rgba(81, 164, 255, .42)";
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([5, 5]);
+        ctx.strokeRect(testX, testY, testSize, testSize);
+        ctx.setLineDash([]);
+
+        for (let index = 0; index < tubeCount; index += 1) {
+          const angle = -1.25 + (index / (tubeCount - 1)) * 2.5;
+          const focused = index < overlapCount;
+          const sourceX = width * (0.12 + (((index * 37) % 77) / 100));
+          const sourceY = height * (0.14 + (((index * 53) % 68) / 100));
+          const targetX = cx + (((index * 19) % 9) - 4) * 3;
+          const targetY = cy + (((index * 29) % 9) - 4) * 3;
+          const x = focused ? sourceX * spread + targetX * (1 - spread) : sourceX;
+          const y = focused ? sourceY * spread + targetY * (1 - spread) : sourceY;
+          tube(
+            x,
+            y,
+            Math.min(width, height) * 0.26,
+            angle,
+            focused ? 3 : 1.6,
+            focused ? gold : cyanSoft,
+          );
         }
-        ctx.globalAlpha = 1;
-        for (let index = 0; index < 9; index += 1) {
-          tube(width * (0.16 + index * 0.085), cy, width * 0.075, -0.7 + index * 0.17, 5, cyanSoft);
-        }
+
+        const response = overlapCount / tubeCount;
+        const meterX = width * 0.72;
+        const meterY = height * 0.78;
+        const meterW = width * 0.18;
+        ctx.fillStyle = "rgba(7, 18, 15, .76)";
+        ctx.fillRect(meterX - 14, meterY - 48, meterW + 28, 72);
+        ctx.strokeStyle = "rgba(143, 216, 207, .18)";
+        ctx.strokeRect(meterX - 14, meterY - 48, meterW + 28, 72);
+        ctx.fillStyle = "rgba(183, 244, 238, .74)";
+        ctx.font = "600 11px Arial";
+        ctx.fillText("有限样本的局部重叠", meterX, meterY - 28);
+        ctx.fillStyle = "rgba(91, 225, 213, .18)";
+        ctx.fillRect(meterX, meterY - 12, meterW, 8);
+        ctx.fillStyle = gold;
+        ctx.fillRect(meterX, meterY - 12, meterW * response, 8);
+        ctx.fillStyle = "#dceee9";
+        ctx.font = "600 13px Arial";
+        ctx.fillText(`${overlapCount} / ${tubeCount}`, meterX, meterY + 13);
         ctx.fillStyle = "rgba(183, 244, 238, .66)";
         ctx.font = "500 12px Arial";
-        ctx.fillText("波形与管束为概念对应 · 非偏微分方程数值解", width * 0.08, height * 0.88);
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) phase += 0.018;
+        ctx.fillText("测试区域：重叠越高，波包估计越难", width * 0.08, height * 0.88);
       }
 
       if (activeEra === 3) {
         const levels = 1 + Math.round(parameter * 4);
-        const size = Math.min(width * 0.68, height * 0.72);
-        const left = cx - size / 2;
-        const top = cy - size * 0.42;
-        for (let level = 0; level < levels; level += 1) {
-          const divisions = Math.pow(2, level + 1);
-          ctx.strokeStyle = level === levels - 1 ? "rgba(242, 203, 114, .34)" : line;
-          ctx.lineWidth = level === levels - 1 ? 1.2 : 0.7;
-          for (let index = 0; index <= divisions; index += 1) {
-            const offset = (size * index) / divisions;
-            ctx.beginPath();
-            ctx.moveTo(left + offset, top);
-            ctx.lineTo(left + offset, top + size * 0.84);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(left, top + offset * 0.84);
-            ctx.lineTo(left + size, top + offset * 0.84);
-            ctx.stroke();
-          }
+        const mapX = width * 0.08;
+        const mapY = height * 0.16;
+        const mapW = width * 0.43;
+        const mapH = height * 0.62;
+        const zoomX = width * 0.61;
+        const zoomY = mapY;
+        const zoomSize = Math.min(width * 0.29, mapH);
+        const boxSize = Math.min(mapW, mapH) * Math.pow(0.65, levels - 1);
+        const boxX = mapX + mapW * 0.48 - boxSize / 2;
+        const boxY = mapY + mapH * 0.52 - boxSize / 2;
+
+        ctx.fillStyle = "rgba(91, 225, 213, .025)";
+        ctx.fillRect(mapX, mapY, mapW, mapH);
+        ctx.strokeStyle = line;
+        ctx.strokeRect(mapX, mapY, mapW, mapH);
+        for (let index = 0; index < 28; index += 1) {
+          const x = mapX + mapW * (0.05 + (((index * 31) % 88) / 100));
+          const y = mapY + mapH * (0.08 + (((index * 47) % 76) / 100));
+          tube(x, y, mapW * 0.25, ((index * 119) % 180) * (Math.PI / 180), 1.6, cyanSoft);
         }
-        for (let index = 0; index < 24; index += 1) {
-          const x = left + size * (0.08 + (((index * 31) % 84) / 100));
-          const y = top + size * (0.08 + (((index * 47) % 72) / 100));
-          tube(x, y, size * 0.23, ((index * 119) % 180) * (Math.PI / 180), 1.6, index % 7 === 0 ? gold : cyan);
+        ctx.fillStyle = "rgba(242, 203, 114, .09)";
+        ctx.fillRect(boxX, boxY, boxSize, boxSize);
+        ctx.strokeStyle = gold;
+        ctx.lineWidth = 1.4;
+        ctx.strokeRect(boxX, boxY, boxSize, boxSize);
+
+        ctx.beginPath();
+        ctx.moveTo(boxX + boxSize, boxY + boxSize / 2);
+        ctx.lineTo(zoomX - 20, zoomY + zoomSize / 2);
+        ctx.strokeStyle = "rgba(242, 203, 114, .55)";
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(zoomX - 20, zoomY + zoomSize / 2);
+        ctx.lineTo(zoomX - 28, zoomY + zoomSize / 2 - 6);
+        ctx.lineTo(zoomX - 28, zoomY + zoomSize / 2 + 6);
+        ctx.closePath();
+        ctx.fillStyle = gold;
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(91, 225, 213, .025)";
+        ctx.fillRect(zoomX, zoomY, zoomSize, zoomSize);
+        ctx.strokeStyle = "rgba(143, 216, 207, .32)";
+        ctx.strokeRect(zoomX, zoomY, zoomSize, zoomSize);
+        const divisions = Math.pow(2, Math.min(levels, 3));
+        for (let index = 1; index < divisions; index += 1) {
+          const offset = (zoomSize * index) / divisions;
+          ctx.beginPath();
+          ctx.moveTo(zoomX + offset, zoomY);
+          ctx.lineTo(zoomX + offset, zoomY + zoomSize);
+          ctx.moveTo(zoomX, zoomY + offset);
+          ctx.lineTo(zoomX + zoomSize, zoomY + offset);
+          ctx.strokeStyle = "rgba(143, 216, 207, .12)";
+          ctx.lineWidth = 0.7;
+          ctx.stroke();
         }
-        ctx.fillStyle = "rgba(183, 244, 238, .66)";
+        const localTubes = 7 + levels * 2;
+        for (let index = 0; index < localTubes; index += 1) {
+          const x = zoomX + zoomSize * (0.16 + (((index * 19) % 67) / 100));
+          const y = zoomY + zoomSize * (0.18 + (((index * 43) % 61) / 100));
+          tube(x, y, zoomSize * 0.42, -1.05 + (index / Math.max(1, localTubes - 1)) * 2.1, 1.8, index % 5 === 0 ? gold : cyan);
+        }
+        ctx.fillStyle = "rgba(183, 244, 238, .72)";
+        ctx.font = "600 11px Arial";
+        ctx.fillText("总览：锁定局部拥挤", mapX, mapY - 12);
+        ctx.fillText(`第 ${levels} 次重标度：重新以同样窗口观察`, zoomX, zoomY - 12);
         ctx.font = "500 12px Arial";
-        ctx.fillText("多尺度网格示意 · 非多项式分割计算", width * 0.08, height * 0.88);
+        ctx.fillStyle = "rgba(183, 244, 238, .66)";
+        ctx.fillText("示意：局部区域缩小，但放大后仍要重新判断细管是否异常拥挤", width * 0.08, height * 0.88);
       }
 
       if (activeEra === 4) {
@@ -1498,6 +1578,11 @@ function TimelineExplorer() {
         </div>
         <div className="era-copy">
           <span>{experiment.kicker} · INTERACTIVE</span>
+          <div className="era-people" aria-label={`这一阶段的关键人物：${people.lead}`}>
+            <span>关键人物</span>
+            <strong>{people.lead}</strong>
+            <small>{people.detail}</small>
+          </div>
           <h3>{experiment.title}</h3>
           <p><b>先看什么：</b>{experiment.action}</p>
           <label>

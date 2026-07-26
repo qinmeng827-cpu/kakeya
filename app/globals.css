@@ -1405,6 +1405,34 @@ input[type="range"] {
   letter-spacing: .14em;
 }
 
+.era-copy > .era-people {
+  display: grid;
+  gap: 4px;
+  margin: 16px 0 0;
+  padding: 10px 12px;
+  border-left: 2px solid var(--gold);
+  background: rgba(242, 203, 114, .055);
+}
+
+.era-copy > .era-people span {
+  color: #8fa9a1;
+  font: 650 11px/1 var(--font-geist-mono), monospace;
+  letter-spacing: .12em;
+}
+
+.era-copy > .era-people strong {
+  color: #eef5f1;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.era-copy > .era-people small {
+  margin: 0;
+  color: #9db4ad;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .era-copy h3 {
   margin: 14px 0 10px;
   color: #eff5f1;
