@@ -31,7 +31,7 @@ const proofSteps = [
   {
     number: "01",
     title: "先给线段一点厚度",
-    text: "线段细到没有体积，没法直接测量。于是先把每条线段套进一根很细的“吸管”；吸管半径记作 δ。",
+    text: "原来的线段没有厚度，几乎无从谈起“它们合起来占多少空间”。第一步不是偷换问题，而是先给每条线段套上一根极细的“吸管”；吸管半径记作 δ。",
     input: "每个方向都有一条线段",
     operation: "给线段套上半径 δ 的细管",
     output: "一组可以测量的细管",
@@ -39,7 +39,7 @@ const proofSteps = [
   {
     number: "02",
     title: "找出挤成一团的地方",
-    text: "麻烦不在于细管很多，而在于它们可能躲进同一小块区域。证明要排除这种过分拥挤，同时允许正常的交叉。",
+    text: "细管相交并不奇怪；真正危险的是，它们能不能在每一个尺度上都偷偷挤进同一小块区域。这里要辨认哪些交叉正常，哪些拥挤已经不可能发生。",
     input: "一组可能互相重叠的细管",
     operation: "检查它们有没有挤进同一凸形区域",
     output: "重叠程度受到控制",
@@ -47,7 +47,7 @@ const proofSteps = [
   {
     number: "03",
     title: "像看地图一样不断缩放",
-    text: "远看不拥挤，不代表近看也不拥挤。证明在不同放大倍数之间来回切换，追踪局部的拥挤会不会累积成整体问题。",
+    text: "远看不拥挤，不代表放大后也安全。证明像在城市地图与街角之间来回切换：追踪局部的拥挤，会不会在更细的尺度上累积成整体问题。",
     input: "某一个放大倍数下的重叠情况",
     operation: "放大、拆分，再把结论传到下一层",
     output: "每个尺度都不失控",
@@ -55,7 +55,7 @@ const proofSteps = [
   {
     number: "04",
     title: "证明它们占的空间不会太小",
-    text: "只要细管没有异常抱团，它们合在一起就必须占据足够多的空间。允许局部只取细管的一部分，但这些部分也不能凭空缩没。",
+    text: "一旦异常抱团被排除，这些细管合在一起就不能凭空缩没：哪怕只保留每根细管的一部分，它们仍必须占据足够多的空间。",
     input: "已经控制好重叠的细管",
     operation: "估计所有细管合起来的体积",
     output: "得到一个不会塌缩的体积下界",
@@ -63,7 +63,7 @@ const proofSteps = [
   {
     number: "05",
     title: "最后把“吸管”变回线段",
-    text: "让细管半径 δ 一点点缩到 0。前面的估计始终有效，于是原来的集合再薄，也不可能只像一张面或一条线。",
+    text: "最后让细管半径 δ 一点点缩到 0。前面的控制在每个小尺度上都成立，于是原来的集合再薄，也不可能被压成一张二维薄片或一条线。",
     input: "每个小尺度都成立的体积估计",
     operation: "让 δ 趋近于 0",
     output: "两种常用维数都等于 3",
@@ -71,12 +71,12 @@ const proofSteps = [
 ];
 
 const timeline = [
-  ["1917", "问题从一根会转动的针开始：想让它转遍所有方向，最小要腾出多大地方？"],
-  ["1919—1928", "第一个惊喜出现了：允许针一边转一边移动，所需面积竟然可以小到接近零。"],
-  ["1970s", "面积可以是零，但二维里的集合仍“复杂得像整个平面”。几何也在这时走进傅里叶分析。"],
-  ["1990s—2020s", "数学家开始像看卫星地图一样切换尺度，逐步限制那些过分拥挤的细管。"],
-  ["2025.02", "王虹与 Joshua Zahl 完成三维证明：集合可以没有体积，却不能降成一张面。"],
-  ["2026.07", "菲尔兹奖表彰王虹的一系列工作；三维挂谷定理由她与 Joshua Zahl 共同证明。"],
+  ["1917", "卡在哪里：针要转遍所有方向，到底需要多大空间？新语言：先把“有一条针”说得足够精确。"],
+  ["1919—1928", "卡在哪里：直觉以为总要扫出一大片面积。新办法：允许针边转边移动，让不同方向尽量重叠。"],
+  ["1970s", "卡在哪里：面积可以是零，但二维里的集合仍会不会像一条线？新结论：它仍可满维，细管也进入了波的分析。"],
+  ["1990s—2020s", "卡在哪里：局部重叠能否在放大后失控？新工具：在不同尺度之间来回切换，追踪拥挤。"],
+  ["2025.02", "卡在哪里：三维细管究竟能挤到多薄？新证明：集合可以没有体积，却不能降成一张面。"],
+  ["2026.07", "成果如何归属：菲尔兹奖表彰王虹的一系列工作；三维定理由王虹与 Joshua Zahl 共同证明。"],
 ];
 
 const timelineExperiments = [
@@ -1080,6 +1080,10 @@ function DirectionLab() {
     dragRef.current.active = false;
   };
 
+  const labFeedback = showTubes
+    ? `现在每条线段都有半径 ${delta.toFixed(3)} 的外壳。它们可以交叉，但这张图并不在计算“能挤到多薄”。`
+    : "你现在看到的是没有厚度的线段：它们只负责给出方向；要讨论空间占用，下一步才把它们加厚成细管。";
+
   return (
     <div className="lab-shell" ref={wrapRef}>
       <div className="lab-readout">
@@ -1100,9 +1104,10 @@ function DirectionLab() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       />
-      <div className="lab-caption">
-        <span className="pulse-dot" />
-        无向方向的有限采样 · 线段长度归一化为 1 · 共中心不是挂谷集合构造
+      <div className="lab-guide" aria-live="polite">
+        <p><span>先看</span>球面上的每条亮线代表一个方向；这里的线段共用中心，只是方向样本，不是挂谷构造本身。</p>
+        <p><span>动手</span>拖动画面换个角度，再调细管半径 δ 或方向数。</p>
+        <p><span>你刚刚看到</span>{labFeedback}</p>
       </div>
       <div className="lab-controls" aria-label="方向采样实验控制">
         <label>
@@ -1444,9 +1449,9 @@ function TimelineExplorer() {
         <div className="era-copy">
           <span>{experiment.kicker} · INTERACTIVE</span>
           <h3>{experiment.title}</h3>
-          <p>{experiment.action}</p>
+          <p><b>先看什么：</b>{experiment.action}</p>
           <label>
-            <span>{experiment.control}</span>
+            <span>动手做 · {experiment.control}</span>
             <strong>{experiment.value(parameter)}</strong>
             <input
               type="range"
@@ -1458,10 +1463,10 @@ function TimelineExplorer() {
             />
           </label>
           <div>
-            <span>一句话结果</span>
+            <span>你刚刚看到</span>
             <p>{experiment.conclusion}</p>
           </div>
-          <small>动画只讲思路，不负责替代数学证明。</small>
+          <small>动画只讲思路，不负责替代数学证明；这是有限样本的直觉实验，图形变化不等于完成了数学证明。</small>
         </div>
       </div>
       <div className="era-derivation">
@@ -1550,19 +1555,19 @@ function ProofRoute() {
           <p>{proofSteps[active].text}</p>
           <div className="proof-logic" aria-label="当前证明步骤的起点、做法和结果">
             <div>
-              <span>起点</span>
+              <span>先看什么</span>
               <strong>{proofSteps[active].input}</strong>
             </div>
             <div>
-              <span>怎么做</span>
+              <span>这一步做什么</span>
               <strong>{proofSteps[active].operation}</strong>
             </div>
             <div>
-              <span>得到</span>
+              <span>现在能说明</span>
               <strong>{proofSteps[active].output}</strong>
             </div>
           </div>
-          <small>这张图只帮你看懂思路，不会替你完成 127 页证明。</small>
+          <small>点击左侧关卡，观察难点怎样被逐步换成可计算的问题。这张图只帮你看懂思路，不会替你完成 127 页证明。</small>
         </div>
       </div>
     </div>
@@ -1786,8 +1791,8 @@ export default function Home() {
             都装进<span>三维</span>
           </h1>
           <p className="hero-lead">
-            想象把一根长度固定的针，朝每个方向各放一次。王虹与 Joshua Zahl 证明：
-            <em>无论这些针怎样挤在一起，它们组成的三维集合都不可能“扁”成一张面。</em>
+            把一根长度不变的针，朝每个方向各放一次。你当然可以让它们彼此靠近；真正奇怪的是，王虹与 Joshua Zahl 证明：
+            <em>在三维里，无论怎么挤，这些针组成的集合仍保留完整的三维复杂度。</em>
           </p>
           <div className="hero-actions">
             <a href="#question">进入问题 <span>↓</span></a>
@@ -1829,14 +1834,14 @@ export default function Home() {
           </div>
           <div className="question-copy">
             <p>
-              任选一个方向，这个集合里都能找到一条长度为 1 的线段。
-              线段不必围着同一个中心转，也不必经过同一点。它们可以一边转、一边移动，还可以大量重叠。
+              这里的“针”不是一把真的针，而是一条长度为 1、没有厚度的线段。任意一个方向，集合里都要有一条这样的线段；至于它放在哪里，可以自由选择。
+              难点恰恰从这里开始：它们不必围着同一个中心转，也不必经过同一点，可以一边转、一边移动，还可以大量重叠。
             </p>
             <blockquote>
-              “它几乎不占地方，却会不会仍然复杂得像整个空间？”
+              “它可以几乎不占体积，却会不会仍然复杂得像整个空间？”
             </blockquote>
             <p className="micro-note">
-              数学家把“复杂得像整个空间”说成“满维”。二维早已证明满维；王虹与 Joshua Zahl 在 2025 年解决了三维。四维及以上仍然开放。
+              数学家把“复杂得像整个空间”说成“满维”。先有直觉，术语才跟上：二维早已证明满维；王虹与 Joshua Zahl 在 2025 年解决了三维。四维及以上仍然开放。
             </p>
           </div>
         </div>
@@ -1908,6 +1913,7 @@ export default function Home() {
         <div className="section-index light">04 / A CENTURY OF PROGRESS</div>
         <div className="timeline-heading">
           <h2>一道小学几何味的问题，做了一百多年。</h2>
+          <p>每个节点只回答两件事：当时究竟卡在哪里？后来的人又多了一件什么工具？</p>
         </div>
         <TimelineExplorer />
       </section>
@@ -1915,7 +1921,7 @@ export default function Home() {
       <section className="person-section" id="person">
         <div className="person-heading">
           <div className="section-index">05 / THE MATHEMATICIAN</div>
-          <h2>她研究两件事：波怎样传播，几何形状究竟能挤得多薄。</h2>
+          <h2>她研究两件事：一束波能挤到多窄，几何形状究竟能压得多薄。</h2>
         </div>
         <div className="person-profiles">
           <article className="person-profile person-profile-hong">
@@ -1965,9 +1971,9 @@ export default function Home() {
         <div className="section-heading-row">
           <div>
             <div className="section-index">06 / SOURCES</div>
-            <h2>从原始论文开始。</h2>
+            <h2>想继续读，从两条路进入。</h2>
           </div>
-          <p>想继续深挖，可以从论文、官方奖项说明和面向大众的长文开始。数学结论以原始论文为准。</p>
+          <p>先看面向大众的解释，建立直觉；再读原始论文，保留完整证明。数学结论以原始论文为准。</p>
         </div>
         <div className="source-list">
           {sources.map((source, index) => (
