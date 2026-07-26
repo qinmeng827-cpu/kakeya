@@ -535,12 +535,16 @@ input[type="range"] {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #dfe5dc;
+  isolation: isolate;
+  border: 1px solid rgba(48, 124, 112, .58);
+  background: #061b18;
+  box-shadow: inset 0 0 0 1px rgba(154, 221, 207, .05), inset 0 -100px 140px rgba(0, 0, 0, .18);
 }
 
 .needle-interactive {
   position: absolute;
   inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(17, 68, 60, .5), transparent 58%);
 }
 
 .needle-card::before {
@@ -548,14 +552,16 @@ input[type="range"] {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(36, 65, 56, .08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 65, 56, .08) 1px, transparent 1px);
+    linear-gradient(rgba(121, 226, 211, .075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(121, 226, 211, .075) 1px, transparent 1px);
   background-size: 46px 46px;
+  pointer-events: none;
 }
 
 .kakeya-canvas {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   cursor: grab;
@@ -566,40 +572,62 @@ input[type="range"] {
   cursor: grabbing;
 }
 
-.canvas-hint {
+.needle-topbar {
   position: absolute;
-  z-index: 2;
-  top: 20px;
-  left: 22px;
-  padding: 8px 10px;
-  border: 1px solid rgba(31, 83, 70, .18);
-  background: rgba(230, 235, 227, .78);
-  color: #456056;
-  font: 600 13px/1 var(--font-geist-mono), monospace;
-  letter-spacing: .08em;
-  backdrop-filter: blur(8px);
-  pointer-events: none;
+  z-index: 3;
+  inset: 0 0 auto;
+  min-height: 74px;
+  padding: 15px 18px 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid rgba(123, 220, 206, .16);
+  background: linear-gradient(180deg, rgba(5, 28, 25, .97), rgba(5, 28, 25, .68));
+  backdrop-filter: blur(12px);
+}
+
+.needle-intro {
+  color: rgba(192, 244, 235, .75);
+  font: 600 12px/1.2 var(--font-geist-mono), monospace;
+  letter-spacing: .12em;
+}
+
+.needle-intro span {
+  display: block;
+  color: #f2cb72;
+  font-size: 10px;
+  letter-spacing: .16em;
+}
+
+.needle-intro p {
+  margin: 6px 0 0;
+  font: 500 13px/1.35 Arial, "Microsoft YaHei", "PingFang SC", sans-serif;
+  letter-spacing: .02em;
 }
 
 .needle-toolbar {
-  position: absolute;
-  z-index: 3;
-  top: 18px;
-  right: 20px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .needle-toolbar button,
 .needle-toolbar strong {
-  min-height: 32px;
-  padding: 7px 10px;
-  border: 1px solid rgba(31, 83, 70, .2);
-  background: rgba(230, 235, 227, .84);
-  color: #345448;
-  font: 600 14px/1 var(--font-geist-mono), monospace;
-  backdrop-filter: blur(8px);
+  min-height: 34px;
+  padding: 8px 10px;
+  border: 1px solid rgba(124, 221, 207, .28);
+  background: rgba(14, 57, 50, .55);
+  color: #c1eee8;
+  font: 600 13px/1 var(--font-geist-mono), monospace;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.needle-toolbar strong {
+  min-width: 48px;
+  border-color: rgba(242, 203, 114, .56);
+  color: #f2cb72;
+  text-align: center;
 }
 
 .needle-toolbar button {
@@ -608,20 +636,48 @@ input[type="range"] {
 
 .needle-toolbar button:hover,
 .needle-toolbar button:focus-visible {
-  border-color: #a97d2c;
-  color: #8f6419;
+  border-color: #f2cb72;
+  background: rgba(119, 92, 30, .28);
+  color: #fff4ca;
 }
 
-.needle-labels {
+.needle-status {
   position: absolute;
-  left: 25px;
-  right: 25px;
-  bottom: 22px;
+  z-index: 3;
+  inset: auto 20px 18px;
   display: flex;
+  align-items: end;
   justify-content: space-between;
-  color: #4f6158;
-  font: 650 15px/1.2 var(--font-geist-mono), monospace;
+  gap: 24px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(123, 220, 206, .16);
+  color: rgba(197, 242, 234, .72);
+}
+
+.needle-status span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  color: #c7f2eb;
+  font: 600 11px/1.2 var(--font-geist-mono), monospace;
   letter-spacing: .08em;
+}
+
+.needle-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f2cb72;
+  box-shadow: 0 0 12px rgba(242, 203, 114, .7);
+}
+
+.needle-status p {
+  margin: 0;
+  max-width: 355px;
+  color: rgba(197, 242, 234, .62);
+  font: 500 13px/1.45 Arial, "Microsoft YaHei", "PingFang SC", sans-serif;
+  text-align: right;
 }
 
 .question-copy {
@@ -2120,20 +2176,32 @@ footer > a {
     grid-template-columns: 1fr;
   }
   .needle-card {
-    min-height: 390px;
+    min-height: 430px;
   }
-  .canvas-hint {
-    top: 14px;
-    left: 14px;
+  .needle-topbar {
+    min-height: 0;
+    padding: 13px 14px 12px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
   }
   .needle-toolbar {
-    top: auto;
-    right: 14px;
-    bottom: 48px;
+    width: 100%;
+    justify-content: flex-end;
   }
   .needle-toolbar button,
   .needle-toolbar strong {
     padding: 7px 8px;
+  }
+  .needle-status {
+    inset: auto 14px 13px;
+    display: block;
+  }
+  .needle-status p {
+    margin-top: 7px;
+    max-width: none;
+    font-size: 12px;
+    text-align: left;
   }
   .dimension-switch {
     display: inline-flex;

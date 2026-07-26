@@ -434,12 +434,12 @@ function KakeyaDiagram() {
         ctx.moveTo(-length / 2, 0);
         ctx.lineTo(length / 2, 0);
         ctx.lineCap = "round";
-        ctx.lineWidth = isSelected ? 4 : needle.gold ? 2.2 : 1.25;
+        ctx.lineWidth = isSelected ? 4 : needle.gold ? 2 : 1.2;
         ctx.strokeStyle = isSelected
-          ? "rgba(20, 107, 91, .96)"
+          ? "rgba(242, 203, 114, .98)"
           : needle.gold
-            ? "rgba(168, 121, 44, .88)"
-            : "rgba(23, 95, 82, .34)";
+            ? "rgba(113, 215, 202, .64)"
+            : "rgba(91, 225, 213, .25)";
         ctx.stroke();
         ctx.restore();
 
@@ -448,8 +448,8 @@ function KakeyaDiagram() {
         ctx.fillStyle = isSelected
           ? "#f3c561"
           : needle.gold
-            ? "rgba(168, 121, 44, .92)"
-            : "rgba(23, 95, 82, .36)";
+            ? "rgba(136, 229, 216, .75)"
+            : "rgba(91, 225, 213, .34)";
         ctx.fill();
       });
     };
@@ -519,6 +519,18 @@ function KakeyaDiagram() {
 
   return (
     <div className="needle-interactive">
+      <div className="needle-topbar">
+        <div className="needle-intro">
+          <span>01 / DIRECTION LAB</span>
+          <p>拖动金色针的中心；滚轮旋转它的方向</p>
+        </div>
+        <div className="needle-toolbar" aria-label="线段实验控制">
+          <button type="button" onClick={() => rotateSelected(-10)} aria-label="逆时针旋转所选线段">−10°</button>
+          <strong aria-label="所选线段当前角度">{Math.round((((needles[selected]?.angle ?? 0) * 180) / Math.PI + 180) % 180)}°</strong>
+          <button type="button" onClick={() => rotateSelected(10)} aria-label="顺时针旋转所选线段">+10°</button>
+          <button type="button" onClick={reshuffle}>重新排布</button>
+        </div>
+      </div>
       <canvas
         ref={canvasRef}
         className="kakeya-canvas"
@@ -536,12 +548,9 @@ function KakeyaDiagram() {
           rotateSelected(event.deltaY > 0 ? 4 : -4);
         }}
       />
-      <div className="canvas-hint">拖动线段中心 · 滚轮旋转</div>
-      <div className="needle-toolbar" aria-label="线段实验控制">
-        <button type="button" onClick={() => rotateSelected(-10)} aria-label="逆时针旋转所选线段">−10°</button>
-        <strong>{Math.round((((needles[selected]?.angle ?? 0) * 180) / Math.PI + 180) % 180)}°</strong>
-        <button type="button" onClick={() => rotateSelected(10)} aria-label="顺时针旋转所选线段">+10°</button>
-        <button type="button" onClick={reshuffle}>重新排布</button>
+      <div className="needle-status" aria-live="polite">
+        <span><i aria-hidden="true" />当前：25 个有限方向样本</span>
+        <p>你刚刚看到：方向可以保留，线段中心可以移动。</p>
       </div>
     </div>
   );
@@ -1843,10 +1852,6 @@ export default function Home() {
         <div className="question-grid">
           <div className="needle-card">
             <KakeyaDiagram />
-            <div className="needle-labels">
-              <span>线段中心可以移动</span>
-              <span>当前展示 25 个有限采样方向</span>
-            </div>
           </div>
           <div className="question-copy">
             <p>
