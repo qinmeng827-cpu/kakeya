@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 
 type Vec3 = { x: number; y: number; z: number };
 type Tube2D = { x: number; y: number; angle: number; gold?: boolean };
@@ -1863,8 +1863,24 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  const handleHashLink = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target as Element;
+    const link = target.closest<HTMLAnchorElement>('a[href^="#"]');
+    const hash = link?.getAttribute("href");
+    if (!link || !hash || hash === "#") return;
+
+    const section = document.querySelector<HTMLElement>(hash);
+    if (!section) return;
+
+    // GitHub Pages only hosts static files. Handle in-page links ourselves so
+    // the client router does not request a non-existent React Server Component.
+    event.preventDefault();
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", hash);
+  };
+
   return (
-    <main style={typographyStyle}>
+    <main style={typographyStyle} onClick={handleHashLink}>
       <TypographyPanel settings={typography} onChange={setTypography} />
       <header className="site-header">
         <a className="brand" href="#top" aria-label="回到顶部">
