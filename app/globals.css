@@ -415,6 +415,27 @@ main {
   cursor: grabbing;
 }
 
+.direction-sphere-key {
+  position: absolute;
+  z-index: 3;
+  right: 38px;
+  bottom: 178px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid rgba(128, 218, 213, .28);
+  background: rgba(4, 13, 17, .72);
+  color: rgba(201, 232, 228, .82);
+  font: 600 12px/1.2 var(--font-geist-mono), monospace;
+  letter-spacing: .06em;
+  pointer-events: none;
+}
+
+.direction-sphere-key span {
+  color: var(--cyan);
+}
+
 .lab-shell:fullscreen {
   width: 100vw;
   height: 100vh;
@@ -431,6 +452,11 @@ main {
 
 .lab-shell:fullscreen .lab-guide {
   left: 54px;
+  bottom: 196px;
+}
+
+.lab-shell:fullscreen .direction-sphere-key {
+  right: 54px;
   bottom: 196px;
 }
 
@@ -2432,6 +2458,12 @@ footer > a {
   }
   .lab-readout-actions > span {
     display: none;
+  }
+  .direction-sphere-key {
+    right: 24px;
+    bottom: 190px;
+    max-width: calc(100% - 48px);
+    font-size: 11px;
   }
   .lab-controls {
     grid-template-columns: 1fr;

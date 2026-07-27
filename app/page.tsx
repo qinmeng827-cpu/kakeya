@@ -1067,8 +1067,8 @@ function DirectionLab() {
 
       ctx.save();
       ctx.setLineDash([5, 7]);
-      ctx.strokeStyle = "rgba(128, 218, 213, .16)";
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(128, 218, 213, .34)";
+      ctx.lineWidth = 1.25;
       [-0.58, -0.28, 0, 0.28, 0.58].forEach((latitude) => {
         const radius = Math.sqrt(1 - latitude * latitude);
         drawGuide(Array.from({ length: 65 }, (_, index) => {
@@ -1164,6 +1164,10 @@ function DirectionLab() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       />
+      <div className="direction-sphere-key" aria-hidden="true">
+        <span>外层虚线球</span>
+        三维方向的参考框架
+      </div>
       <div className="lab-controls" aria-label="方向采样实验控制">
         <label>
           <span>
