@@ -276,24 +276,24 @@ main {
 }
 
 .question-copy .story-detail summary {
-  color: #15554b;
+  color: #4a2a0b;
   font-weight: 750;
 }
 
 .question-copy .story-detail p {
-  color: #344b40;
+  color: #000;
 }
 
 .question-copy .story-detail summary::after {
-  color: #6c4a10;
-  border-color: rgba(162, 112, 28, .7);
-  background: rgba(248, 231, 185, .42);
+  color: #4a2a0b;
+  border-color: rgba(74, 42, 11, .72);
+  background: rgba(120, 78, 29, .08);
 }
 
 .question-copy .story-detail[open] summary::after {
-  color: #075f58;
-  border-color: rgba(7, 95, 88, .48);
-  background: rgba(159, 229, 219, .22);
+  color: #4a2a0b;
+  border-color: rgba(74, 42, 11, .72);
+  background: rgba(120, 78, 29, .08);
 }
 
 .dimension-copy .story-detail,
