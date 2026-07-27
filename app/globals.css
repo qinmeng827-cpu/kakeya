@@ -1598,6 +1598,16 @@ input[type="range"] {
   line-height: 1.6;
 }
 
+.era-copy .timeline-story-detail {
+  margin-top: 18px;
+}
+
+.era-copy .timeline-story-detail p {
+  color: #c8d9d3;
+  font-size: calc(16px + var(--type-body-adjust));
+  line-height: calc(1.75 + var(--type-body-leading-adjust));
+}
+
 .era-derivation {
   grid-column: 2;
   grid-row: 2;
@@ -1773,6 +1783,26 @@ input[type="range"] {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border-top: 1px solid rgba(25, 53, 43, .16);
+}
+
+.person-story-detail {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 1720px;
+  justify-self: center;
+  margin: 42px 0 30px;
+  border-color: rgba(25, 53, 43, .2);
+}
+
+.person-story-detail summary {
+  color: #183d33;
+}
+
+.person-story-detail p {
+  color: #1c2821;
+  max-width: 1120px;
+  font-size: calc(18px + var(--type-body-adjust));
+  line-height: calc(1.85 + var(--type-body-leading-adjust));
 }
 
 .person-profile,
