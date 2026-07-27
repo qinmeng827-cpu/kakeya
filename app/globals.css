@@ -205,6 +205,63 @@ main {
   font-style: normal;
 }
 
+.story-detail {
+  margin-top: 24px;
+  border-top: 1px solid rgba(130, 206, 198, .2);
+  border-bottom: 1px solid rgba(130, 206, 198, .14);
+}
+
+.story-detail summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  color: var(--cyan-soft);
+  font: 600 14px/1.4 var(--font-geist-mono), monospace;
+  letter-spacing: .06em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.story-detail summary::-webkit-details-marker {
+  display: none;
+}
+
+.story-detail summary::after {
+  content: "+";
+  color: var(--gold);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.story-detail[open] summary::after {
+  content: "−";
+}
+
+.story-detail > div {
+  padding: 0 0 22px;
+}
+
+.story-detail p {
+  margin: 0;
+  color: #aabbb5;
+  font-size: calc(17px + var(--type-body-adjust));
+  line-height: calc(1.85 + var(--type-body-leading-adjust));
+}
+
+.story-detail p + p {
+  margin-top: 13px;
+}
+
+.question-copy .story-detail {
+  margin-top: 28px;
+}
+
+.dimension-copy .story-detail,
+.proof-copy .story-detail {
+  margin-top: 28px;
+}
+
 .hero-actions {
   display: flex;
   align-items: center;
