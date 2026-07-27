@@ -228,14 +228,31 @@ main {
 }
 
 .story-detail summary::after {
-  content: "+";
+  content: "展开详细解释  +";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 142px;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(233, 190, 81, .58);
+  background: rgba(233, 190, 81, .06);
   color: var(--gold);
-  font-size: 22px;
-  font-weight: 400;
+  font: 700 14px/1 var(--font-geist-mono), monospace;
+  letter-spacing: .04em;
+  transition: background .2s ease, color .2s ease;
 }
 
 .story-detail[open] summary::after {
-  content: "−";
+  content: "收起详细解释  −";
+  color: var(--cyan-soft);
+  border-color: rgba(97, 228, 222, .5);
+  background: rgba(97, 228, 222, .07);
+}
+
+.story-detail summary:hover::after,
+.story-detail summary:focus-visible::after {
+  background: rgba(233, 190, 81, .16);
 }
 
 .story-detail > div {
