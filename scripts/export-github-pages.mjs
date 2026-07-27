@@ -29,7 +29,7 @@ if (!response.ok) {
 }
 
 let html = await response.text();
-html = html.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`);
+html = html.replace(/\b(href|src)="\/(?!\/|kakeya(?:\/|"))/g, `$1="${basePath}/`);
 html = html.replaceAll("http://localhost:3000/", `${siteUrl}/`);
 html = html.replace(
   /url\((?:["']?)(?:file:\/\/\/)?[A-Z]:[^)]*?\.vinext[\\/]fonts[\\/]([^)'"\s]+)(?:["']?)\)/gi,
