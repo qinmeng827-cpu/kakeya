@@ -1860,10 +1860,13 @@ input[type="range"] {
 }
 
 .profile-copy h3 {
-  margin: 0 0 28px;
-  color: #121913;
-  font: 700 clamp(calc(38px + var(--type-section-adjust)), calc(3.6vw + var(--type-section-adjust)), calc(62px + var(--type-section-adjust)))/calc(1.12 + var(--type-title-leading-adjust)) var(--font-serif-cn);
-  letter-spacing: -.035em;
+  margin: 0 0 30px;
+  color: #a9741d;
+  font-family: "Songti SC", "STSong", "SimSun", var(--font-serif-cn);
+  font-size: clamp(46px, 4vw, 70px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.025em;
 }
 
 .profile-copy > p {
