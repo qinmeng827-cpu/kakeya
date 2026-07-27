@@ -1954,6 +1954,7 @@ export default function Home() {
           <a className="award-source" href="https://www.ihes.fr/en/hong-wang2026-fields-medal/" target="_blank" rel="noreferrer">
             查看 IHES 官方公告 ↗
           </a>
+          <p className="award-bridge">这份荣誉所照见的，并不只是一项已经完成的结论。它的起点，是一根没有粗细的针；它的问题，是当所有方向都不能缺席时，空间究竟还能把它们压缩到什么程度。</p>
         </div>
       </section>
 
@@ -2185,6 +2186,10 @@ export default function Home() {
             <div className="section-index">06 / SOURCES</div>
             <h2>更多阅读</h2>
           </div>
+        </div>
+        <div className="sources-intro">
+          <p>故事讲到这里，结论已经出现，但阅读可以从这里继续分成两条路。</p>
+          <p><strong>想先把直觉弄清楚</strong>，可以从面向大众的解释、历史与综述读起；<strong>想直接看数学怎样被写成证明</strong>，可以进入王虹与 Joshua Zahl 的原始论文。前者帮助你继续想象，后者保留完整而严格的论证。</p>
         </div>
         <div className="source-list">
           {sources.map((source, index) => (

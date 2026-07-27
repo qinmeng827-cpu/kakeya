@@ -2015,13 +2015,43 @@ input[type="range"] {
   font-size: 17px;
 }
 
+.award-bridge {
+  margin: 34px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(163, 215, 208, .17);
+  color: #d5e5df;
+  font-family: var(--font-serif-cn);
+  font-size: calc(22px + var(--type-body-adjust));
+  line-height: calc(1.7 + var(--type-body-leading-adjust));
+}
+
 .sources-section {
   padding-top: 60px;
   padding-bottom: 100px;
 }
 
+.sources-intro {
+  max-width: 960px;
+  margin: 34px auto 0;
+  color: #3e5146;
+  font-size: calc(19px + var(--type-body-adjust));
+  line-height: calc(1.85 + var(--type-body-leading-adjust));
+}
+
+.sources-intro p {
+  margin: 0;
+}
+
+.sources-intro p + p {
+  margin-top: 14px;
+}
+
+.sources-intro strong {
+  color: #174c40;
+}
+
 .source-list {
-  margin-top: 80px;
+  margin-top: 52px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(5, auto);
