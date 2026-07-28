@@ -5,9 +5,6 @@
  * This notice is retained as required by the license.
  */
 
-Exit code: 0
-Wall time: 0.3 seconds
-Output:
 // ---------------------------------------------------------------------------
 // The Kakeya needle 鈥?geometry + motion core (standalone, DOM-free).
 //
@@ -303,5 +300,4 @@ var API = {
 };
 if (typeof window !== 'undefined') window.Kakeya = API;
 if (typeof module !== 'undefined' && module.exports) module.exports = API;
-
 
