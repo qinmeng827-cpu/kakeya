@@ -643,6 +643,190 @@ input[type="range"] {
   color: #aa7d28;
 }
 
+.sweep-lab {
+  position: relative;
+  min-height: 610px;
+  margin: 0 auto 96px;
+  overflow: hidden;
+  border: 1px solid rgba(48, 124, 112, .64);
+  background:
+    radial-gradient(circle at 50% 44%, rgba(64, 89, 166, .2), transparent 38%),
+    #071714;
+  box-shadow: inset 0 0 0 1px rgba(154, 221, 207, .05), 0 22px 70px rgba(7, 30, 26, .12);
+}
+
+.sweep-lab:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  border: 0;
+}
+
+.sweep-lab-topbar {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px;
+  border-bottom: 1px solid rgba(132, 211, 201, .13);
+  background: linear-gradient(to bottom, rgba(4, 14, 16, .78), rgba(4, 14, 16, 0));
+  color: #d9f4ef;
+}
+
+.sweep-lab-topbar span {
+  color: var(--gold);
+  font: 700 13px/1 var(--font-geist-mono), monospace;
+  letter-spacing: .13em;
+}
+
+.sweep-lab-topbar p {
+  margin: 10px 0 0;
+  color: rgba(214, 239, 235, .82);
+  font-size: 17px;
+}
+
+.sweep-lab-topbar > button,
+.sweep-actions button {
+  min-height: 38px;
+  border: 1px solid rgba(97, 228, 222, .42);
+  background: rgba(4, 16, 20, .78);
+  color: var(--cyan-soft);
+  font: 650 12px/1 var(--font-geist-mono), monospace;
+  letter-spacing: .06em;
+  cursor: pointer;
+}
+
+.sweep-lab-topbar > button {
+  padding: 0 13px;
+}
+
+.sweep-lab-topbar > button:hover,
+.sweep-lab-topbar > button:focus-visible,
+.sweep-actions button:hover,
+.sweep-actions button:focus-visible {
+  border-color: var(--cyan);
+  background: rgba(97, 228, 222, .14);
+  color: #f4fffc;
+}
+
+.sweep-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sweep-lab-caption {
+  position: absolute;
+  z-index: 2;
+  left: 32px;
+  bottom: 184px;
+  max-width: 430px;
+  padding: 13px 15px;
+  border-left: 2px solid var(--gold);
+  background: rgba(4, 14, 16, .6);
+  backdrop-filter: blur(10px);
+}
+
+.sweep-lab-caption strong,
+.sweep-lab-caption span {
+  display: block;
+}
+
+.sweep-lab-caption strong {
+  color: var(--gold);
+  font: 700 13px/1.2 var(--font-geist-mono), monospace;
+  letter-spacing: .08em;
+}
+
+.sweep-lab-caption span {
+  margin-top: 7px;
+  color: rgba(215, 239, 235, .75);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.sweep-lab-controls {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: minmax(210px, 1.2fr) minmax(180px, .8fr) auto minmax(220px, .9fr);
+  align-items: end;
+  gap: 20px;
+  padding: 18px 32px 16px;
+  border-top: 1px solid rgba(97, 228, 222, .18);
+  background: rgba(4, 12, 14, .86);
+  backdrop-filter: blur(12px);
+}
+
+.sweep-lab-controls label > span,
+.sweep-metrics > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: #9fbab6;
+  font-size: 13px;
+}
+
+.sweep-lab-controls strong,
+.sweep-metrics strong {
+  color: var(--cyan);
+  font-family: var(--font-geist-mono), monospace;
+}
+
+.sweep-lab-controls select {
+  width: 100%;
+  min-height: 38px;
+  margin-top: 9px;
+  padding: 0 10px;
+  border: 1px solid rgba(111, 202, 192, .35);
+  border-radius: 0;
+  outline: 0;
+  background: rgba(7, 27, 24, .95);
+  color: #d9f4ef;
+  font: 600 13px/1 var(--font-geist-mono), monospace;
+}
+
+.sweep-lab-controls input[type="range"] {
+  margin-top: 16px;
+}
+
+.sweep-actions {
+  display: flex;
+  gap: 9px;
+}
+
+.sweep-actions button {
+  padding: 0 12px;
+}
+
+.sweep-metrics {
+  display: grid;
+  gap: 9px;
+  padding-bottom: 2px;
+}
+
+.sweep-disclaimer {
+  position: absolute;
+  z-index: 2;
+  right: 32px;
+  bottom: 142px;
+  max-width: 390px;
+  margin: 0;
+  color: rgba(188, 218, 213, .55);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: right;
+}
+
 .question-grid {
   display: grid;
   grid-template-columns: minmax(720px, 1.16fr) minmax(460px, .84fr);
@@ -2528,6 +2712,38 @@ footer > a {
   }
   .question-grid {
     grid-template-columns: 1fr;
+  }
+  .sweep-lab {
+    min-height: 650px;
+    margin-bottom: 60px;
+  }
+  .sweep-lab-topbar {
+    padding: 22px 24px;
+  }
+  .sweep-lab-topbar p {
+    max-width: 235px;
+    font-size: 15px;
+  }
+  .sweep-lab-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 16px 24px 18px;
+  }
+  .sweep-actions,
+  .sweep-metrics {
+    grid-column: 1 / -1;
+  }
+  .sweep-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sweep-lab-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 206px;
+    max-width: none;
+  }
+  .sweep-disclaimer {
+    display: none;
   }
   .needle-card {
     min-height: 430px;

@@ -4,6 +4,15 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEve
 
 type Vec3 = { x: number; y: number; z: number };
 type Tube2D = { x: number; y: number; angle: number; gold?: boolean };
+type SweepPresetId = "disk" | "triangle" | "curve" | "star" | "tree";
+
+const sweepPresets: Array<{ id: SweepPresetId; label: string; note: string; relativeArea: string }> = [
+  { id: "disk", label: "固定中心 · 圆盘", note: "针围绕同一中心转动，扫出最直观的圆盘。", relativeArea: "100%" },
+  { id: "triangle", label: "移动中心 · 三角摆法", note: "中心沿三角形边缘换位，方向仍完整出现。", relativeArea: "约 72%" },
+  { id: "curve", label: "弯曲摆法", note: "让运动轨迹弯起来，开始重复借用同一片区域。", relativeArea: "约 54%" },
+  { id: "star", label: "星形近似", note: "更多方向被安排到彼此交错的狭长区域里。", relativeArea: "约 35%" },
+  { id: "tree", label: "佩龙树 · 有限近似", note: "分叉、重叠、再分叉：这是通往贝西科维奇构造的直觉。", relativeArea: "更小" },
+];
 
 type TypographySettings = {
   display: number;
@@ -605,6 +614,194 @@ function KakeyaDiagram() {
         <span><i aria-hidden="true" />当前：25 个有限方向样本</span>
         <p>你刚刚看到：方向可以保留，线段中心可以移动。</p>
       </div>
+    </div>
+  );
+}
+
+function KakeyaSweepLab() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { ref: wrapRef, isFullscreen, toggleFullscreen } = useFullscreen<HTMLDivElement>();
+  const [presetId, setPresetId] = useState<SweepPresetId>("disk");
+  const [progress, setProgress] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState(1);
+  const preset = sweepPresets.find((item) => item.id === presetId) ?? sweepPresets[0];
+
+  const centerAt = (t: number, width: number, height: number) => {
+    const phase = t * Math.PI * 2;
+    const base = Math.min(width, height);
+    const origin = { x: width * 0.5, y: height * 0.51 };
+    const triangleVertices = [
+      { x: 0, y: -0.22 },
+      { x: -0.22, y: 0.16 },
+      { x: 0.22, y: 0.16 },
+    ];
+    if (presetId === "disk") return origin;
+    if (presetId === "triangle") {
+      const scaled = t * 3;
+      const index = Math.min(2, Math.floor(scaled));
+      const local = scaled - index;
+      const from = triangleVertices[index];
+      const to = triangleVertices[(index + 1) % 3];
+      return {
+        x: origin.x + (from.x + (to.x - from.x) * local) * base,
+        y: origin.y + (from.y + (to.y - from.y) * local) * base,
+      };
+    }
+    if (presetId === "curve") {
+      return {
+        x: origin.x + Math.cos(phase) * base * 0.18,
+        y: origin.y + Math.sin(phase * 2) * base * 0.1,
+      };
+    }
+    if (presetId === "star") {
+      const radius = base * (0.13 + 0.09 * Math.cos(phase * 5));
+      return { x: origin.x + Math.cos(phase) * radius, y: origin.y + Math.sin(phase) * radius };
+    }
+    const branch = (Math.floor(t * 8) % 2 === 0 ? 1 : -1) * Math.pow((t * 8) % 1, 1.7);
+    return {
+      x: origin.x - base * 0.23 + t * base * 0.46,
+      y: origin.y + branch * base * 0.19 + Math.sin(phase * 3) * base * 0.028,
+    };
+  };
+
+  useEffect(() => {
+    if (!playing) return;
+    let frame = 0;
+    let previous = performance.now();
+    const tick = (now: number) => {
+      const elapsed = Math.min(48, now - previous);
+      previous = now;
+      setProgress((value) => {
+        const next = value + (elapsed / 15000) * speed;
+        if (next >= 1) {
+          setPlaying(false);
+          return 1;
+        }
+        return next;
+      });
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [playing, speed]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const wrap = wrapRef.current;
+    if (!canvas || !wrap) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const draw = () => {
+      const rect = wrap.getBoundingClientRect();
+      const width = Math.max(320, rect.width);
+      const height = Math.max(430, rect.height);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+
+      const glow = ctx.createRadialGradient(width * 0.5, height * 0.5, 0, width * 0.5, height * 0.5, Math.min(width, height) * 0.58);
+      glow.addColorStop(0, "rgba(89, 142, 216, .16)");
+      glow.addColorStop(1, "rgba(6, 27, 24, 0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(116, 204, 195, .09)";
+      ctx.lineWidth = 1;
+      const step = 42;
+      for (let x = step; x < width; x += step) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+      }
+      for (let y = step; y < height; y += step) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+      }
+      ctx.restore();
+
+      const count = Math.max(1, Math.floor(progress * 260));
+      const needleLength = Math.min(width, height) * 0.46;
+      for (let index = 0; index <= count; index += 1) {
+        const t = (index / count) * progress;
+        const center = centerAt(t, width, height);
+        const angle = t * Math.PI * 2 - Math.PI / 2;
+        const alpha = index === count ? 0.92 : 0.065;
+        ctx.save();
+        ctx.translate(center.x, center.y);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(-needleLength / 2, 0);
+        ctx.lineTo(needleLength / 2, 0);
+        ctx.lineCap = "round";
+        ctx.lineWidth = index === count ? 4.5 : 2.1;
+        ctx.strokeStyle = index === count ? "rgba(242, 203, 114, .98)" : `rgba(158, 179, 255, ${alpha})`;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      const current = centerAt(progress, width, height);
+      ctx.beginPath();
+      ctx.arc(current.x, current.y, 5.5, 0, Math.PI * 2);
+      ctx.fillStyle = "#f2cb72";
+      ctx.shadowColor = "rgba(242, 203, 114, .8)";
+      ctx.shadowBlur = 16;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    };
+
+    const observer = new ResizeObserver(draw);
+    observer.observe(wrap);
+    draw();
+    return () => observer.disconnect();
+  }, [presetId, progress]);
+
+  const choosePreset = (next: SweepPresetId) => {
+    setPresetId(next);
+    setProgress(0);
+    setPlaying(false);
+  };
+
+  return (
+    <div className="sweep-lab" ref={wrapRef}>
+      <div className="sweep-lab-topbar">
+        <div>
+          <span>00 / SWEEP LAB</span>
+          <p>一根针转满一圈，扫过的区域能缩到多小？</p>
+        </div>
+        <button type="button" onClick={toggleFullscreen} aria-pressed={isFullscreen}>
+          {isFullscreen ? "退出全屏" : "全屏查看"}
+        </button>
+      </div>
+      <canvas ref={canvasRef} className="sweep-canvas" aria-label="二维挂谷扫过区域的动画演示" />
+      <div className="sweep-lab-caption" aria-live="polite">
+        <strong>{preset.label}</strong>
+        <span>{preset.note}</span>
+      </div>
+      <div className="sweep-lab-controls">
+        <label>
+          <span>选择摆法</span>
+          <select value={presetId} onChange={(event) => choosePreset(event.target.value as SweepPresetId)}>
+            {sweepPresets.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
+          </select>
+        </label>
+        <label>
+          <span>播放速度 <strong>{speed.toFixed(1)}×</strong></span>
+          <input type="range" min="0.5" max="2" step="0.25" value={speed} onChange={(event) => setSpeed(Number(event.target.value))} />
+        </label>
+        <div className="sweep-actions">
+          <button type="button" onClick={() => setPlaying((value) => !value)}>{playing ? "暂停" : progress >= 1 ? "重新播放" : "开始旋转"}</button>
+          <button type="button" onClick={() => { setProgress(0); setPlaying(false); }}>清除轨迹</button>
+        </div>
+        <div className="sweep-metrics">
+          <span>旋转进度 <strong>{Math.round(progress * 360)}°</strong></span>
+          <span>相对扫过量 <strong>{preset.relativeArea}</strong></span>
+        </div>
+      </div>
+      <p className="sweep-disclaimer">这是有限步动画，用来比较“怎样摆放”；不是严格面积计算，更不是定理证明。</p>
     </div>
   );
 }
@@ -2015,6 +2212,7 @@ export default function Home() {
             <span>无限细、长度为 1 的线段。</span>
           </h2>
         </div>
+        <KakeyaSweepLab />
         <div className="question-grid">
           <div className="needle-card">
             <KakeyaDiagram />
