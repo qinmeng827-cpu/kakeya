@@ -1066,6 +1066,57 @@ input[type="range"] {
   min-height: 0;
 }
 
+/* A fullscreen workbench is normally viewed from farther away, so make the
+   control rail comfortably readable without changing the embedded version. */
+.sweep-lab-authentic:fullscreen {
+  grid-template-columns: minmax(340px, 400px) minmax(0, 1fr);
+}
+
+.sweep-lab-authentic:fullscreen .sweep-lab-topbar {
+  padding: 34px 30px 0;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-select-row > span {
+  font-size: 16px;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-select-row select {
+  min-height: 50px;
+  font-size: 16px;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-lab-topbar > button,
+.sweep-lab-authentic:fullscreen .sweep-lab-controls button {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-authentic-caption {
+  margin: 0 30px;
+  padding: 19px 18px 19px 20px;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-authentic-caption strong {
+  font-size: 17px;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-authentic-caption span {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-authentic-caption small,
+.sweep-lab-authentic:fullscreen .sweep-speed,
+.sweep-lab-authentic:fullscreen .sweep-checkbox,
+.sweep-lab-authentic:fullscreen .sweep-readout {
+  font-size: 14px;
+}
+
+.sweep-lab-authentic:fullscreen .sweep-lab-controls {
+  gap: 16px;
+  padding: 26px 30px 30px;
+}
+
 .sweep-lab-authentic .sweep-authentic-caption {
   position: relative;
   z-index: 3;
