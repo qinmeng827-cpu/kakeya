@@ -4,6 +4,18 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEve
 
 type Vec3 = { x: number; y: number; z: number };
 type Tube2D = { x: number; y: number; angle: number; gold?: boolean };
+type KakeyaShapeId = "disk" | "reuleaux" | "triangle" | "deltoid" | "modhypo" | "modstar" | "star" | "perron";
+
+const kakeyaShapes: Array<{ id: KakeyaShapeId; label: string; area: string; detail: string }> = [
+  { id: "disk", label: "圆盘", area: "π/4", detail: "把长度为 1 的针绕中点旋转，得到最直观的解。" },
+  { id: "reuleaux", label: "鲁洛三角形", area: "(π−√3)/2", detail: "恒宽为 1：针始终从一个顶点指向对侧圆弧。" },
+  { id: "triangle", label: "等边三角形", area: "1/√3", detail: "Pál 的最小凸挂谷集合：针在顶点转动、沿边滑动。" },
+  { id: "deltoid", label: "三尖瓣线", area: "π/8", detail: "针作为固定长度的切线弦，沿三尖瓣线连续滑行。" },
+  { id: "modhypo", label: "改良三尖瓣线", area: "(2π−2)/(π+8)", detail: "Cunningham 的构造，把三尖瓣线再压缩到更小的面积。" },
+  { id: "modstar", label: "改良星形多边形", area: "π(11/12−2 log 3/2)", detail: "针在星形尖点间连续转动，扫出细薄的星形区域。" },
+  { id: "star", label: "Bloom–Schoenberg 星形", area: "(5−2√2)π/24", detail: "由相切圆弧组织出的星形构造；可调节尖点数。" },
+  { id: "perron", label: "Besicovitch–Perron 树", area: "面积 → 0", detail: "有限深度的树形构造；深度增加时面积趋近 0，而不是已经等于 0。" },
+];
 type SweepPresetId = "disk" | "triangle" | "curve" | "star" | "tree";
 
 const sweepPresets: Array<{ id: SweepPresetId; label: string; note: string; conclusion: string }> = [
@@ -809,6 +821,77 @@ function KakeyaSweepLab() {
       <p className="sweep-disclaimer">画面只抽样绘制有限多个时刻；上方公式才是严格定义。除“固定中点”的 π/4 外，本实验不报告任何面积数值，也不把这些路径称为经典贝西科维奇构造。</p>
     </div>
   );
+}
+
+function AuthenticKakeyaSweepLab() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { ref: wrapRef, isFullscreen, toggleFullscreen } = useFullscreen<HTMLDivElement>();
+  const [ready, setReady] = useState(false);
+  const [shape, setShape] = useState<KakeyaShapeId>("deltoid");
+  const [n, setN] = useState(7);
+  const [depth, setDepth] = useState(5);
+  const [progress, setProgress] = useState(0);
+  const [coverage, setCoverage] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState(12);
+  const [turn, setTurn] = useState<1 | .5>(1);
+  const [showSwept, setShowSwept] = useState(true);
+  const selected = kakeyaShapes.find((item) => item.id === shape) ?? kakeyaShapes[0];
+
+  useEffect(() => {
+    if ((window as Window & { Kakeya?: unknown }).Kakeya) { setReady(true); return; }
+    const script = document.createElement("script");
+    script.src = "/kakeya-core.js"; script.async = true; script.onload = () => setReady(true);
+    document.head.appendChild(script); return () => script.remove();
+  }, []);
+  useEffect(() => { setProgress(0); setCoverage(0); setPlaying(false); }, [shape, n, depth, turn]);
+  useEffect(() => {
+    if (!playing) return;
+    let frame = 0, previous = performance.now();
+    const tick = (now: number) => {
+      const seconds = Math.min(.05, (now - previous) / 1000); previous = now;
+      setProgress((value) => { const next = value + speed / 100 * seconds; setCoverage((seen) => Math.max(seen, Math.min(next, turn))); return next >= turn ? next - turn : next; });
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick); return () => cancelAnimationFrame(frame);
+  }, [playing, speed, turn]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current, wrap = wrapRef.current;
+    const K = (window as Window & { Kakeya?: any }).Kakeya;
+    if (!canvas || !wrap || !ready || !K) return;
+    const ctx = canvas.getContext("2d"); if (!ctx) return;
+    const con = shape === "star" ? K.starBS(n) : shape === "modstar" ? K.modStarPolygon(n) : shape === "perron" ? K.perronTree(depth) : ({ disk: K.disk, reuleaux: K.reuleaux, triangle: K.triangle, deltoid: K.deltoid, modhypo: K.modHypocycloid } as Record<string, () => any>)[shape]();
+    const pts = shape === "triangle" ? con.vertices : shape === "star" ? con.A.concat([K.V(0, 0)]) : con.region;
+    const xs = pts.map((p: {x:number}) => p.x), ys = pts.map((p: {y:number}) => p.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const draw = () => {
+      const r = wrap.getBoundingClientRect(), w = Math.max(320, r.width), h = Math.max(380, r.height), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr); canvas.style.width = w + "px"; canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h); ctx.fillStyle = "#0a0d17"; ctx.fillRect(0, 0, w, h);
+      const glow = ctx.createRadialGradient(w*.5,h*.46,0,w*.5,h*.46,Math.max(w,h)*.7); glow.addColorStop(0,"rgba(94,116,212,.17)"); glow.addColorStop(1,"rgba(6,8,13,0)"); ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+      const scale = Math.min((w-92)/Math.max(.01,x1-x0),(h-92)/Math.max(.01,y1-y0)), P=(p:{x:number;y:number})=>({x:w*.5+scale*(p.x-(x0+x1)/2),y:h*.5-scale*(p.y-(y0+y1)/2)});
+      const path=(region:Array<{x:number;y:number}>)=>{ctx.beginPath();region.forEach((p,i)=>{const q=P(p);if(i)ctx.lineTo(q.x,q.y);else ctx.moveTo(q.x,q.y)});ctx.closePath()};
+      const swept = shape === "modhypo" || shape === "modstar" || shape === "star" || shape === "perron";
+      if (!swept && con.region) { path(con.region); const fill=ctx.createLinearGradient(0,0,w,h);fill.addColorStop(0,"rgba(116,137,255,.49)");fill.addColorStop(1,"rgba(89,112,217,.22)");ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle="rgba(207,215,255,.85)";ctx.lineWidth=2;ctx.stroke(); }
+      if (shape === "perron") con.triangles.forEach((tr:Array<{x:number;y:number}>)=>{path(tr);ctx.fillStyle="rgba(114,138,255,.35)";ctx.fill();ctx.strokeStyle="rgba(185,197,255,.57)";ctx.lineWidth=1;ctx.stroke()});
+      ctx.save();ctx.setLineDash([5,5]);ctx.strokeStyle="rgba(196,207,255,.56)";ctx.lineWidth=1.25;
+      if(shape==="star") for(let a=0;a<con.n;a+=1){ctx.beginPath();for(let j=0;j<=48;j+=1){const q=P(con.arcPoint(a,j/48));if(j)ctx.lineTo(q.x,q.y);else ctx.moveTo(q.x,q.y)}ctx.stroke();}
+      if(shape==="modstar") con.chords.forEach((ch:Array<{x:number;y:number}>)=>{const a=P(ch[0]),b=P(ch[1]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();});
+      if(shape==="modhypo"){ctx.beginPath();con.guide.forEach((p:{x:number;y:number},i:number)=>{const q=P(p);if(i)ctx.lineTo(q.x,q.y);else ctx.moveTo(q.x,q.y)});ctx.closePath();ctx.stroke();}ctx.restore();
+      if(showSwept&&(swept||coverage>0)){const samples=Math.max(2,Math.ceil(460*Math.max(coverage,swept?1:0)));ctx.save();ctx.lineCap="round";ctx.lineWidth=swept?2.5:1.7;ctx.strokeStyle="rgba(113,132,255,.12)";ctx.shadowColor="rgba(116,131,255,.45)";ctx.shadowBlur=5;for(let i=0;i<=samples;i+=1){const nd=con.at(i/samples*Math.max(coverage,swept?turn:0));if(nd.join)continue;const a=P(nd.a),b=P(nd.b);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}ctx.restore();}
+      const nd=con.at(progress),a=P(nd.a),b=P(nd.b);ctx.save();ctx.shadowColor="rgba(174,186,255,.95)";ctx.shadowBlur=14;ctx.strokeStyle="#b7c2ff";ctx.lineWidth=3.6;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle="#ff6d5a";ctx.beginPath();ctx.arc(a.x,a.y,4.8,0,Math.PI*2);ctx.fill();ctx.fillStyle="#111525";ctx.strokeStyle="#cbd3ff";ctx.lineWidth=2;ctx.beginPath();ctx.arc(b.x,b.y,4.8,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.restore();
+    };
+    const observer = new ResizeObserver(draw); observer.observe(wrap); draw(); return () => observer.disconnect();
+  }, [ready, shape, n, depth, progress, coverage, showSwept, turn]);
+
+  const step = () => { setPlaying(false); setProgress((value) => { const next=Math.min(turn,value+.035);setCoverage((seen)=>Math.max(seen,next));return next>=turn?0:next; }); };
+  return <div className="sweep-lab sweep-lab-authentic" ref={wrapRef}>
+    <div className="sweep-lab-topbar"><div className="sweep-select-row"><span>SHAPE</span><select value={shape} onChange={(event)=>setShape(event.target.value as KakeyaShapeId)} aria-label="选择挂谷构造">{kakeyaShapes.map((item)=><option key={item.id} value={item.id}>{item.label} — {item.area}</option>)}</select>{(shape==="star"||shape==="modstar")&&<label className="sweep-inline-range">N <input type="range" min="5" max="15" step="2" value={n} onChange={(event)=>setN(Number(event.target.value))}/><b>{n}</b></label>}{shape==="perron"&&<label className="sweep-inline-range">深度 <input type="range" min="2" max="8" step="1" value={depth} onChange={(event)=>setDepth(Number(event.target.value))}/><b>{depth}</b></label>}</div><button type="button" onClick={toggleFullscreen}>{isFullscreen?"退出全屏":"全屏查看"}</button></div>
+    <canvas ref={canvasRef} className="sweep-canvas" aria-label="严格数学构造中的单位针连续转动及扫过区域"/>
+    <div className="sweep-lab-controls"><div className="sweep-actions"><button type="button" className="sweep-primary" onClick={()=>setPlaying((value)=>!value)}>{playing?"Ⅱ 暂停":"▶ 播放"}</button><button type="button" onClick={step}>⏭ 单步</button><button type="button" onClick={()=>{setProgress(0);setCoverage(0);setPlaying(false);}}>↻ 清除</button></div><label className="sweep-speed">速度 <input type="range" min="1" max="40" step="1" value={speed} onChange={(event)=>setSpeed(Number(event.target.value))}/></label><button type="button" className="sweep-turn" onClick={()=>setTurn((value)=>value===1?.5:1)}>{turn===1?"360°":"180°"}</button><label className="sweep-checkbox"><input type="checkbox" checked={showSwept} onChange={(event)=>setShowSwept(event.target.checked)}/> 显示扫过区域</label><span className="sweep-readout">已转 <b>{Math.round(progress*360)}°</b> · 面积 <b>{selected.area}</b></span></div>
+    <div className="sweep-authentic-caption"><strong>{selected.label} · {selected.area}</strong><span>{selected.detail}</span><small>蓝紫色是针在连续运动中扫过的位置；红点与空心点是这根长度恒为 1 的针的两端。</small></div>
+    <p className="sweep-attribution">互动构造引擎改编自 Terence Tao 的 MIT 许可开源 Kakeya Needle app；有限深度 Perron 树显示的是“趋近于零”，不是面积已经等于零。</p>
+  </div>;
 }
 
 function ProofVisual({ active }: { active: number }) {
@@ -2217,7 +2300,7 @@ export default function Home() {
             <span>无限细、长度为 1 的线段。</span>
           </h2>
         </div>
-        <KakeyaSweepLab />
+        <AuthenticKakeyaSweepLab />
         <div className="question-grid">
           <div className="needle-card">
             <KakeyaDiagram />
