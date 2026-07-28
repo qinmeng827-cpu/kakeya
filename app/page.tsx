@@ -841,7 +841,7 @@ function AuthenticKakeyaSweepLab() {
   useEffect(() => {
     if ((window as Window & { Kakeya?: unknown }).Kakeya) { setReady(true); return; }
     const script = document.createElement("script");
-    script.src = "/kakeya-core.js"; script.async = true; script.onload = () => setReady(true);
+    script.src = "kakeya-core.js"; script.async = true; script.onload = () => setReady(true);
     document.head.appendChild(script); return () => script.remove();
   }, []);
   useEffect(() => { setProgress(0); setCoverage(0); setPlaying(false); }, [shape, n, depth, turn]);
