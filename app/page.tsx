@@ -865,7 +865,7 @@ function AuthenticKakeyaSweepLab() {
     const pts = shape === "triangle" ? con.vertices : shape === "star" ? con.A.concat([K.V(0, 0)]) : con.region;
     const xs = pts.map((p: {x:number}) => p.x), ys = pts.map((p: {y:number}) => p.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
     const draw = () => {
-      const r = wrap.getBoundingClientRect(), w = Math.max(320, r.width), h = Math.max(380, r.height), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const r = canvas.getBoundingClientRect(), w = Math.max(320, r.width), h = Math.max(380, r.height), dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr); canvas.style.width = w + "px"; canvas.style.height = h + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h); ctx.fillStyle = "#0a0d17"; ctx.fillRect(0, 0, w, h);
       const glow = ctx.createRadialGradient(w*.5,h*.46,0,w*.5,h*.46,Math.max(w,h)*.7); glow.addColorStop(0,"rgba(94,116,212,.17)"); glow.addColorStop(1,"rgba(6,8,13,0)"); ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
