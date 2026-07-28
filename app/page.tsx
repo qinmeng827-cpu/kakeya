@@ -2247,23 +2247,22 @@ export default function Home() {
           <img src="/fields-medal-obverse.jpg" alt="菲尔兹奖章正面：阿基米德浮雕" />
         </figure>
         <div>
-          <div className="section-index light">PHILADELPHIA · 23 JULY 2026</div>
-          <h2>2026 年，王虹获得菲尔兹奖。</h2>
+          <h2>2026年7月23日，中国数学家王虹获得菲尔兹奖。</h2>
           <p>
             王虹是继伊朗裔美国数学家玛丽安·米尔札哈尼、乌克兰数学家玛丽娜・维亚佐夫斯卡之后，菲尔兹奖历史上第三位女性得主，也是首位获奖的中国女性。
           </p>
           <div className="award-facts">
             <div>
               <span>地点</span>
-              <strong>Philadelphia</strong>
+              <strong>费城</strong>
             </div>
             <div>
               <span>日期</span>
-              <strong>23 JUL 2026</strong>
+              <strong>2026年7月23日</strong>
             </div>
             <div>
               <span>研究领域</span>
-              <strong>Harmonic Analysis</strong>
+              <strong>调和分析</strong>
             </div>
           </div>
           <a className="award-source" href="https://www.ihes.fr/en/hong-wang2026-fields-medal/" target="_blank" rel="noreferrer">
