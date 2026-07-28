@@ -167,7 +167,7 @@ main {
 }
 
 .hero h1 {
-  margin: 34px 0 28px;
+  margin: 0 0 28px;
   font-family: var(--font-serif-cn);
   font-size: clamp(calc(64px + var(--type-display-adjust)), calc(5.1vw + var(--type-display-adjust)), calc(104px + var(--type-display-adjust)));
   font-weight: var(--type-title-weight);

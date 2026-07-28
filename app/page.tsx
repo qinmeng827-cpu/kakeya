@@ -1458,9 +1458,7 @@ function DirectionLab() {
   return (
     <div className="lab-shell" ref={wrapRef}>
       <div className="lab-readout">
-        <span>PROJECTIVE DIRECTION SAMPLER</span>
         <div className="lab-readout-actions">
-          <span>{sampleCount} UNORIENTED DIR · δ {delta.toFixed(3)}</span>
           <button type="button" onClick={toggleFullscreen} aria-pressed={isFullscreen}>
             {isFullscreen ? "退出全屏" : "全屏查看"}
           </button>
@@ -2275,10 +2273,6 @@ export default function Home() {
       <section className="hero" id="hero">
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-copy">
-          <div className="eyebrow">
-            <span>2026 FIELDS MEDAL</span>
-            <span>HARMONIC ANALYSIS × GEOMETRY</span>
-          </div>
           <h1>
             每一个方向，
             <br />

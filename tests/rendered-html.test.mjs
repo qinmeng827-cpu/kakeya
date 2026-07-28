@@ -32,7 +32,7 @@ test("server-renders the Kakeya exhibition and its scientific framing", async ()
   assert.match(html, /<html lang="zh-CN">/i);
   assert.match(html, /<title>每一个方向，都装进三维｜王虹与三维挂谷猜想<\/title>/i);
   assert.match(html, /王虹与 Joshua Zahl 证明/);
-  assert.match(html, /PROJECTIVE DIRECTION SAMPLER/);
+  assert.doesNotMatch(html, /PROJECTIVE DIRECTION SAMPLER/);
   assert.match(html, /面积可以是零，但二维里的集合仍/);
   assert.match(html, /04 \/ A CENTURY OF PROGRESS/);
   assert.match(html, /动画只讲思路，不负责替代数学证明/);
