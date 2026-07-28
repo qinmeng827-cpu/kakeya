@@ -1314,6 +1314,30 @@ input[type="range"] {
   color: #10201c;
 }
 
+.sweep-lab-authentic .sweep-primary.is-awaiting-play {
+  position: relative;
+}
+
+.sweep-lab-authentic .sweep-primary.is-awaiting-play::after {
+  content: "👇";
+  position: absolute;
+  left: 50%;
+  top: -44px;
+  z-index: 2;
+  font-size: 36px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 7px rgba(0, 0, 0, .42));
+  transform: translateX(-50%);
+  animation: play-guide-tap .72s cubic-bezier(.25, .8, .3, 1) 3 both;
+}
+
+@keyframes play-guide-tap {
+  0%, 100% { opacity: .1; transform: translate(-50%, -9px) scale(.9); }
+  38% { opacity: 1; transform: translate(-50%, 2px) scale(1.12); }
+  58% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
 .sweep-lab-authentic .sweep-readout {
   color: #d8f4ef;
   border-top-color: rgba(89, 222, 212, .15);
