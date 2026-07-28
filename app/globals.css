@@ -1072,48 +1072,48 @@ input[type="range"] {
    control rail comfortably readable without changing the embedded version. */
 .sweep-lab-authentic:fullscreen,
 .sweep-lab-authentic.is-fullscreen {
-  grid-template-columns: minmax(520px, 620px) minmax(0, 1fr);
+  grid-template-columns: minmax(600px, 680px) minmax(0, 1fr);
 }
 
 .sweep-lab-authentic:fullscreen .sweep-lab-topbar,
 .sweep-lab-authentic.is-fullscreen .sweep-lab-topbar {
-  padding: 48px 48px 0;
+  padding: 60px 58px 0;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-select-row > span,
 .sweep-lab-authentic.is-fullscreen .sweep-select-row > span {
-  font-size: 22px;
+  font-size: 30px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-select-row select,
 .sweep-lab-authentic.is-fullscreen .sweep-select-row select {
-  min-height: 70px;
-  font-size: 22px;
+  min-height: 86px;
+  font-size: 28px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-lab-topbar > button,
 .sweep-lab-authentic.is-fullscreen .sweep-lab-topbar > button,
 .sweep-lab-authentic:fullscreen .sweep-lab-controls button,
 .sweep-lab-authentic.is-fullscreen .sweep-lab-controls button {
-  min-height: 62px;
-  font-size: 20px;
+  min-height: 78px;
+  font-size: 26px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-authentic-caption,
 .sweep-lab-authentic.is-fullscreen .sweep-authentic-caption {
-  margin: 0 48px;
-  padding: 30px 26px 30px 28px;
+  margin: 0 58px;
+  padding: 36px 30px 36px 32px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-authentic-caption strong,
 .sweep-lab-authentic.is-fullscreen .sweep-authentic-caption strong {
-  font-size: 24px;
+  font-size: 30px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-authentic-caption span,
 .sweep-lab-authentic.is-fullscreen .sweep-authentic-caption span {
-  font-size: 21px;
-  line-height: 1.7;
+  font-size: 26px;
+  line-height: 1.65;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-authentic-caption small,
@@ -1124,18 +1124,18 @@ input[type="range"] {
 .sweep-lab-authentic.is-fullscreen .sweep-checkbox,
 .sweep-lab-authentic:fullscreen .sweep-readout,
 .sweep-lab-authentic.is-fullscreen .sweep-readout {
-  font-size: 19px;
+  font-size: 22px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-lab-controls,
 .sweep-lab-authentic.is-fullscreen .sweep-lab-controls {
-  gap: 24px;
-  padding: 38px 48px 46px;
+  gap: 30px;
+  padding: 52px 58px 58px;
 }
 
 .sweep-lab-authentic:fullscreen .sweep-speed input,
 .sweep-lab-authentic.is-fullscreen .sweep-speed input {
-  min-height: 26px;
+  min-height: 32px;
 }
 
 .sweep-lab-authentic .sweep-authentic-caption {
