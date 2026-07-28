@@ -1054,6 +1054,18 @@ input[type="range"] {
   border-left: 1px solid rgba(177, 190, 255, .16);
 }
 
+/* In fullscreen the workbench becomes a single viewport-high grid.  The canvas
+   is allowed to shrink and then expand with the remaining right-hand area. */
+.sweep-lab-authentic:fullscreen {
+  height: 100vh;
+  min-height: 100vh;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.sweep-lab-authentic:fullscreen .sweep-canvas {
+  min-height: 0;
+}
+
 .sweep-lab-authentic .sweep-authentic-caption {
   position: relative;
   z-index: 3;

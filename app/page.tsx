@@ -865,8 +865,12 @@ function AuthenticKakeyaSweepLab() {
     const pts = shape === "triangle" ? con.vertices : shape === "star" ? con.A.concat([K.V(0, 0)]) : con.region;
     const xs = pts.map((p: {x:number}) => p.x), ys = pts.map((p: {y:number}) => p.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
     const draw = () => {
+      // CSS owns the visible canvas size. Keeping a pixel size here would freeze
+      // the old pre-fullscreen dimensions as an inline style.
+      canvas.style.removeProperty("width");
+      canvas.style.removeProperty("height");
       const r = canvas.getBoundingClientRect(), w = Math.max(320, r.width), h = Math.max(380, r.height), dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr); canvas.style.width = w + "px"; canvas.style.height = h + "px";
+      canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h); ctx.fillStyle = "#061412"; ctx.fillRect(0, 0, w, h);
       const glow = ctx.createRadialGradient(w*.5,h*.46,0,w*.5,h*.46,Math.max(w,h)*.7); glow.addColorStop(0,"rgba(74,213,204,.18)"); glow.addColorStop(1,"rgba(4,20,18,0)"); ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
       const scale = Math.min((w-92)/Math.max(.01,x1-x0),(h-92)/Math.max(.01,y1-y0)), P=(p:{x:number;y:number})=>({x:w*.5+scale*(p.x-(x0+x1)/2),y:h*.5-scale*(p.y-(y0+y1)/2)});
@@ -881,7 +885,15 @@ function AuthenticKakeyaSweepLab() {
       if(showSwept&&(swept||coverage>0)){const samples=Math.max(2,Math.ceil(460*Math.max(coverage,swept?1:0)));ctx.save();ctx.lineCap="round";ctx.lineWidth=swept?2.5:1.7;ctx.strokeStyle="rgba(86,222,212,.13)";ctx.shadowColor="rgba(77,224,214,.46)";ctx.shadowBlur=5;for(let i=0;i<=samples;i+=1){const nd=con.at(i/samples*Math.max(coverage,swept?turn:0));if(nd.join)continue;const a=P(nd.a),b=P(nd.b);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}ctx.restore();}
       const nd=con.at(progress),a=P(nd.a),b=P(nd.b);ctx.save();ctx.shadowColor="rgba(242,203,114,.92)";ctx.shadowBlur=14;ctx.strokeStyle="#f2cb72";ctx.lineWidth=3.6;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle="#f2cb72";ctx.beginPath();ctx.arc(a.x,a.y,4.8,0,Math.PI*2);ctx.fill();ctx.fillStyle="#061412";ctx.strokeStyle="#70eee4";ctx.lineWidth=2;ctx.beginPath();ctx.arc(b.x,b.y,4.8,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.restore();
     };
-    const observer = new ResizeObserver(draw); observer.observe(wrap); draw(); return () => observer.disconnect();
+    const observer = new ResizeObserver(draw);
+    const redrawAfterFullscreenChange = () => window.requestAnimationFrame(draw);
+    observer.observe(wrap);
+    document.addEventListener("fullscreenchange", redrawAfterFullscreenChange);
+    draw();
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("fullscreenchange", redrawAfterFullscreenChange);
+    };
   }, [ready, shape, n, depth, progress, coverage, showSwept, turn]);
 
   const step = () => { setPlaying(false); setProgress((value) => { const next=Math.min(turn,value+.035);setCoverage((seen)=>Math.max(seen,next));return next>=turn?0:next; }); };
