@@ -627,10 +627,10 @@ function KakeyaSweepLab() {
   const [speed, setSpeed] = useState(1);
   const preset = sweepPresets.find((item) => item.id === presetId) ?? sweepPresets[0];
 
-  const centerAt = (t: number, width: number, height: number) => {
+  const centerAt = (t: number, width: number, visualHeight: number, visualTop: number) => {
     const phase = t * Math.PI * 2;
-    const base = Math.min(width, height);
-    const origin = { x: width * 0.5, y: height * 0.51 };
+    const base = Math.min(width * 0.74, visualHeight * 0.86);
+    const origin = { x: width * 0.5, y: visualTop + visualHeight * 0.5 };
     const triangleVertices = [
       { x: 0, y: -0.22 },
       { x: -0.22, y: 0.16 },
@@ -723,11 +723,15 @@ function KakeyaSweepLab() {
       }
       ctx.restore();
 
+      const visualTop = 104;
+      const visualBottom = Math.max(visualTop + 180, height - 188);
+      const visualHeight = visualBottom - visualTop;
+      const visualBase = Math.min(width * 0.74, visualHeight * 0.86);
       const count = Math.max(1, Math.floor(progress * 260));
-      const needleLength = Math.min(width, height) * 0.46;
+      const needleLength = visualBase * 0.4;
       for (let index = 0; index <= count; index += 1) {
         const t = (index / count) * progress;
-        const center = centerAt(t, width, height);
+        const center = centerAt(t, width, visualHeight, visualTop);
         const angle = t * Math.PI - Math.PI / 2;
         const alpha = index === count ? 0.92 : 0.065;
         ctx.save();
@@ -743,7 +747,7 @@ function KakeyaSweepLab() {
         ctx.restore();
       }
 
-      const current = centerAt(progress, width, height);
+      const current = centerAt(progress, width, visualHeight, visualTop);
       ctx.beginPath();
       ctx.arc(current.x, current.y, 5.5, 0, Math.PI * 2);
       ctx.fillStyle = "#f2cb72";
