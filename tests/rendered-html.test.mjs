@@ -92,7 +92,7 @@ test("keeps interactive models explicit about scope and removes fake estimates",
   assert.match(css, /\.proof-nav button[\s\S]*?font-size:\s*calc\(20px/);
   assert.match(css, /\.question-heading h2,[\s\S]*?\.dimension-top h2[\s\S]*?font-weight:\s*700/);
   assert.match(css, /\.site-header nav a,[\s\S]*?font-size:\s*17px/);
-  assert.match(css, /\.section-index[\s\S]*?font:\s*650 14px/);
+  assert.match(css, /\.section-index[\s\S]*?font:\s*650 calc\(18px \+ var\(--type-ui-adjust\)\)/);
   assert.match(css, /\.timeline-explorer[\s\S]*?grid-template-columns:\s*minmax\(260px,\s*310px\)\s*minmax\(0,\s*1fr\)/);
   assert.match(css, /\.timeline[\s\S]*?grid-row:\s*1\s*\/\s*span 2/);
   assert.match(css, /\.person-profiles\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\) minmax\(0, 1fr\)/);

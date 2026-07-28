@@ -246,7 +246,7 @@ const timelineProofs = [
       },
       {
         title: "每一小块大致沿细管传播",
-        body: "继续分解后得到波包。它们的能量主要集中在相应细管附近，离开细管会迅速变弱，但并非完全为零。",
+        body: "继续分解后得到波包。它们的能量主要集中在相应细管附近，离开细管会迅速变弱，但并非完全为零。这里展示的是几何示意，非偏微分方程数值解。",
         formula: "fθ ≈ ΣT fT；fT 主要集中于 T",
       },
       {
@@ -623,7 +623,7 @@ function KakeyaDiagram() {
         }}
       />
       <div className="needle-status" aria-live="polite">
-        <span><i aria-hidden="true" />当前：25 个有限方向样本</span>
+        <span><i aria-hidden="true" />当前展示 25 个有限采样方向</span>
         <p>你刚刚看到：方向可以保留，线段中心可以移动。</p>
       </div>
     </div>
